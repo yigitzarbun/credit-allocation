@@ -1,9 +1,15 @@
 import React from "react";
-
-const Dashboard = () => {
+import Occupations from "./Occupations";
+import SectorsTable from "./SectorsTable";
+import LoanRequests from "./LoanRequests";
+import Metrics from "../Metrics";
+function Dashboard() {
   return (
     <div>
-      <p>Dashboard</p>
+      <Metrics />
+      <LoanRequests />
     </div>
   );
-};
+}
+
+export default Dashboard;

@@ -6,7 +6,7 @@ function Header() {
       <p>test</p>
       <h1>Bank</h1>
       <nav className="flex justify-between w-1/4">
-        <NavLink>Dashboard</NavLink>
+        <NavLink to="/">Dashboard</NavLink>
 
         <button>Logout</button>
       </nav>
