@@ -25,19 +25,19 @@ function ChangePrioritization(props) {
       </div>
       <form
         onSubmit={handleSubmit(handleChangePrioritization)}
-        className="addSectorForm flex flex-col mt-4"
+        className="changePrioritizationForm flex flex-col mt-4"
       >
-        <div className="addSectorFormContainer">
-          <label htmlFor="name" className="flex">
+        <div className="changePrioritizationFormContainer">
+          <label htmlFor="priority" className="flex">
             <p>{`${propsData.sector} -- ${propsData.occupation}`}</p>
           </label>
           <input
-            type="text"
+            type="number"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("text", { required: "Sektör adı zorunlu" })}
+            {...register("priority", { required: "Önceliklendirme zorunlu" })}
           />
-          {errors.name && (
-            <span className="fieldError">{errors.name.message}</span>
+          {errors.priority && (
+            <span className="fieldError">{errors.priority.message}</span>
           )}
         </div>
 

@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 function EmployeesTable() {
   return (
     <div className="mt-12">
-      <h2 className="subHeading">Çalışanlar</h2>
+      <div className="flex justify-between">
+        <h2 className="subHeading">Çalışanlar</h2>
+        <Link to="/add-employee">
+          <button className="bg-green-300 p-2">Çalışan Ekle</button>
+        </Link>
+      </div>
       <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
@@ -15,7 +20,6 @@ function EmployeesTable() {
             <th>Email</th>
             <th>Birim</th>
             <th>Pozisyon</th>
-            <th>Aksiyon</th>
           </tr>
         </thead>
         <tbody>
@@ -31,13 +35,6 @@ function EmployeesTable() {
               <td>{e.email}</td>
               <td>{e.department}</td>
               <td>{e.title}</td>
-              <td>
-                {e.access ? (
-                  <button className="p-1 bg-red-300">Yetki kaldır</button>
-                ) : (
-                  <button className="p-1 bg-green-300">Yetki ver</button>
-                )}
-              </td>
             </tr>
           ))}
         </tbody>

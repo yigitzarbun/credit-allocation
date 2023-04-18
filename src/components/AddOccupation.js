@@ -24,9 +24,9 @@ function AddOccupation() {
       </div>
       <form
         onSubmit={handleSubmit(handleAddOccupation)}
-        className="addOccupationrForm flex flex-col mt-4"
+        className="addOccupationForm flex flex-col mt-4"
       >
-        <div className="addOccupationrFormContainer">
+        <div className="addOccupationFormContainer">
           <label htmlFor="name" className="flex">
             Meslek Adı
           </label>
