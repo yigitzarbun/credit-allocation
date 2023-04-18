@@ -1,4 +1,4 @@
-const db = require("../../data/db-config");
+const db = require("../data/db-config");
 
 async function findAllUsers() {
   return db("users");

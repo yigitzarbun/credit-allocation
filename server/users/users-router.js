@@ -3,8 +3,8 @@ const userModel = require("./users-model");
 const bcrypt = require("bcryptjs");
 const jsWTN = require("jsonwebtoken");
 
-const { JWT_SECRET } = require("../../config/config");
-const tokenMW = require("../../middleware/restricted");
+const { JWT_SECRET } = require("../config/config");
+const tokenMW = require("../middleware/restricted");
 router.post("/register", async (req, res, next) => {
   try {
     const newUser = req.body;
