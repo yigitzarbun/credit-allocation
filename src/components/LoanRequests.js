@@ -4,7 +4,7 @@ function LoanRequests() {
   return (
     <div className="mt-12">
       <h2 className="subHeading">Kredi Talepleri</h2>
-      <table className="w-full text-left">
+      <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
             <th>Müşteri ID</th>
@@ -14,6 +14,7 @@ function LoanRequests() {
             <th>Sektör</th>
             <th>Meslek</th>
             <th>Kredi Puan</th>
+            <th>Kredi Uygunluk</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@ function LoanRequests() {
               <td>{l.sector}</td>
               <td>{l.occupation}</td>
               <td>{l.credit}</td>
+              <td>{l.feasible}</td>
             </tr>
           ))}
         </tbody>

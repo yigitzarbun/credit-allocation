@@ -24,3 +24,7 @@ td {
 .subHeading {
   @apply font-bold text-xl;
 }
+
+button {
+  @apply rounded-md;
+}
