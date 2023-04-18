@@ -10,6 +10,8 @@ import OccupationsTable from "./components/OccupationsTable";
 import UnprocessedLoanRequests from "./components/UnprocessedLoanRequests";
 import ProcessedLoanRequests from "./components/ProcessedLoanRequests";
 import EmployeesTable from "./components/EmployeesTable";
+import Prioritization from "./components/Prioritization";
+import ChangePrioritization from "./components/ChangePrioritization";
 function App() {
   return (
     <div className="max-w-6xl mx-auto flex justify-between">
@@ -25,6 +27,11 @@ function App() {
           <Route path="/sectors" element={<SectorsTable />} />
           <Route path="/occupations" element={<OccupationsTable />} />
           <Route path="/employees" element={<EmployeesTable />} />
+          <Route path="/prioritization" element={<Prioritization />} />
+          <Route
+            path="/change-prioritization"
+            element={<ChangePrioritization />}
+          />
           <Route
             path="/unprocessed-loan-requests"
             element={<UnprocessedLoanRequests />}

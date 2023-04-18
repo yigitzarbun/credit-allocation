@@ -97,21 +97,35 @@ const SideBar = () => {
           </ul>
         )}
         {userType === "superAdmin" && (
-          <NavLink
-            to="employees"
-            className={({ isActive, isPending }) =>
-              isPending
-                ? "pending"
-                : isActive
-                ? " bg-yellow-700 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
-            }
-          >
-            <span>
-              <GrUserWorker />
-            </span>
-            <span>Çalışanlar</span>
-          </NavLink>
+          <>
+            <NavLink
+              to="employees"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? " bg-yellow-700 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+              }
+            >
+              <span>
+                <GrUserWorker />
+              </span>
+              <span>Çalışanlar</span>
+            </NavLink>
+            <NavLink
+              to="/prioritization"
+              className={({ isActive, isPending }) =>
+                isPending
+                  ? "pending"
+                  : isActive
+                  ? " bg-yellow-700 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+              }
+            >
+              <span>Önceliklendirme</span>
+            </NavLink>
+          </>
         )}
       </ul>
       <div className={subMenuOpen === false ? "mt-80 p-2" : " mt-12 p-2 "}>

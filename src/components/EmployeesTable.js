@@ -4,12 +4,7 @@ import { Link } from "react-router-dom";
 function EmployeesTable() {
   return (
     <div className="mt-12">
-      <div className="flex justify-between">
-        <h2 className="subHeading">Çalışanlar</h2>
-        <Link to="/add-occupation">
-          <button className="bg-green-300 p-2">Çalışan Ekle</button>
-        </Link>
-      </div>
+      <h2 className="subHeading">Çalışanlar</h2>
       <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">

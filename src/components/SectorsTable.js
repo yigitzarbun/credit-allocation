@@ -2,7 +2,6 @@ import React from "react";
 import { sectors } from "./data";
 import { Link } from "react-router-dom";
 function SectorsTable() {
-  // kullanıcı admin ise aksiyon sütunu gözükecek
   const userType = "admin";
   return (
     <div className="mt-12">

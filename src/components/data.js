@@ -179,3 +179,12 @@ export const employees = [
     access: false,
   },
 ];
+
+const occupationsList = ["Yönetici", "Uzman", "Uzmn yrd."];
+const sectorsList = ["Eğitim", "Sağlık", "Tarım"];
+export const matrice = [];
+for (let s = 0; s < sectorsList.length; s++) {
+  for (let o = 0; o < occupationsList.length; o++) {
+    matrice.push([sectorsList[s], occupationsList[o]]);
+  }
+}
