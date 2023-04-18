@@ -1,4 +1,42 @@
-export const loanRequests = [
+export const unprocessedLoanRequests = [
+  {
+    customer_id: 1,
+    fname: "Ahmet",
+    lname: "Güneş",
+    year_birth: 1980,
+    sector: "Eğitim",
+    occupation: "Yönetici",
+    credit: 7.4,
+  },
+  {
+    customer_id: 2,
+    fname: "Mehmet",
+    lname: "Ay",
+    year_birth: 1970,
+    sector: "Tarım",
+    occupation: "Çiftçi",
+    credit: 7.1,
+  },
+  {
+    customer_id: 3,
+    fname: "Ayşe",
+    lname: "Kara",
+    year_birth: 1985,
+    sector: "Spor",
+    occupation: "Sporcu",
+    credit: 7.2,
+  },
+  {
+    customer_id: 4,
+    fname: "Fatma",
+    lname: "Kuş",
+    year_birth: 1990,
+    sector: "Savunma",
+    occupation: "Mühendis",
+    credit: 7.5,
+  },
+];
+export const processedLoanRequests = [
   {
     customer_id: 1,
     fname: "Ahmet",

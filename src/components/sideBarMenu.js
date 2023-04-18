@@ -33,18 +33,21 @@ const SideBar = () => {
             <span>
               <BsFillClipboardDataFill />
             </span>
-            <span>Tables</span>
+            <span className="cursor-pointer">Tables</span>
           </span>
 
           <span>
-            <BsChevronDown onClick={() => setSubMenuOpen(!subMenuOpen)} />
+            <BsChevronDown
+              onClick={() => setSubMenuOpen(!subMenuOpen)}
+              className="cursor-pointer"
+            />
           </span>
         </li>
 
         {subMenuOpen && (
           <ul>
             <NavLink
-              to="/musterilistesi"
+              to="/unprocessed-loan-requests"
               className={({ isActive, isPending }) =>
                 isPending
                   ? "pending"

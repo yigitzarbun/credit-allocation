@@ -7,6 +7,7 @@ import AddOccupation from "./components/AddOccupation";
 import SideBar from "./components/sideBarMenu";
 import SectorsTable from "./components/SectorsTable";
 import OccupationsTable from "./components/OccupationsTable";
+import UnprocessedLoanRequests from "./components/UnprocessedLoanRequests";
 import ProcessedLoanRequests from "./components/ProcessedLoanRequests";
 import EmployeesTable from "./components/EmployeesTable";
 function App() {
@@ -24,6 +25,10 @@ function App() {
           <Route path="/sectors" element={<SectorsTable />} />
           <Route path="/occupations" element={<OccupationsTable />} />
           <Route path="/employees" element={<EmployeesTable />} />
+          <Route
+            path="/unprocessed-loan-requests"
+            element={<UnprocessedLoanRequests />}
+          />
           <Route
             path="/processed-loan-requests"
             element={<ProcessedLoanRequests />}

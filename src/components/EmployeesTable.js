@@ -14,12 +14,13 @@ function EmployeesTable() {
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
             <th>Çalışan ID</th>
+            <th>Erişim</th>
             <th>Çalışan İsim</th>
             <th>Çalışan Soyisim</th>
             <th>Email</th>
             <th>Birim</th>
             <th>Pozisyon</th>
-            <th>Erişim</th>
+            <th>Aksiyon</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@ function EmployeesTable() {
               className="border-b-2 border-b-slate-200 leading-loose"
             >
               <td>{e.employee_id}</td>
+              <td>{e.access ? "Var" : "Yok"}</td>
               <td>{e.fname}</td>
               <td>{e.lname}</td>
               <td>{e.email}</td>

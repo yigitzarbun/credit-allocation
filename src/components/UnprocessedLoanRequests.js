@@ -1,9 +1,9 @@
 import React from "react";
-import { processedLoanRequests } from "./data";
-function ProcessedLoanRequests() {
+import { unprocessedLoanRequests } from "./data";
+function UnprocessedLoanRequests() {
   return (
     <div className="mt-12">
-      <h2 className="subHeading">İşlenmiş Müşteri Listesi</h2>
+      <h2 className="subHeading">Müşteri Listesi</h2>
       <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
@@ -14,11 +14,10 @@ function ProcessedLoanRequests() {
             <th>Sektör</th>
             <th>Meslek</th>
             <th>Kredi Puan</th>
-            <th>Kredi Uygunluk</th>
           </tr>
         </thead>
         <tbody>
-          {processedLoanRequests.map((l) => (
+          {unprocessedLoanRequests.map((l) => (
             <tr
               key={l.customer_id}
               className="border-b-2 border-b-slate-200 leading-loose"
@@ -30,7 +29,6 @@ function ProcessedLoanRequests() {
               <td>{l.sector}</td>
               <td>{l.occupation}</td>
               <td>{l.credit}</td>
-              <td>{l.feasible}</td>
             </tr>
           ))}
         </tbody>
@@ -39,4 +37,4 @@ function ProcessedLoanRequests() {
   );
 }
 
-export default ProcessedLoanRequests;
+export default UnprocessedLoanRequests;
