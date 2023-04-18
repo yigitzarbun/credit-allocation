@@ -1,7 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import { addUser } from "../redux-stuff/actions";
+import { useDispatch } from "react-redux";
+
 function AddEmployee() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     register,
@@ -9,8 +13,12 @@ function AddEmployee() {
     reset,
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
-  const handleAddEmployee = () => {
-    navigate("/employees");
+  const handleAddEmployee = (data) => {
+    const dataWide = {
+      ...data,
+      role_name: "analyst",
+    };
+    dispatch(addUser(dataWide, navigate));
     reset();
   };
 
@@ -27,6 +35,47 @@ function AddEmployee() {
         className="addEmployeeForm flex flex-col mt-4"
       >
         <div className="addEmployeeFormContainer">
+          <label htmlFor="email" className="flex">
+            Email
+          </label>
+          <input
+            type="email"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("email", { required: "Çalışan email zorunlu" })}
+          />
+          {errors.email && (
+            <span className="fieldError">{errors.email.message}</span>
+          )}
+        </div>
+        <div className="addEmployeeFormContainer">
+          <label htmlFor="email" className="flex">
+            Password
+          </label>
+          <input
+            type="password"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("password", { required: "Çalışan şifre zorunlu" })}
+          />
+          {errors.password && (
+            <span className="fieldError">{errors.password.message}</span>
+          )}
+        </div>
+        <button
+          className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
+          disabled={!isValid}
+          type="submit"
+        >
+          <p className="font-bold">Ekle</p>
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default AddEmployee;
+
+/*
+ <div className="addEmployeeFormContainer">
           <label htmlFor="fname" className="flex">
             İsim
           </label>
@@ -52,29 +101,4 @@ function AddEmployee() {
             <span className="fieldError">{errors.lname.message}</span>
           )}
         </div>
-        <div className="addEmployeeFormContainer">
-          <label htmlFor="email" className="flex">
-            Email
-          </label>
-          <input
-            type="email"
-            className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("email", { required: "Çalışan email zorunlu" })}
-          />
-          {errors.email && (
-            <span className="fieldError">{errors.email.message}</span>
-          )}
-        </div>
-        <button
-          className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
-          disabled={!isValid}
-          type="submit"
-        >
-          <p className="font-bold">Ekle</p>
-        </button>
-      </form>
-    </div>
-  );
-}
-
-export default AddEmployee;
+        */
