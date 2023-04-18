@@ -1,9 +1,9 @@
 import React from "react";
 import { loanRequests } from "./data";
-function LoanRequests() {
+function ProcessedLoanRequests() {
   return (
     <div className="mt-12">
-      <h2 className="subHeading">Kredi Talepleri</h2>
+      <h2 className="subHeading">İşlenmiş Müşteri Listesi</h2>
       <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
@@ -39,4 +39,4 @@ function LoanRequests() {
   );
 }
 
-export default LoanRequests;
+export default ProcessedLoanRequests;

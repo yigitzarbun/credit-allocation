@@ -1,8 +1,7 @@
 import React from "react";
 import { occupations } from "./data";
 import { Link } from "react-router-dom";
-function Occupations() {
-  // kullanıcı admin ise aksiyon sütunu gözükecek
+function OccupationsTable() {
   const userType = "admin";
   return (
     <div className="mt-12">
@@ -43,4 +42,4 @@ function Occupations() {
   );
 }
 
-export default Occupations;
+export default OccupationsTable;

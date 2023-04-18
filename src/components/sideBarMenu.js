@@ -5,17 +5,13 @@ import { BsChevronDown } from "react-icons/bs";
 import { GrUserWorker } from "react-icons/gr";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import logo1 from "../logo.png";
+//import logo1 from "../logo.png";
 const SideBar = () => {
   const [userType, setUserType] = useState("superAdmin");
   const [subMenuOpen, setSubMenuOpen] = useState(false);
 
   return (
-    <div className=" bg-white h-screen p5 text-ternanry pt-8 w-64 p-4">
-      <div className="flex justify-center mb-12 ">
-        <img src={logo1} alt="logo" />
-      </div>
-
+    <div className=" bg-white h-screen p5 text-ternanry pt-8 p-4">
       <ul className="pt-2">
         <NavLink
           to="/"
@@ -60,7 +56,7 @@ const SideBar = () => {
               Müşteri Listesi
             </NavLink>
             <NavLink
-              to="/sektorler"
+              to="/sectors"
               className={({ isActive, isPending }) =>
                 isPending
                   ? "pending"
@@ -72,7 +68,7 @@ const SideBar = () => {
               Sektörler
             </NavLink>
             <NavLink
-              to="/meslekler"
+              to="/occupations"
               className={({ isActive, isPending }) =>
                 isPending
                   ? "pending"
@@ -84,7 +80,7 @@ const SideBar = () => {
               Meslekler
             </NavLink>
             <NavLink
-              to="/islenmismusteriList"
+              to="/processed-loan-requests"
               className={({ isActive, isPending }) =>
                 isPending
                   ? "pending"
@@ -99,7 +95,7 @@ const SideBar = () => {
         )}
         {userType === "superAdmin" && (
           <NavLink
-            to="Employees"
+            to="employees"
             className={({ isActive, isPending }) =>
               isPending
                 ? "pending"
@@ -111,7 +107,7 @@ const SideBar = () => {
             <span>
               <GrUserWorker />
             </span>
-            <span>Employees</span>
+            <span>Çalışanlar</span>
           </NavLink>
         )}
       </ul>

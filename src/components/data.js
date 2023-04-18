@@ -102,3 +102,42 @@ export const occupations = [
     occupation_name: "Mimar",
   },
 ];
+
+export const employees = [
+  {
+    employee_id: 1,
+    fname: "Ahmet",
+    lname: "Güneş",
+    email: "ahmetgunes@bank.com",
+    department: "Kredi Tahsis",
+    title: "Yönetici",
+    access: true,
+  },
+  {
+    employee_id: 2,
+    fname: "Mehmet",
+    lname: "Ay",
+    email: "mehmetay@bank.com",
+    department: "Kredi Tahsis",
+    title: "Uzman",
+    access: false,
+  },
+  {
+    employee_id: 3,
+    fname: "Ayşe",
+    lname: "Kara",
+    email: "aysekara@bank.com",
+    department: "Kredi Tahsis",
+    title: "Uzman",
+    access: false,
+  },
+  {
+    employee_id: 4,
+    fname: "Fatma",
+    lname: "Gül",
+    email: "fatmagul@bank.com",
+    department: "Kredi Tahsis",
+    title: "Uzman Yrd.",
+    access: false,
+  },
+];
