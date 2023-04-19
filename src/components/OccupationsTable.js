@@ -23,8 +23,8 @@ function OccupationsTable() {
       <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
-            <th>Sektör ID</th>
-            <th>Sektör Adı</th>
+            <th>Meslek ID</th>
+            <th>Meslek Adı</th>
             {userType == "admin" && <th>Aksiyon</th>}
           </tr>
         </thead>

@@ -52,7 +52,7 @@ export function myReducer(state = initialState, action) {
     case GET_USERS:
       return {
         ...state,
-        users: [action.payload, ...(state.users || [])],
+        users: [...action.payload],
       };
     case ADD_SECTOR:
       return {
@@ -62,7 +62,7 @@ export function myReducer(state = initialState, action) {
     case GET_SECTORS:
       return {
         ...state,
-        sectors: [action.payload, ...(state.sectors || [])],
+        sectors: [...action.payload],
       };
     case DELETE_SECTOR:
       const copySectors = [...state.sectors];
@@ -74,7 +74,10 @@ export function myReducer(state = initialState, action) {
         sectors: [...updatedSectorsList],
       };
     case GET_OCCUPATIONS:
-      return { ...state, occupations: [...action.payload] };
+      return {
+        ...state,
+        occupations: [...action.payload],
+      };
     case ADD_OCCUPATION:
       return {
         ...state,

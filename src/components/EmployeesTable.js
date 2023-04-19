@@ -8,6 +8,7 @@ function EmployeesTable() {
   const deleteEmployee = (user_id) => {
     dispatch(deleteUser(user_id));
   };
+  console.log(users);
   useEffect(() => {
     dispatch(getUsers());
   }, []);
@@ -19,7 +20,7 @@ function EmployeesTable() {
           <button className="bg-green-300 p-2">Çalışan Ekle</button>
         </Link>
       </div>
-      <table className="w-full text-left mt-4">
+      <table className="w-full text-left mt-4 text-black">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
             <th>Çalışan ID</th>
