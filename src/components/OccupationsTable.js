@@ -25,6 +25,7 @@ function OccupationsTable() {
           <tr className="leading-loose">
             <th>Meslek ID</th>
             <th>Meslek Adı</th>
+            <th>Puan</th>
             {userType == "admin" && <th>Aksiyon</th>}
           </tr>
         </thead>
@@ -36,6 +37,7 @@ function OccupationsTable() {
             >
               <td>{o.occupation_id}</td>
               <td>{o.occupation_name}</td>
+              <td>5</td>
               {userType == "admin" && (
                 <td>
                   <button

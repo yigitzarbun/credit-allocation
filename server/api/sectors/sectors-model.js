@@ -13,6 +13,11 @@ async function createSector(sector) {
   const createdSector = await findSectorById(CreatedSectorId);
   return createdSector;
 }
+
+async function updateSector(sector_id, updates) {
+  return db("sectors").where("sector_id", sector_id).update(updates);
+}
+
 async function deleteSector(id) {
   const deletedSector = await db("sectors").where("sector_id", id).del();
   return deletedSector;
@@ -21,5 +26,6 @@ module.exports = {
   getAllSectors,
   findSectorById,
   createSector,
+  updateSector,
   deleteSector,
 };

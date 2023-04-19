@@ -16,9 +16,9 @@ function ChangePrioritization(props) {
     reset();
   };
   return (
-    <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto xs:w-2/3">
+    <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto">
       <div className="flex justify-between items-center">
-        <h2 className="font-bold text-4xl">Önceliklendirme</h2>
+        <h2 className="font-bold text-4xl">Öncelik</h2>
         <Link to="/prioritization">
           <img src="/images/cancel.png" alt="cancel" className="h-4 w-4" />
         </Link>

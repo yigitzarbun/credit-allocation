@@ -18,7 +18,16 @@ router.post("/addOcc", async (req, res, next) => {
     next(error);
   }
 });
-
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { occupation_id, updates } = req.body;
+    await occModel.updateOccupation(occupation_id, updates);
+    const updatedOccupation = await occModel.findSectorById(occupation_id);
+    res.status(201).json(updatedOccupation);
+  } catch (error) {
+    next(error);
+  }
+});
 router.delete("/:id", async (req, res, next) => {
   try {
     const deletedUser = await occModel.deleteOccupation(req.params.id);

@@ -6,7 +6,7 @@ function Prioritization() {
   return (
     <div className="mt-12">
       <div className="flex justify-between">
-        <h2 className="subHeading">Sektörler</h2>
+        <h2 className="subHeading">İstisnai Önceliklendirme</h2>
       </div>
       <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">

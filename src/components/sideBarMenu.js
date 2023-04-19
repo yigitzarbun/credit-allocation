@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RiDashboardLine } from "react-icons/ri";
 import { BsFillClipboardDataFill } from "react-icons/bs";
 import { BsChevronDown } from "react-icons/bs";
 import { GrUserWorker } from "react-icons/gr";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { LOGOUT } from "../redux-stuff/actions";
+import { getUserFromLs, LOGOUT } from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 //import logo1 from "../logo.png";
 const SideBar = () => {
@@ -36,19 +36,19 @@ const SideBar = () => {
           </span>
           <span>Dashboard</span>
         </NavLink>
-        <li className=" text-lg flex justify-between items-center  gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6">
+        <li
+          onClick={() => setSubMenuOpen(!subMenuOpen)}
+          className=" text-lg flex justify-between items-center  gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+        >
           <span className="flex  gap-x-4 items-center">
             <span>
               <BsFillClipboardDataFill />
             </span>
-            <span className="cursor-pointer">Tables</span>
+            <span className="cursor-pointer">Tablolar</span>
           </span>
 
           <span>
-            <BsChevronDown
-              onClick={() => setSubMenuOpen(!subMenuOpen)}
-              className="cursor-pointer"
-            />
+            <BsChevronDown className="cursor-pointer" />
           </span>
         </li>
 
@@ -138,14 +138,14 @@ const SideBar = () => {
       </ul>
       <div className={subMenuOpen === false ? "mt-80 p-2" : " mt-12 p-2 "}>
         <div>
-          <p>Jhon Daniel</p>
-          <p className=" text-sm text-slate-500 ">johndaniel@gmail.com</p>
+          <p>{user && user.role_name.toUpperCase()}</p>
+          <p className=" text-sm text-slate-500 ">{user && user.email}</p>
         </div>
         <button
           onClick={handleLogout}
           className=" bg-red-300 text-red-700 px-14 py-2 rounded-md mt-6 "
         >
-          Log out
+          Çıkış
         </button>
       </div>
     </div>

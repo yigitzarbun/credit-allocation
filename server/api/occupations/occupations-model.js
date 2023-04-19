@@ -13,6 +13,11 @@ async function createOccupation(Occupation) {
   const createdOccupation = await findOccupationById(CreatedOccupationId);
   return createdOccupation;
 }
+async function updateOccupation(occupation_id, updates) {
+  return db("occupations")
+    .where("occupation_id", occupation_id)
+    .update(updates);
+}
 async function deleteOccupation(id) {
   const deletedOccupation = await db("occupations")
     .where("occupation_id", id)
@@ -24,4 +29,5 @@ module.exports = {
   findOccupationById,
   createOccupation,
   deleteOccupation,
+  updateOccupation,
 };
