@@ -27,6 +27,7 @@ export const GET_OCCUPATIONS = "GET_OCCUPATIONS";
 export const ADD_OCCUPATION = "ADD_OCCUPATION";
 export const REMOVE_OCCUPATION = "REMOVE_OCCUPATION";
 export const UPDATE_PRIORITIZATION = "UPDATE_PRIORITIZATION";
+export const GET_CUSTOMERS = "GET_CUSTOMERS";
 
 const axiosWithAuth = () => {
   const tokenObj = JSON.parse(localStorage.getItem(key));
@@ -164,6 +165,17 @@ export const deleteOccupation = (occupation_id) => (dispatch) => {
       if (res.status == 200) {
         dispatch({ type: REMOVE_OCCUPATION, payload: occupation_id });
         toast.success("Meslek silindi");
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getCustomers = () => (dispatch) => {
+  axiosWithAuth()
+    .get(url + "api/customers")
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch({ type: GET_CUSTOMERS, payload: res.data });
       }
     })
     .catch((err) => console.log(err));

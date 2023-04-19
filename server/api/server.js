@@ -8,9 +8,11 @@ server.use(cors());
 const userRouter = require("./users/users-router");
 const sectorRouter = require("./sectors/sectors-router");
 const occRouter = require("./occupations/occupations-router");
+const customersRouter = require("./customers/customers-router");
 server.use("/api/users", userRouter);
 server.use("/api/sector", sectorRouter);
 server.use("/api/occ", occRouter);
+server.use("/api/customers", customersRouter);
 server.get("/", (req, res) => {
   res.status(200).json({ message: "hello world" });
 });

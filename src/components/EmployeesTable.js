@@ -8,7 +8,6 @@ function EmployeesTable() {
   const deleteEmployee = (user_id) => {
     dispatch(deleteUser(user_id));
   };
-  console.log(users);
   useEffect(() => {
     dispatch(getUsers());
   }, []);
@@ -24,6 +23,8 @@ function EmployeesTable() {
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
             <th>Çalışan ID</th>
+            <th>İsim</th>
+            <th>Soyisim</th>
             <th>Email</th>
             <th>Rol</th>
             <th>Aksiyon</th>
@@ -36,6 +37,8 @@ function EmployeesTable() {
               className="border-b-2 border-b-slate-200 leading-loose"
             >
               <td>{u.user_id}</td>
+              <td>{u.fname}</td>
+              <td>{u.lname}</td>
               <td>{u.email}</td>
               <td>{u.role_name}</td>
               <td>

@@ -1,6 +1,13 @@
-import React from "react";
-import { unprocessedLoanRequests } from "./data";
+import React, { useEffect } from "react";
+import { getCustomers } from "../redux-stuff/actions";
+import { useDispatch, useSelector } from "react-redux";
+
 function UnprocessedLoanRequests() {
+  const dispatch = useDispatch();
+  const customers = useSelector((store) => store.customers);
+  useEffect(() => {
+    dispatch(getCustomers());
+  }, []);
   return (
     <div className="mt-12">
       <h2 className="subHeading">Müşteri Listesi</h2>
@@ -10,25 +17,23 @@ function UnprocessedLoanRequests() {
             <th>Müşteri ID</th>
             <th>İsim</th>
             <th>Soyisim</th>
-            <th>Doğum yılı</th>
+            <th>Tecrübe Yıl</th>
             <th>Sektör</th>
             <th>Meslek</th>
-            <th>Kredi Puan</th>
           </tr>
         </thead>
         <tbody>
-          {unprocessedLoanRequests.map((l) => (
+          {customers.map((c) => (
             <tr
-              key={l.customer_id}
+              key={c.customer_id}
               className="border-b-2 border-b-slate-200 leading-loose"
             >
-              <td>{l.customer_id}</td>
-              <td>{l.fname}</td>
-              <td>{l.lname}</td>
-              <td>{l.year_birth}</td>
-              <td>{l.sector}</td>
-              <td>{l.occupation}</td>
-              <td>{l.credit}</td>
+              <td>{c.customer_id}</td>
+              <td>{c.fname}</td>
+              <td>{c.lname}</td>
+              <td>{c.experience_years}</td>
+              <td>{c.sector_name}</td>
+              <td>{c.occupation_name}</td>
             </tr>
           ))}
         </tbody>

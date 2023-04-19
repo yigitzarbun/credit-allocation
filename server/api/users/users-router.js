@@ -7,7 +7,6 @@ const tokenMW = require("../../middleware/restricted");
 router.post("/register", async (req, res, next) => {
   try {
     const newUser = req.body;
-    console.log(newUser);
     const getUser = await userModel.findByFilter({
       email: newUser.email,
     });

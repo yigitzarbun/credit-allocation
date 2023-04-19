@@ -37,7 +37,7 @@ function SectorsTable() {
             >
               <td>{s.sector_id}</td>
               <td>{s.sector_name}</td>
-              <td>5</td>
+              <td>{s.score}</td>
               {userType == "admin" && (
                 <td>
                   <button

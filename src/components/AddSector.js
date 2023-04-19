@@ -21,7 +21,7 @@ function AddSector() {
     <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto xs:w-2/3">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-4xl">Sektör Ekle</h2>
-        <Link to="/">
+        <Link to="/sectors">
           <img src="/images/cancel.png" alt="cancel" className="h-4 w-4" />
         </Link>
       </div>
@@ -42,7 +42,19 @@ function AddSector() {
             <span className="fieldError">{errors.name.message}</span>
           )}
         </div>
-
+        <div className="addSectorFormContainer">
+          <label htmlFor="sector_name" className="flex">
+            Skor
+          </label>
+          <input
+            type="number"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("score", { required: "Sektör skoru zorunlu" })}
+          />
+          {errors.score && (
+            <span className="fieldError">{errors.score.message}</span>
+          )}
+        </div>
         <button
           className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
           disabled={!isValid}

@@ -37,7 +37,7 @@ function OccupationsTable() {
             >
               <td>{o.occupation_id}</td>
               <td>{o.occupation_name}</td>
-              <td>5</td>
+              <td>{o.score}</td>
               {userType == "admin" && (
                 <td>
                   <button

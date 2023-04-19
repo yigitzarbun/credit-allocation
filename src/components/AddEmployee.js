@@ -48,7 +48,33 @@ function AddEmployee() {
           )}
         </div>
         <div className="addEmployeeFormContainer">
-          <label htmlFor="email" className="flex">
+          <label htmlFor="fname" className="flex">
+            İsim
+          </label>
+          <input
+            type="text"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("fname", { required: "Çalışan adı zorunlu" })}
+          />
+          {errors.fname && (
+            <span className="fieldError">{errors.fname.message}</span>
+          )}
+        </div>
+        <div className="addEmployeeFormContainer">
+          <label htmlFor="fname" className="flex">
+            Soyisim
+          </label>
+          <input
+            type="text"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("lname", { required: "Çalışan soyadı zorunlu" })}
+          />
+          {errors.lname && (
+            <span className="fieldError">{errors.lname.message}</span>
+          )}
+        </div>
+        <div className="addEmployeeFormContainer">
+          <label htmlFor="password" className="flex">
             Password
           </label>
           <input
