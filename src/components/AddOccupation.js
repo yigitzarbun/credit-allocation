@@ -1,7 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addOccupation } from "../redux-stuff/actions";
 function AddOccupation() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     register,
@@ -9,8 +12,8 @@ function AddOccupation() {
     reset,
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
-  const handleAddOccupation = () => {
-    navigate("/");
+  const handleAddOccupation = (formData) => {
+    dispatch(addOccupation(formData, navigate));
     reset();
   };
 
@@ -27,16 +30,16 @@ function AddOccupation() {
         className="addOccupationForm flex flex-col mt-4"
       >
         <div className="addOccupationFormContainer">
-          <label htmlFor="name" className="flex">
+          <label htmlFor="occupation_name" className="flex">
             Meslek Adı
           </label>
           <input
             type="text"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("text", { required: "Meslek adı zorunlu" })}
+            {...register("occupation_name", { required: "Meslek adı zorunlu" })}
           />
-          {errors.name && (
-            <span className="fieldError">{errors.name.message}</span>
+          {errors.occupation_name && (
+            <span className="fieldError">{errors.occupation_name.message}</span>
           )}
         </div>
 

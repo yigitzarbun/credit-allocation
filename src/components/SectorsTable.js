@@ -1,7 +1,16 @@
-import React from "react";
-import { sectors } from "./data";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getSectors, deleteSector } from "../redux-stuff/actions";
 function SectorsTable() {
+  const dispatch = useDispatch();
+  const sectors = useSelector((store) => store.sectors);
+  const handleDelete = (sector_id) => {
+    dispatch(deleteSector(sector_id));
+  };
+  useEffect(() => {
+    dispatch(getSectors());
+  }, []);
   const userType = "admin";
   return (
     <div className="mt-12">
@@ -29,7 +38,10 @@ function SectorsTable() {
               <td>{s.sector_name}</td>
               {userType == "admin" && (
                 <td>
-                  <button className="bg-red-300 text-white px-8 py-2">
+                  <button
+                    onClick={() => handleDelete(s.sector_id)}
+                    className="bg-red-300 text-white px-8 py-2"
+                  >
                     Sil
                   </button>
                 </td>

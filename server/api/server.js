@@ -1,6 +1,10 @@
 const express = require("express");
 const server = express();
 server.use(express.json());
+const cors = require("cors");
+const helmet = require("helmet");
+server.use(helmet());
+server.use(cors());
 const userRouter = require("./users/users-router");
 const sectorRouter = require("./sectors/sectors-router");
 const occRouter = require("./occupations/occupations-router");

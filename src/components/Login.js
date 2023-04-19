@@ -1,10 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../redux-stuff/actions";
 import { useDispatch } from "react-redux";
 function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -12,7 +13,7 @@ function Login() {
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
   const handleLogin = (data) => {
-    dispatch(login(data));
+    dispatch(login(data, navigate));
     reset();
   };
   const handleClearForm = () => {
@@ -32,7 +33,7 @@ function Login() {
             </label>
             <input
               placeholder="e.g. user@email.com"
-              className="rounded-md w-full p-2"
+              className="rounded-md w-full p-2 text-black"
               type="email"
               {...register("email", { required: "You must enter an email" })}
             />

@@ -1,7 +1,16 @@
-import React from "react";
-import { occupations } from "./data";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getOccupations, deleteOccupation } from "../redux-stuff/actions";
 function OccupationsTable() {
+  const dispatch = useDispatch();
+  const occupations = useSelector((store) => store.occupations);
+  const handleDelete = (occupation_id) => {
+    dispatch(deleteOccupation(occupation_id));
+  };
+  useEffect(() => {
+    dispatch(getOccupations());
+  }, []);
   const userType = "admin";
   return (
     <div className="mt-12">
@@ -29,7 +38,10 @@ function OccupationsTable() {
               <td>{o.occupation_name}</td>
               {userType == "admin" && (
                 <td>
-                  <button className="bg-red-300 text-white px-8 py-2">
+                  <button
+                    onClick={() => handleDelete(o.occupation_id)}
+                    className="bg-red-300 text-white px-8 py-2"
+                  >
                     Sil
                   </button>
                 </td>

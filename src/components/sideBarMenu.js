@@ -18,7 +18,6 @@ const SideBar = () => {
     dispatch({ type: LOGOUT });
     navigate("/login");
   };
-  console.log(user);
   return (
     <div className=" bg-white h-screen p5 text-ternanry pt-8 p-4">
       <ul className="pt-2">
@@ -138,7 +137,6 @@ const SideBar = () => {
         )}
       </ul>
       <div className={subMenuOpen === false ? "mt-80 p-2" : " mt-12 p-2 "}>
-        <h4 className="text-lg mb-2">Profile</h4>
         <div>
           <p>Jhon Daniel</p>
           <p className=" text-sm text-slate-500 ">johndaniel@gmail.com</p>

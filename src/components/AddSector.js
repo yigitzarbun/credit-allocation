@@ -1,16 +1,19 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import { addSector } from "../redux-stuff/actions";
+import { useDispatch } from "react-redux";
 function AddSector() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
-  const handleAddSector = () => {
-    navigate("/");
+  const handleAddSector = (data) => {
+    dispatch(addSector(data, navigate));
     reset();
   };
 
@@ -19,7 +22,6 @@ function AddSector() {
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-4xl">Sektör Ekle</h2>
         <Link to="/">
-          {" "}
           <img src="/images/cancel.png" alt="cancel" className="h-4 w-4" />
         </Link>
       </div>
@@ -28,13 +30,13 @@ function AddSector() {
         className="addSectorForm flex flex-col mt-4"
       >
         <div className="addSectorFormContainer">
-          <label htmlFor="name" className="flex">
+          <label htmlFor="sector_name" className="flex">
             Sektör Adı
           </label>
           <input
             type="text"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("text", { required: "Sektör adı zorunlu" })}
+            {...register("sector_name", { required: "Sektör adı zorunlu" })}
           />
           {errors.name && (
             <span className="fieldError">{errors.name.message}</span>

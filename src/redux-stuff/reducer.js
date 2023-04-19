@@ -6,11 +6,13 @@ import {
   ADD_USER,
   DELETE_USER,
   GET_USERS,
+  GET_SECTORS,
   ADD_SECTOR,
-  REMOVE_SECTOR,
+  DELETE_SECTOR,
   ADD_OCCUPATION,
   REMOVE_OCCUPATION,
   UPDATE_PRIORITIZATION,
+  GET_OCCUPATIONS,
 } from "./actions";
 
 const initialState = {
@@ -36,7 +38,7 @@ export function myReducer(state = initialState, action) {
     case ADD_USER:
       return {
         ...state,
-        users: [...action.payload, ...(state.users || [])],
+        users: [action.payload, ...(state.users || [])],
       };
     case DELETE_USER:
       const copyUsers = [...state.users];
@@ -50,7 +52,42 @@ export function myReducer(state = initialState, action) {
     case GET_USERS:
       return {
         ...state,
-        users: [...action.payload],
+        users: [action.payload, ...(state.users || [])],
+      };
+    case ADD_SECTOR:
+      return {
+        ...state,
+        sectors: [action.payload, ...(state.sectors || [])],
+      };
+    case GET_SECTORS:
+      return {
+        ...state,
+        sectors: [action.payload, ...(state.sectors || [])],
+      };
+    case DELETE_SECTOR:
+      const copySectors = [...state.sectors];
+      const updatedSectorsList = copySectors.filter(
+        (sector) => sector.sector_id != action.payload
+      );
+      return {
+        ...state,
+        sectors: [...updatedSectorsList],
+      };
+    case GET_OCCUPATIONS:
+      return { ...state, occupations: [...action.payload] };
+    case ADD_OCCUPATION:
+      return {
+        ...state,
+        occupations: [action.payload, ...(state.occupations || [])],
+      };
+    case REMOVE_OCCUPATION:
+      const copyOccupations = [...state.occupations];
+      const updatedOccupationsList = copyOccupations.filter(
+        (occupation) => occupation.occupation_id != action.payload
+      );
+      return {
+        ...state,
+        occupations: updatedOccupationsList,
       };
     default:
       return state;

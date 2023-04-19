@@ -20,8 +20,10 @@ export const LOGOUT = "LOGOUT";
 export const GET_USERS = "GET_USERS";
 export const ADD_USER = "ADD_USER";
 export const DELETE_USER = "DELETE_USER";
+export const GET_SECTORS = "GET_SECTORS";
 export const ADD_SECTOR = "ADD_SECTOR";
-export const REMOVE_SECTOR = "REMOVE_SECTOR";
+export const DELETE_SECTOR = "DELETE_SECTOR";
+export const GET_OCCUPATIONS = "GET_OCCUPATIONS";
 export const ADD_OCCUPATION = "ADD_OCCUPATION";
 export const REMOVE_OCCUPATION = "REMOVE_OCCUPATION";
 export const UPDATE_PRIORITIZATION = "UPDATE_PRIORITIZATION";
@@ -36,18 +38,19 @@ const axiosWithAuth = () => {
   });
 };
 
-export const login = (formData) => (dispatch) => {
+export const login = (formData, navigate) => (dispatch) => {
   axios
     .post(url + "api/users/login", formData)
     .then((res) => {
       if (res.status === 200) {
         dispatch({ type: LOGIN, payload: res.data });
         toast.success("Başarılı giriş");
+        navigate("/");
       }
     })
     .catch((err) => {
       console.log("Login error: ", err);
-      //  toast.error(err.response.data.message);
+      toast.error(err.response.data.message);
     });
 };
 
@@ -86,6 +89,81 @@ export const getUsers = () => (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         dispatch({ type: GET_USERS, payload: res.data });
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getSectors = () => (dispatch) => {
+  axiosWithAuth()
+    .get(url + "api/sector")
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch({ type: GET_SECTORS, payload: res.data });
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const addSector = (formData, navigate) => (dispatch) => {
+  axiosWithAuth()
+    .post(url + "api/sector/addSector", formData)
+    .then((res) => {
+      if (res.status == 201) {
+        dispatch({ type: ADD_SECTOR, payload: res.data });
+        toast.success("Sektör eklendi");
+        navigate("/sectors");
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deleteSector = (sector_id) => (dispatch) => {
+  axiosWithAuth()
+    .delete(url + `api/sector/${sector_id}`)
+    .then((res) => {
+      if (res.status == 200) {
+        dispatch({ type: DELETE_SECTOR, payload: sector_id });
+        toast.success("Sektör silindi");
+      }
+    })
+    .catch((err) => {
+      console.log("Delete sector error: ", err);
+      toast.error(err.response.data.message);
+    });
+};
+
+export const getOccupations = () => (dispatch) => {
+  axiosWithAuth()
+    .get(url + "api/occ")
+    .then((res) => {
+      if (res.status == 200) {
+        dispatch({ type: GET_OCCUPATIONS, payload: res.data });
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const addOccupation = (formData, navigate) => (dispatch) => {
+  axiosWithAuth()
+    .post(url + "api/occ/addOcc", formData)
+    .then((res) => {
+      if (res.status == 201) {
+        dispatch({ type: ADD_OCCUPATION, payload: res.data });
+        toast.success("Meslek eklendi");
+        navigate("/occupations");
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const deleteOccupation = (occupation_id) => (dispatch) => {
+  axiosWithAuth()
+    .delete(url + `api/occ/${occupation_id}`)
+    .then((res) => {
+      if (res.status == 200) {
+        dispatch({ type: REMOVE_OCCUPATION, payload: occupation_id });
+        toast.success("Meslek silindi");
       }
     })
     .catch((err) => console.log(err));
