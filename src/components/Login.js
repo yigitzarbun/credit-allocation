@@ -1,7 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { login } from "../redux-stuff/actions";
+import { useDispatch } from "react-redux";
 function Login() {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -9,6 +12,8 @@ function Login() {
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
   const handleLogin = (data) => {
+    dispatch(login(data));
+    console.log(data);
     reset();
   };
   const handleClearForm = () => {

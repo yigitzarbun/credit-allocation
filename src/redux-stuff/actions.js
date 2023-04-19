@@ -52,7 +52,7 @@ export const login = (formData) => (dispatch) => {
 };
 
 export const addUser = (formData, navigate) => (dispatch) => {
-  axios
+  axiosWithAuth()
     .post(url + "api/users/register", formData)
     .then((res) => {
       if (res.status == 201) {
@@ -67,7 +67,7 @@ export const addUser = (formData, navigate) => (dispatch) => {
 };
 
 export const deleteUser = (user_id) => (dispatch) => {
-  axios
+  axiosWithAuth()
     .delete(url + `api/users/${user_id}`)
     .then((res) => {
       if (res.status == 200) {
@@ -81,7 +81,7 @@ export const deleteUser = (user_id) => (dispatch) => {
 };
 
 export const getUsers = () => (dispatch) => {
-  axios
+  axiosWithAuth()
     .get(url + "api/users")
     .then((res) => {
       if (res.status === 200) {

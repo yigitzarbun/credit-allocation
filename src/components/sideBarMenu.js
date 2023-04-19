@@ -4,12 +4,19 @@ import { BsFillClipboardDataFill } from "react-icons/bs";
 import { BsChevronDown } from "react-icons/bs";
 import { GrUserWorker } from "react-icons/gr";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { LOGOUT } from "../redux-stuff/actions";
+import { useDispatch } from "react-redux";
 //import logo1 from "../logo.png";
 const SideBar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [userType, setUserType] = useState("superAdmin");
   const [subMenuOpen, setSubMenuOpen] = useState(false);
-
+  const handleLogout = () => {
+    dispatch({ type: LOGOUT });
+    navigate("/login");
+  };
   return (
     <div className=" bg-white h-screen p5 text-ternanry pt-8 p-4">
       <ul className="pt-2">
@@ -134,7 +141,10 @@ const SideBar = () => {
           <p>Jhon Daniel</p>
           <p className=" text-sm text-slate-500 ">johndaniel@gmail.com</p>
         </div>
-        <button className=" bg-red-300 text-red-700 px-14 py-2 rounded-md mt-6 ">
+        <button
+          onClick={handleLogout}
+          className=" bg-red-300 text-red-700 px-14 py-2 rounded-md mt-6 "
+        >
           Log out
         </button>
       </div>
