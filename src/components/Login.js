@@ -13,7 +13,6 @@ function Login() {
   } = useForm({ mode: "onChange" });
   const handleLogin = (data) => {
     dispatch(login(data));
-    console.log(data);
     reset();
   };
   const handleClearForm = () => {
@@ -21,16 +20,19 @@ function Login() {
   };
   return (
     <div>
-      <div className="bg-slate-800 text-white p-8 mt-8 rounded-md shadow-md w-1/2 mx-auto xs:w-2/3">
+      <div className="bg-[#D09600] text-white p-8 mt-8 rounded-md shadow-md w-1/2 mx-auto xs:w-2/3">
         <h2 className="font-bold text-4xl">Login</h2>
         <form
           onSubmit={handleSubmit(handleLogin)}
           className="loginForm flex flex-col mt-4"
         >
           <div className="loginFormContainer">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" className="flex">
+              Email
+            </label>
             <input
               placeholder="e.g. user@email.com"
+              className="rounded-md w-full p-2"
               type="email"
               {...register("email", { required: "You must enter an email" })}
             />
@@ -39,10 +41,11 @@ function Login() {
             )}
           </div>
 
-          <div className="loginFormContainer">
-            <label>Password</label>
+          <div className="loginFormContainer mt-4">
+            <label className="flex">Password</label>
             <input
               type="password"
+              className="rounded-md w-full p-2 text-black"
               {...register("password", {
                 required: "Password is required",
               })}
@@ -67,12 +70,6 @@ function Login() {
             </button>
           </div>
         </form>
-        <Link to="/register">
-          <p className="mt-8">
-            Don't have an account yet?
-            <span className="text-blue-400 font-bold ml-2">Register</span>
-          </p>
-        </Link>
       </div>
     </div>
   );

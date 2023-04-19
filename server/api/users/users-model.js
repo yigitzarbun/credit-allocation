@@ -1,4 +1,4 @@
-const db = require("../data/db-config");
+const db = require("../../data/db-config");
 
 async function findAllUsers() {
   return db("users");
@@ -21,6 +21,7 @@ async function updateUserById(id, user) {
 }
 async function findByFilter(filter) {
   let filteredUser = await db("users").where(filter).first();
+
   return filteredUser;
 }
 

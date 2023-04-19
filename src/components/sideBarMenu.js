@@ -6,9 +6,10 @@ import { GrUserWorker } from "react-icons/gr";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LOGOUT } from "../redux-stuff/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //import logo1 from "../logo.png";
 const SideBar = () => {
+  const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userType, setUserType] = useState("superAdmin");
@@ -17,6 +18,7 @@ const SideBar = () => {
     dispatch({ type: LOGOUT });
     navigate("/login");
   };
+  console.log(user);
   return (
     <div className=" bg-white h-screen p5 text-ternanry pt-8 p-4">
       <ul className="pt-2">

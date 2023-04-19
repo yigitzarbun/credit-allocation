@@ -2,11 +2,12 @@ const router = require("express").Router();
 const userModel = require("./users-model");
 const bcrypt = require("bcryptjs");
 const jsWTN = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config/config");
-const tokenMW = require("../middleware/restricted");
+const { JWT_SECRET } = require("../../config/config");
+const tokenMW = require("../../middleware/restricted");
 router.post("/register", async (req, res, next) => {
   try {
     const newUser = req.body;
+    console.log(newUser);
     const getUser = await userModel.findByFilter({
       email: newUser.email,
     });
@@ -30,9 +31,11 @@ router.post("/register", async (req, res, next) => {
   }
 });
 router.post("/login", async (req, res, next) => {
+  console.log("burası");
   try {
+    const { email, password } = req.body;
     const loginUser = await userModel.findByFilter({
-      email: req.body.email,
+      email,
     });
     if (!loginUser) {
       res.status(404).json({
