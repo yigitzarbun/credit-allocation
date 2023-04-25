@@ -14,6 +14,7 @@ import {
   UPDATE_PRIORITIZATION,
   GET_OCCUPATIONS,
   GET_CUSTOMERS,
+  GET_PRIORITIES,
 } from "./actions";
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   sectors: [],
   occupations: [],
   customers: [],
+  priorities: [],
 };
 export function myReducer(state = initialState, action) {
   switch (action.type) {
@@ -98,6 +100,11 @@ export function myReducer(state = initialState, action) {
       return {
         ...state,
         customers: [...action.payload],
+      };
+    case GET_PRIORITIES:
+      return {
+        ...state,
+        priorities: [...action.payload],
       };
     default:
       return state;

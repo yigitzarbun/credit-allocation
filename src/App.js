@@ -13,6 +13,7 @@ import EmployeesTable from "./components/EmployeesTable";
 import Prioritization from "./components/Prioritization";
 import ChangePrioritization from "./components/ChangePrioritization";
 import AddEmployee from "./components/AddEmployee";
+import PrivateRoutes from "./components/PrivateRoutes";
 function App() {
   return (
     <div className="max-w-6xl mx-auto flex justify-between">
@@ -21,27 +22,29 @@ function App() {
       </div>
       <div className="w-4/5">
         <Routes>
-          <Route exact path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/add-occupation" element={<AddOccupation />} />
-          <Route path="/add-sector" element={<AddSector />} />
-          <Route path="/add-employee" element={<AddEmployee />} />
-          <Route path="/sectors" element={<SectorsTable />} />
-          <Route path="/occupations" element={<OccupationsTable />} />
-          <Route path="/employees" element={<EmployeesTable />} />
-          <Route path="/prioritization" element={<Prioritization />} />
-          <Route
-            path="/change-prioritization"
-            element={<ChangePrioritization />}
-          />
-          <Route
-            path="/unprocessed-loan-requests"
-            element={<UnprocessedLoanRequests />}
-          />
-          <Route
-            path="/processed-loan-requests"
-            element={<ProcessedLoanRequests />}
-          />
+          <Route element={<PrivateRoutes />}>
+            <Route exact path="/" element={<Dashboard />} />
+            <Route path="/add-occupation" element={<AddOccupation />} />
+            <Route path="/add-sector" element={<AddSector />} />
+            <Route path="/add-employee" element={<AddEmployee />} />
+            <Route path="/sectors" element={<SectorsTable />} />
+            <Route path="/occupations" element={<OccupationsTable />} />
+            <Route path="/employees" element={<EmployeesTable />} />
+            <Route path="/prioritization" element={<Prioritization />} />
+            <Route
+              path="/change-prioritization"
+              element={<ChangePrioritization />}
+            />
+            <Route
+              path="/unprocessed-loan-requests"
+              element={<UnprocessedLoanRequests />}
+            />
+            <Route
+              path="/processed-loan-requests"
+              element={<ProcessedLoanRequests />}
+            />
+          </Route>
         </Routes>
       </div>
     </div>

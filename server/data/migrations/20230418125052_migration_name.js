@@ -15,12 +15,12 @@ exports.up = function (knex) {
     .createTable("sectors", (tablo) => {
       tablo.increments("sector_id");
       tablo.string("sector_name").unique().notNullable();
-      tablo.integer("score").notNullable();
+      tablo.integer("sector_score").notNullable();
     })
     .createTable("occupations", (tablo) => {
       tablo.increments("occupation_id");
       tablo.string("occupation_name").unique().notNullable();
-      tablo.integer("score").notNullable();
+      tablo.integer("occupation_score").notNullable();
     })
     .createTable("priorities", (tablo) => {
       tablo.increments("priority_id");
@@ -61,14 +61,6 @@ exports.up = function (knex) {
         .notNullable()
         .references("occupation_id")
         .inTable("occupations")
-        .onUpdate("CASCADE")
-        .onDelete("CASCADE");
-      tablo
-        .integer("priority_id")
-        .unsigned()
-        .notNullable()
-        .references("priority_id")
-        .inTable("priorities")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
     });

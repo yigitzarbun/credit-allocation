@@ -10,10 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 //import logo1 from "../logo.png";
 const SideBar = () => {
   const user = useSelector((store) => store.user);
+  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userType, setUserType] = useState("superAdmin");
   const [subMenuOpen, setSubMenuOpen] = useState(false);
+  let userType = "";
+  if (user) {
+    userType = user.role_name;
+  }
   const handleLogout = () => {
     dispatch({ type: LOGOUT });
     navigate("/login");
@@ -104,7 +108,7 @@ const SideBar = () => {
             </NavLink>
           </ul>
         )}
-        {userType === "superAdmin" && (
+        {userType === "admin" && (
           <>
             <NavLink
               to="employees"
@@ -137,16 +141,20 @@ const SideBar = () => {
         )}
       </ul>
       <div className={subMenuOpen === false ? "mt-80 p-2" : " mt-12 p-2 "}>
-        <div>
-          <p>{user && user.role_name.toUpperCase()}</p>
-          <p className=" text-sm text-slate-500 ">{user && user.email}</p>
-        </div>
-        <button
-          onClick={handleLogout}
-          className=" bg-red-300 text-red-700 px-14 py-2 rounded-md mt-6 "
-        >
-          Çıkış
-        </button>
+        {user && (
+          <div>
+            <p>{user && user.role_name.toUpperCase()}</p>
+            <p className=" text-sm text-slate-500 ">{user && user.email}</p>
+          </div>
+        )}
+        {user && (
+          <button
+            onClick={handleLogout}
+            className=" bg-red-300 text-red-700 px-14 py-2 rounded-md mt-6 "
+          >
+            Çıkış
+          </button>
+        )}
       </div>
     </div>
   );

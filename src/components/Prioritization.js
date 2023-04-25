@@ -1,8 +1,17 @@
-import React from "react";
-import { matrice } from "./data";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getPriorities } from "../redux-stuff/actions";
+import { useDispatch, useSelector } from "react-redux";
 function Prioritization() {
-  const userType = "admin";
+  const { user, priorities } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  let userType = "";
+  if (user) {
+    userType = user.role_name;
+  }
+  useEffect(() => {
+    dispatch(getPriorities());
+  }, []);
   return (
     <div className="mt-12">
       <div className="flex justify-between">
@@ -13,24 +22,28 @@ function Prioritization() {
           <tr className="leading-loose">
             <th>Sektör</th>
             <th>Meslek</th>
-            <th>Grup</th>
-            <th>Tercih Sıra</th>
+            <th>Öncelik Sıra</th>
             {userType == "admin" && <th>Aksiyon</th>}
           </tr>
         </thead>
         <tbody>
-          {matrice.map((m) => (
-            <tr key={m} className="border-b-2 border-b-slate-200 leading-loose">
-              <td>{m[0]}</td>
-              <td>{m[1]}</td>
-              <td>A</td>
-              <td>1</td>
+          {priorities.map((p) => (
+            <tr
+              key={p.priority_id}
+              className="border-b-2 border-b-slate-200 leading-loose"
+            >
+              <td>{p.sector_name}</td>
+              <td>{p.occupation_name}</td>
+              <td>{p.priority}</td>
               {userType == "admin" && (
                 <td>
                   <Link
                     to="/change-prioritization"
                     className="bg-blue-300 text-white px-8 py-2"
-                    state={{ sector: m[0], occupation: m[1] }}
+                    state={{
+                      sector: p.sector_name,
+                      occupation: p.occupation_name,
+                    }}
                   >
                     Değiştir
                   </Link>

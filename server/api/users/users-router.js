@@ -30,7 +30,6 @@ router.post("/register", async (req, res, next) => {
   }
 });
 router.post("/login", async (req, res, next) => {
-  console.log("burası");
   try {
     const { email, password } = req.body;
     const loginUser = await userModel.findByFilter({
