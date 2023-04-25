@@ -1,5 +1,6 @@
 const express = require("express");
 const server = express();
+const axios = require("axios");
 server.use(express.json());
 const cors = require("cors");
 const helmet = require("helmet");
@@ -15,6 +16,35 @@ server.use("/api/sector", sectorRouter);
 server.use("/api/occ", occRouter);
 server.use("/api/customers", customersRouter);
 server.use("/api/priorities", prioritiesRouter);
+
+const typeFormId = "KEB0Hw0E";
+const typeFormToken =
+  "tfp_5yHwaQsq5SwUFKRcqsPw1niqKskLAyafhkGVdU5tzbAp_3w5qWpzkP72whA";
+
+server.use("/typeform", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  try {
+    const response = await axios.get(
+      `https://api.typeform.com/forms/${typeFormId}/responses`,
+      {
+        headers: {
+          Authorization: `Bearer ${typeFormToken}`,
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    console.log(response);
+    const formData = response.data;
+    res.json(formData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to get form data from Typeform" });
+  }
+});
 
 server.get("/", (req, res) => {
   res.status(200).json({ message: "hello world" });

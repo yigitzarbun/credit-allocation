@@ -15,6 +15,7 @@ import {
   GET_OCCUPATIONS,
   GET_CUSTOMERS,
   GET_PRIORITIES,
+  ADD_CUSTOMER,
 } from "./actions";
 
 const initialState = {
@@ -105,6 +106,11 @@ export function myReducer(state = initialState, action) {
       return {
         ...state,
         priorities: [...action.payload],
+      };
+    case ADD_CUSTOMER:
+      return {
+        ...state,
+        customers: [...(state.customers || []), action.payload],
       };
     default:
       return state;
