@@ -19,7 +19,7 @@ server.use("/api/priorities", prioritiesRouter);
 
 const typeFormId = "KEB0Hw0E";
 const typeFormToken =
-  "tfp_HQwXSpy8rSVqQivTavoyeaoKXpLUdHdM2wEEKuaeSvFX_3mJ7nbpXGT8WzT";
+  "tfp_9kHZGACB5BRVe8evtkGN1vYtQa2kY6pQ5cwmtvxt5YZS_3pc49D8p367zGB";
 
 server.use("/typeform", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
