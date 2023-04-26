@@ -18,9 +18,7 @@ server.use("/api/customers", customersRouter);
 server.use("/api/priorities", prioritiesRouter);
 
 const typeFormId = "KEB0Hw0E";
-const typeFormToken =
-  process.env.TYPE_FORM ||
-  "tfp_2mvmVpB25SEdk2ciERGd56gZKpioKv2H35hPB6pzJMHi_fXqGGWx4R8mq";
+const typeFormToken = process.env.REACT_APP_TYPE_FORM;
 
 server.use("/typeform", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");

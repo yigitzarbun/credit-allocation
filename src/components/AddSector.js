@@ -49,10 +49,10 @@ function AddSector() {
           <input
             type="number"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("score", { required: "Sektör skoru zorunlu" })}
+            {...register("sector_score", { required: "Sektör skoru zorunlu" })}
           />
-          {errors.score && (
-            <span className="fieldError">{errors.score.message}</span>
+          {errors.sector_score && (
+            <span className="fieldError">{errors.sector_score.message}</span>
           )}
         </div>
         <button

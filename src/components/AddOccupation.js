@@ -14,6 +14,7 @@ function AddOccupation() {
   } = useForm({ mode: "onChange" });
   const handleAddOccupation = (formData) => {
     dispatch(addOccupation(formData, navigate));
+    console.log(formData);
     reset();
   };
 
@@ -43,16 +44,20 @@ function AddOccupation() {
           )}
         </div>
         <div className="addOccupationFormContainer">
-          <label htmlFor="score" className="flex">
+          <label htmlFor="occupation_score" className="flex">
             Skor
           </label>
           <input
             type="number"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("score", { required: "Meslek skoru zorunlu" })}
+            {...register("occupation_score", {
+              required: "Meslek skoru zorunlu",
+            })}
           />
-          {errors.score && (
-            <span className="fieldError">{errors.score.message}</span>
+          {errors.occupation_score && (
+            <span className="fieldError">
+              {errors.occupation_score.message}
+            </span>
           )}
         </div>
 
