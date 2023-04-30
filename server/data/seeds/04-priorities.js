@@ -11,12 +11,14 @@ exports.seed = async function (knex) {
       priority: 1,
       sector_id: 2,
       occupation_id: 2,
+      experience_years: 1,
     },
     {
       priority_id: 2,
       priority: 2,
       sector_id: 1,
       occupation_id: 1,
+      experience_years: 1,
     },
   ]);
 };

@@ -14,7 +14,6 @@ function AddOccupation() {
   } = useForm({ mode: "onChange" });
   const handleAddOccupation = (formData) => {
     dispatch(addOccupation(formData, navigate));
-    console.log(formData);
     reset();
   };
 
@@ -43,24 +42,6 @@ function AddOccupation() {
             <span className="fieldError">{errors.occupation_name.message}</span>
           )}
         </div>
-        <div className="addOccupationFormContainer">
-          <label htmlFor="occupation_score" className="flex">
-            Skor
-          </label>
-          <input
-            type="number"
-            className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("occupation_score", {
-              required: "Meslek skoru zorunlu",
-            })}
-          />
-          {errors.occupation_score && (
-            <span className="fieldError">
-              {errors.occupation_score.message}
-            </span>
-          )}
-        </div>
-
         <button
           className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
           disabled={!isValid}

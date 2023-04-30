@@ -27,6 +27,7 @@ export const DELETE_SECTOR = "DELETE_SECTOR";
 export const GET_OCCUPATIONS = "GET_OCCUPATIONS";
 export const ADD_OCCUPATION = "ADD_OCCUPATION";
 export const REMOVE_OCCUPATION = "REMOVE_OCCUPATION";
+export const ADD_PRIORITIZATION = "ADD_PRIORITIZATION";
 export const UPDATE_PRIORITIZATION = "UPDATE_PRIORITIZATION";
 export const GET_CUSTOMERS = "GET_CUSTOMERS";
 export const GET_PRIORITIES = "GET_PRIORITIES";
@@ -202,6 +203,32 @@ export const postTypeformDataToDb = (data) => (dispatch) => {
       if (res.status === 201) {
         dispatch({ type: ADD_CUSTOMER, payload: res.data });
         toast.success("Data added to database");
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const updatePrioritization = (data, navigate) => (dispatch) => {
+  axiosWithAuth()
+    .put(url + `api/priorities/${data.priority_id}`, data)
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch({ type: UPDATE_PRIORITIZATION, payload: res.data });
+        navigate("/prioritization");
+        toast.success("Öncelik değiştirildi");
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const addPrioritization = (formData, navigate) => (dispatch) => {
+  axiosWithAuth()
+    .post(url + "api/priorities", formData)
+    .then((res) => {
+      if (res.status == 201) {
+        dispatch({ type: ADD_PRIORITIZATION, payload: res.data });
+        toast.success("Önceliklendirme eklendi");
+        navigate("/prioritization");
       }
     })
     .catch((err) => console.log(err));

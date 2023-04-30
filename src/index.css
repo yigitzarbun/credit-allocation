@@ -28,3 +28,11 @@ td {
 button {
   @apply rounded-md;
 }
+
+.changePrioritizationFormContainer {
+  @apply mt-8;
+}
+
+.changePrioritizationFormContainer label {
+  @apply font-bold;
+}

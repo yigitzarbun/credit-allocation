@@ -1,18 +1,32 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import { updatePrioritization } from "../redux-stuff/actions";
 function ChangePrioritization(props) {
   const location = useLocation();
   const propsData = location.state;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isValid },
-  } = useForm({ mode: "onChange" });
-  const handleChangePrioritization = () => {
-    navigate("/prioritization");
+  } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      priority: propsData.priority,
+    },
+  });
+  const handleChangePrioritization = (data) => {
+    const dataWide = {
+      priority_id: propsData.priority_id,
+      priority: data.priority,
+      sector_id: propsData.sector_id,
+      occupation_id: propsData.occupation_id,
+    };
+    dispatch(updatePrioritization(dataWide, navigate));
     reset();
   };
   return (
@@ -29,7 +43,7 @@ function ChangePrioritization(props) {
       >
         <div className="changePrioritizationFormContainer">
           <label htmlFor="priority" className="flex">
-            <p>{`${propsData.sector} -- ${propsData.occupation}`}</p>
+            <p>{`${propsData.sector} -- ${propsData.occupation} -- ${propsData.experience} (Yıl)`}</p>
           </label>
           <input
             type="number"

@@ -10,6 +10,29 @@ async function getAllPriorities() {
     );
   return priotiries;
 }
+
+async function getById(priority_id) {
+  const result = await db("priorities")
+    .where("priority_id", priority_id)
+    .first();
+  return result;
+}
+
+async function add(formData) {
+  const priorityIdArray = await db("priorities").insert(formData);
+  const priorityId = priorityIdArray[0];
+  const newPriority = await db("priorities")
+    .where("priority_id", priorityId)
+    .first();
+  return newPriority;
+}
+
+async function update(priority_id, changes) {
+  return db("priorities").where("priority_id", priority_id).update(changes);
+}
 module.exports = {
   getAllPriorities,
+  add,
+  update,
+  getById,
 };

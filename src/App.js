@@ -14,6 +14,7 @@ import Prioritization from "./components/Prioritization";
 import ChangePrioritization from "./components/ChangePrioritization";
 import AddEmployee from "./components/AddEmployee";
 import PrivateRoutes from "./components/PrivateRoutes";
+import AddPrioritization from "./components/AddPrioritization";
 function App() {
   return (
     <div className="max-w-6xl mx-auto flex justify-between">
@@ -32,6 +33,7 @@ function App() {
             <Route path="/occupations" element={<OccupationsTable />} />
             <Route path="/employees" element={<EmployeesTable />} />
             <Route path="/prioritization" element={<Prioritization />} />
+            <Route path="/add-prioritization" element={<AddPrioritization />} />
             <Route
               path="/change-prioritization"
               element={<ChangePrioritization />}

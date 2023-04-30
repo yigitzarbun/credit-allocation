@@ -25,7 +25,6 @@ function SectorsTable() {
           <tr className="leading-loose">
             <th>Sektör ID</th>
             <th>Sektör Adı</th>
-            <th>Puan</th>
             {userType == "admin" && <th>Aksiyon</th>}
           </tr>
         </thead>
@@ -37,7 +36,6 @@ function SectorsTable() {
             >
               <td>{s.sector_id}</td>
               <td>{s.sector_name}</td>
-              <td>{s.score}</td>
               {userType == "admin" && (
                 <td>
                   <button

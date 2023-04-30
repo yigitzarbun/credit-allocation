@@ -26,7 +26,6 @@ function UnprocessedLoanRequests() {
       sector_id: Number(formData[3]["text"]),
       occupation_id: Number(formData[4]["text"]),
     };
-    console.log(dbData);
     if (dbData["fname"]) {
       dispatch(postTypeformDataToDb(dbData));
     }

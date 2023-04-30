@@ -112,6 +112,17 @@ export function myReducer(state = initialState, action) {
         ...state,
         customers: [...(state.customers || []), action.payload],
       };
+    case UPDATE_PRIORITIZATION:
+      const copyPriorities = [...(state.priorities || [])];
+      const oldPriority = copyPriorities.filter(
+        (p) => p.priority_id === action.payload.priority_id
+      )[0];
+      const index = copyPriorities.indexOf(oldPriority);
+      copyPriorities.splice(index, 1, action.payload);
+      return {
+        ...state,
+        priorities: [...copyPriorities],
+      };
     default:
       return state;
   }

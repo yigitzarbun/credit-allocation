@@ -15,15 +15,19 @@ function Prioritization() {
   return (
     <div className="mt-12">
       <div className="flex justify-between">
-        <h2 className="subHeading">İstisnai Önceliklendirme</h2>
+        <h2 className="subHeading">Önceliklendirme</h2>
+        <Link to="/add-prioritization">
+          <button>Yeni Ekle</button>
+        </Link>
       </div>
       <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">
             <th>Sektör</th>
             <th>Meslek</th>
+            <th>Kıdem (Yıl)</th>
             <th>Öncelik Sıra</th>
-            {userType == "admin" && <th>Aksiyon</th>}
+            {userType == "admin" && <th>Öncelik Değiştir</th>}
           </tr>
         </thead>
         <tbody>
@@ -34,6 +38,7 @@ function Prioritization() {
             >
               <td>{p.sector_name}</td>
               <td>{p.occupation_name}</td>
+              <th>{p.experience_years}</th>
               <td>{p.priority}</td>
               {userType == "admin" && (
                 <td>
@@ -43,6 +48,11 @@ function Prioritization() {
                     state={{
                       sector: p.sector_name,
                       occupation: p.occupation_name,
+                      experience: p.experience_years,
+                      priority: p.priority,
+                      priority_id: p.priority_id,
+                      sector_id: p.sector_id,
+                      occupation_id: p.occupation_id,
                     }}
                   >
                     Değiştir

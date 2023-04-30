@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 //import logo1 from "../logo.png";
 const SideBar = () => {
   const user = useSelector((store) => store.user);
-  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
