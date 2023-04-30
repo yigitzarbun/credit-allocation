@@ -6,7 +6,8 @@ async function getAllCustomers() {
       "occupations",
       "occupations.occupation_id",
       "customers.occupation_id"
-    );
+    )
+    .leftJoin("priorities", "priorities.priority_id", "customers.priority_id");
   return customers;
 }
 

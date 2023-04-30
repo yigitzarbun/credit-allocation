@@ -5,17 +5,7 @@ import { getCustomers } from "../redux-stuff/actions";
 function ProcessedLoanRequests() {
   const dispatch = useDispatch();
   const customers = useSelector((store) => store.customers);
-  function calculatePriority(c) {
-    let experienceWeight = 1;
-    let sectorWeight = 0.5;
-    let occupationWeight = 0.75;
-    let score =
-      (c.experience_years * experienceWeight +
-        c.sector_score * sectorWeight +
-        c.occupation_score * occupationWeight) /
-      3;
-    return score.toFixed(2);
-  }
+
   useEffect(() => {
     dispatch(getCustomers());
   }, []);
@@ -47,7 +37,7 @@ function ProcessedLoanRequests() {
               <td>{c.experience_years}</td>
               <td>{c.sector_name}</td>
               <td>{c.occupation_name}</td>
-              <td>{calculatePriority(c)}</td>
+              <td>{c.priority}</td>
             </tr>
           ))}
         </tbody>

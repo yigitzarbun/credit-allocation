@@ -18,6 +18,11 @@ async function getById(priority_id) {
   return result;
 }
 
+async function getByFilter(filter) {
+  const priority = await db("priorities").where(filter).first();
+  return priority;
+}
+
 async function add(formData) {
   const priorityIdArray = await db("priorities").insert(formData);
   const priorityId = priorityIdArray[0];
@@ -35,4 +40,5 @@ module.exports = {
   add,
   update,
   getById,
+  getByFilter,
 };

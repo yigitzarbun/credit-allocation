@@ -231,5 +231,8 @@ export const addPrioritization = (formData, navigate) => (dispatch) => {
         navigate("/prioritization");
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      toast.error(err.response.data.message);
+    });
 };

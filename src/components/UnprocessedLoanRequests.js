@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { getCustomers, postTypeformDataToDb } from "../redux-stuff/actions";
+import {
+  getCustomers,
+  postTypeformDataToDb,
+  getPriorities,
+} from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import axios from "axios";
 function UnprocessedLoanRequests() {
   const dispatch = useDispatch();
-  const customers = useSelector((store) => store.customers);
+  const { customers, priorities } = useSelector((store) => store);
   const [formData, setFormData] = useState(null);
   const getTypeForm = () => {
     axios
@@ -25,6 +29,21 @@ function UnprocessedLoanRequests() {
       experience_years: formData[2]["number"],
       sector_id: Number(formData[3]["text"]),
       occupation_id: Number(formData[4]["text"]),
+      priority_id: priorities.filter(
+        (p) =>
+          p.experience_years === formData[2]["number"] &&
+          p.sector_id === Number(formData[3]["text"]) &&
+          p.occupation_id === Number(formData[4]["text"])
+      )[0]
+        ? priorities.filter(
+            (p) =>
+              p.experience_years === formData[2]["number"] &&
+              p.sector_id === Number(formData[3]["text"]) &&
+              p.occupation_id === Number(formData[4]["text"])
+          )[0]["priority_id"]
+        : priorities.sort(function (a, b) {
+            return b.priority - a.priority;
+          })[0]["priority_id"],
     };
     if (dbData["fname"]) {
       dispatch(postTypeformDataToDb(dbData));
@@ -33,6 +52,7 @@ function UnprocessedLoanRequests() {
 
   useEffect(() => {
     dispatch(getCustomers());
+    dispatch(getPriorities());
   }, []);
   return (
     <div className="mt-12">

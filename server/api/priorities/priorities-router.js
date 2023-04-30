@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const prioritiesModel = require("./priorities-model");
+const md = require("./priorities-middleware");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -10,7 +11,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", md.priorityUnique, async (req, res, next) => {
   try {
     const newPriority = await prioritiesModel.add(req.body);
     res.status(201).json(newPriority);
