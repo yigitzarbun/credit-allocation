@@ -48,21 +48,24 @@ function UnprocessedLoanRequests() {
     if (dbData["fname"]) {
       dispatch(postTypeformDataToDb(dbData));
     }
+    setFormData(null);
   };
 
   useEffect(() => {
     dispatch(getCustomers());
     dispatch(getPriorities());
-  }, []);
+  }, [formData]);
   return (
     <div className="mt-12">
       <h2 className="subHeading">Müşteri Listesi</h2>
       <button className="bg-blue-300 p-2 mt-4" onClick={getTypeForm}>
         Veri Çek
       </button>
-      <button className="bg-yellow-300 p-2 mt-4" onClick={sendTypeForm}>
-        Veri Kaydet
-      </button>
+      {formData && (
+        <button className="bg-yellow-300 p-2 mt-4" onClick={sendTypeForm}>
+          Veri Kaydet
+        </button>
+      )}
       <table className="w-full text-left mt-4">
         <thead className="bg-[#F6EACC]">
           <tr className="leading-loose">

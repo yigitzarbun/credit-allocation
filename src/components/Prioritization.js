@@ -17,7 +17,7 @@ function Prioritization() {
       <div className="flex justify-between">
         <h2 className="subHeading">Önceliklendirme</h2>
         <Link to="/add-prioritization">
-          <button>Yeni Ekle</button>
+          <button className="bg-green-300 p-2">Yeni Ekle</button>
         </Link>
       </div>
       <table className="w-full text-left mt-4">
