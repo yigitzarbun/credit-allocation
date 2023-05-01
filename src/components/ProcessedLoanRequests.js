@@ -9,19 +9,42 @@ function ProcessedLoanRequests() {
   const dispatch = useDispatch();
   const customers = useSelector((store) => store.customers);
   const handlePipedrive = (data) => {
-    const dataWide = {
-      ...data,
+    const dataWidePipedrive = {
+      name: `${data.fname}_${data.lname}`,
+      email: data.email,
+      "5976947d51a616982813da1436c6a6dd57a3b183": data.customer_id,
+      "8f3d9b3f96d2cf5ad4b2f64a0bdc89b17a805150": data.experience_years,
+      b1b1278b2f82a5823ce469c0937dcef024a18384: data.fname,
+      "35d36111ce0c577a505402baf8064a3ce80c19ba": data.lname,
+      "377a4938941350838ac7abb868c3b372ac9426a7": data.occupation_id,
+      "865693ada6c3199a7dc795d975470d3006d979b6": data.priority_id,
+      "646c04ebfa05ebc031c93ba032341904bb1b120c": data.sector_id,
+    };
+    const dataWideDb = {
       pipedrive: true,
+      customer_id: data.customer_id,
+      fname: data.fname,
+      lname: data.lname,
+      experience_years: data.experience_years,
+      priority_id: data.priority_id,
+      sector_id: data.sector_id,
+      occupation_id: data.occupation_id,
     };
     axios
       .post(
-        `https://api.pipedrive.com/v1/persons?api_token=${process.env.REACT_APP_PIPEDRIVE}`,
-        dataWide
+        `https://api.pipedrive.com/v1/persons?api_token=2fd5ab47d7e8d546dab032dae385afd4bd097f4d`,
+        dataWidePipedrive,
+        {
+          headers: {
+            Authorization: `Bearer 2fd5ab47d7e8d546dab032dae385afd4bd097f4d`,
+            "Content-Type": "application/json",
+          },
+        }
       )
       .then((res) => {
         if (res.status === 201) {
           toast.success("Customers sent to Pipedrive");
-          dispatch(updateCustomer(dataWide));
+          dispatch(updateCustomer(dataWideDb));
         }
       })
       .catch((err) => console.log(err));
