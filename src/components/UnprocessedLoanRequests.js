@@ -29,6 +29,7 @@ function UnprocessedLoanRequests() {
       experience_years: formData[2]["number"],
       sector_id: Number(formData[3]["text"]),
       occupation_id: Number(formData[4]["text"]),
+      pipedrive: false,
       priority_id: priorities.filter(
         (p) =>
           p.experience_years === formData[2]["number"] &&

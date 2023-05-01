@@ -33,6 +33,7 @@ export const GET_CUSTOMERS = "GET_CUSTOMERS";
 export const GET_PRIORITIES = "GET_PRIORITIES";
 export const GET_TYPEFORM_DATA = "GET_TYPEFORM_DATA";
 export const ADD_CUSTOMER = "ADD_CUSTOMER";
+export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
 
 const axiosWithAuth = () => {
   const tokenObj = JSON.parse(localStorage.getItem(key));
@@ -235,4 +236,15 @@ export const addPrioritization = (formData, navigate) => (dispatch) => {
       console.log(err);
       toast.error(err.response.data.message);
     });
+};
+
+export const updateCustomer = (updates) => (dispatch) => {
+  axiosWithAuth()
+    .put(url + "api/customers/:customer_id", updates)
+    .then((res) => {
+      if (res.status === 201) {
+        dispatch({ type: UPDATE_CUSTOMER, payload: res.data });
+      }
+    })
+    .catch((err) => console.log(err));
 };

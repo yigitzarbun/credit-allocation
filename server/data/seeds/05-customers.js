@@ -14,6 +14,7 @@ exports.seed = async function (knex) {
       sector_id: 1,
       occupation_id: 2,
       priority_id: 1,
+      pipedrive: false,
     },
     {
       customer_id: 2,
@@ -23,6 +24,7 @@ exports.seed = async function (knex) {
       sector_id: 2,
       occupation_id: 3,
       priority_id: 2,
+      pipedrive: false,
     },
   ]);
 };

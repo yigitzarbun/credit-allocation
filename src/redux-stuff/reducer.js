@@ -16,6 +16,7 @@ import {
   GET_CUSTOMERS,
   GET_PRIORITIES,
   ADD_CUSTOMER,
+  UPDATE_CUSTOMER,
 } from "./actions";
 
 const initialState = {
@@ -122,6 +123,17 @@ export function myReducer(state = initialState, action) {
       return {
         ...state,
         priorities: [...copyPriorities],
+      };
+    case UPDATE_CUSTOMER:
+      const copyCustomers = [...(state.customers || [])];
+      const oldCustomer = copyCustomers.filter(
+        (c) => c.customer_id === action.payload.customer_id
+      )[0];
+      const indexCustomer = copyCustomers.indexOf(oldCustomer);
+      copyCustomers.splice(indexCustomer, 1, action.payload);
+      return {
+        ...state,
+        customers: [...copyCustomers],
       };
     default:
       return state;

@@ -46,6 +46,7 @@ exports.up = function (knex) {
       tablo.string("fname").notNullable();
       tablo.string("lname").notNullable();
       tablo.integer("experience_years").notNullable();
+      tablo.boolean("pipedrive").notNullable().defaultTo(false);
       tablo
         .integer("priority_id")
         .unsigned()
