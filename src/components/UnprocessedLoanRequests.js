@@ -3,6 +3,8 @@ import {
   getCustomers,
   postTypeformDataToDb,
   getPriorities,
+  getSectors,
+  getOccupations,
 } from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -10,8 +12,20 @@ import { toast } from "react-toastify";
 import axios from "axios";
 function UnprocessedLoanRequests() {
   const dispatch = useDispatch();
-  const { customers, priorities } = useSelector((store) => store);
+  const { customers, priorities, sectors, occupations } = useSelector(
+    (store) => store
+  );
   const [formData, setFormData] = useState(null);
+  let filteredCustomers = [];
+  if (
+    customers &&
+    customers != null &&
+    customers != undefined &&
+    customers.length > 0
+  ) {
+    filteredCustomers = customers.filter((c) => c.pipedrive == false);
+  }
+
   const getTypeForm = () => {
     axios
       .get("http://localhost:9000/typeform")
@@ -21,6 +35,36 @@ function UnprocessedLoanRequests() {
       })
       .catch((err) => console.log(err));
   };
+  const sectorWeight = 0.5;
+  const occupationWeight = 0.4;
+  const experienceWeight = 0.1;
+
+  let creditScore = null;
+  let priority = null;
+
+  if (formData && sectors && occupations) {
+    creditScore =
+      sectorWeight *
+        sectors.filter((s) => s.sector_id == Number(formData[3]["text"]))[0][
+          "sector_score"
+        ] +
+      occupationWeight *
+        occupations.filter(
+          (o) => o.occupation_id == Number(formData[4]["text"])
+        )[0]["occupation_score"] +
+      experienceWeight * formData[2]["number"];
+    if (creditScore >= 90) {
+      priority = 1;
+    } else if (creditScore >= 80) {
+      priority = 2;
+    } else if (creditScore >= 70) {
+      priority = 3;
+    } else if (creditScore >= 60) {
+      priority = 4;
+    } else {
+      priority = 5;
+    }
+  }
 
   const sendTypeForm = () => {
     const dbData = {
@@ -30,38 +74,28 @@ function UnprocessedLoanRequests() {
       sector_id: Number(formData[3]["text"]),
       occupation_id: Number(formData[4]["text"]),
       pipedrive: false,
-      priority_id: priorities.filter(
-        (p) =>
-          p.experience_years === formData[2]["number"] &&
-          p.sector_id === Number(formData[3]["text"]) &&
-          p.occupation_id === Number(formData[4]["text"])
-      )[0]
-        ? priorities.filter(
-            (p) =>
-              p.experience_years === formData[2]["number"] &&
-              p.sector_id === Number(formData[3]["text"]) &&
-              p.occupation_id === Number(formData[4]["text"])
-          )[0]["priority_id"]
-        : priorities.sort(function (a, b) {
-            return b.priority - a.priority;
-          })[0]["priority_id"],
+      credit_score: creditScore,
+      priority_id: priority,
     };
     if (dbData["fname"]) {
       dispatch(postTypeformDataToDb(dbData));
     }
     setFormData(null);
   };
-
   useEffect(() => {
     dispatch(getCustomers());
     dispatch(getPriorities());
-  }, [formData]);
+    dispatch(getSectors());
+    dispatch(getOccupations());
+  }, []);
   return (
     <div className="mt-12">
       <h2 className="subHeading">Müşteri Listesi</h2>
-      <button className="bg-blue-300 p-2 mt-4" onClick={getTypeForm}>
-        Veri Çek
-      </button>
+      {!formData && (
+        <button className="bg-blue-300 p-2 mt-4" onClick={getTypeForm}>
+          Veri Çek
+        </button>
+      )}
       {formData && (
         <button className="bg-yellow-300 p-2 mt-4" onClick={sendTypeForm}>
           Veri Kaydet
@@ -79,7 +113,7 @@ function UnprocessedLoanRequests() {
           </tr>
         </thead>
         <tbody>
-          {customers.map((c) => (
+          {filteredCustomers.map((c) => (
             <tr
               key={c.customer_id}
               className="border-b-2 border-b-slate-200 leading-loose"

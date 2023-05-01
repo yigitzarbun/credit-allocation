@@ -15,6 +15,8 @@ import ChangePrioritization from "./components/ChangePrioritization";
 import AddEmployee from "./components/AddEmployee";
 import PrivateRoutes from "./components/PrivateRoutes";
 import AddPrioritization from "./components/AddPrioritization";
+import ChangeSector from "./components/ChangeSector";
+import ChangeOccupation from "./components/ChangeOccupation";
 function App() {
   return (
     <div className="max-w-6xl mx-auto flex justify-between">
@@ -46,6 +48,8 @@ function App() {
               path="/processed-loan-requests"
               element={<ProcessedLoanRequests />}
             />
+            <Route path="/change-sector" element={<ChangeSector />} />
+            <Route path="/change-occupation" element={<ChangeOccupation />} />
           </Route>
         </Routes>
       </div>

@@ -21,7 +21,7 @@ function AddOccupation() {
     <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto xs:w-2/3">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-4xl">Meslek Ekle</h2>
-        <Link to="/">
+        <Link to="/occupations">
           <img src="/images/cancel.png" alt="cancel" className="h-4 w-4" />
         </Link>
       </div>
@@ -40,6 +40,23 @@ function AddOccupation() {
           />
           {errors.occupation_name && (
             <span className="fieldError">{errors.occupation_name.message}</span>
+          )}
+        </div>
+        <div className="addOccupationFormContainer">
+          <label htmlFor="occupation_score" className="flex">
+            Meslek Skoru
+          </label>
+          <input
+            type="number"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("occupation_score", {
+              required: "Meslek skoru zorunlu",
+            })}
+          />
+          {errors.occupation_score && (
+            <span className="fieldError">
+              {errors.occupation_score.message}
+            </span>
           )}
         </div>
         <button

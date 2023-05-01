@@ -25,7 +25,9 @@ function SectorsTable() {
           <tr className="leading-loose">
             <th>Sektör ID</th>
             <th>Sektör Adı</th>
-            {userType == "admin" && <th>Aksiyon</th>}
+            <th>Sektör Skor</th>
+            {userType == "admin" && <th>Sil</th>}
+            {userType == "admin" && <th>Güncelle</th>}
           </tr>
         </thead>
         <tbody>
@@ -36,6 +38,7 @@ function SectorsTable() {
             >
               <td>{s.sector_id}</td>
               <td>{s.sector_name}</td>
+              <td>{s.sector_score}</td>
               {userType == "admin" && (
                 <td>
                   <button
@@ -44,6 +47,21 @@ function SectorsTable() {
                   >
                     Sil
                   </button>
+                </td>
+              )}
+              {userType == "admin" && (
+                <td>
+                  <Link
+                    to="/change-sector"
+                    className="bg-blue-300 text-white px-8 py-2"
+                    state={{
+                      sector_id: s.sector_id,
+                      sector_name: s.sector_name,
+                      sector_score: s.sector_score,
+                    }}
+                  >
+                    Değiştir
+                  </Link>
                 </td>
               )}
             </tr>

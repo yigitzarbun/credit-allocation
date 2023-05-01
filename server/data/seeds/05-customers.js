@@ -15,6 +15,7 @@ exports.seed = async function (knex) {
       occupation_id: 2,
       priority_id: 1,
       pipedrive: false,
+      credit_score: 60,
     },
     {
       customer_id: 2,
@@ -25,6 +26,7 @@ exports.seed = async function (knex) {
       occupation_id: 3,
       priority_id: 2,
       pipedrive: false,
+      credit_score: 90,
     },
   ]);
 };

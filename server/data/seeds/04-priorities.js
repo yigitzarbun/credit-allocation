@@ -9,16 +9,22 @@ exports.seed = async function (knex) {
     {
       priority_id: 1,
       priority: 1,
-      sector_id: 2,
-      occupation_id: 2,
-      experience_years: 1,
     },
     {
       priority_id: 2,
       priority: 2,
-      sector_id: 1,
-      occupation_id: 1,
-      experience_years: 1,
+    },
+    {
+      priority_id: 3,
+      priority: 3,
+    },
+    {
+      priority_id: 4,
+      priority: 4,
+    },
+    {
+      priority_id: 5,
+      priority: 5,
     },
   ]);
 };

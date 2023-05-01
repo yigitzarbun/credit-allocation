@@ -6,8 +6,8 @@ exports.seed = async function (knex) {
   // Deletes ALL existing entries
   await knex("occupations").truncate();
   await knex("occupations").insert([
-    { occupation_id: 1, occupation_name: "Yönetici" },
-    { occupation_id: 2, occupation_name: "Uzman" },
-    { occupation_id: 3, occupation_name: "İşçi" },
+    { occupation_id: 1, occupation_name: "Yönetici", occupation_score: 60 },
+    { occupation_id: 2, occupation_name: "Uzman", occupation_score: 80 },
+    { occupation_id: 3, occupation_name: "İşçi", occupation_score: 45 },
   ]);
 };

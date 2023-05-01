@@ -18,11 +18,11 @@ router.post("/addSector", async (req, res, next) => {
     next(error);
   }
 });
-router.put("/:id", async (req, res, next) => {
+router.put("/:sector_id", async (req, res, next) => {
   try {
-    const { sector_id, updates } = req.body;
-    await sectorModel.updateSector(sector_id, updates);
-    const updatedSector = await sectorModel.findSectorById(sector_id);
+    const updates = { ...req.body };
+    await sectorModel.updateSector(updates.sector_id, updates);
+    const updatedSector = await sectorModel.findSectorById(updates.sector_id);
     res.status(201).json(updatedSector);
   } catch (error) {
     next(error);

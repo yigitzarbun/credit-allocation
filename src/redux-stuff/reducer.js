@@ -17,6 +17,8 @@ import {
   GET_PRIORITIES,
   ADD_CUSTOMER,
   UPDATE_CUSTOMER,
+  UPDATE_SECTOR,
+  UPDATE_OCCUPATION,
 } from "./actions";
 
 const initialState = {
@@ -134,6 +136,28 @@ export function myReducer(state = initialState, action) {
       return {
         ...state,
         customers: [...copyCustomers],
+      };
+    case UPDATE_SECTOR:
+      const copySectors2 = [...(state.sectors || [])];
+      const oldSector = copySectors2.filter(
+        (s) => s.sector_id === action.payload.sector_id
+      )[0];
+      const indexSector = copySectors2.indexOf(oldSector);
+      copySectors2.splice(indexSector, 1, action.payload);
+      return {
+        ...state,
+        sectors: [...copySectors2],
+      };
+    case UPDATE_OCCUPATION:
+      const copyOccupations2 = [...(state.occupations || [])];
+      const oldOccupation = copyOccupations2.filter(
+        (o) => o.occupation_id === action.payload.occupation_id
+      )[0];
+      const indexOccupation = copyOccupations2.indexOf(oldOccupation);
+      copyOccupations2.splice(indexOccupation, 1, action.payload);
+      return {
+        ...state,
+        occupations: [...copyOccupations2],
       };
     default:
       return state;

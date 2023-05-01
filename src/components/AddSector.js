@@ -42,6 +42,19 @@ function AddSector() {
             <span className="fieldError">{errors.name.message}</span>
           )}
         </div>
+        <div className="addSectorFormContainer">
+          <label htmlFor="sector_score" className="flex">
+            Sektör Skoru
+          </label>
+          <input
+            type="number"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("sector_score", { required: "Sektör skoru zorunlu" })}
+          />
+          {errors.sector_score && (
+            <span className="fieldError">{errors.sector_score.message}</span>
+          )}
+        </div>
         <button
           className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
           disabled={!isValid}

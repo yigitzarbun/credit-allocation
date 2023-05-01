@@ -25,7 +25,9 @@ function OccupationsTable() {
           <tr className="leading-loose">
             <th>Meslek ID</th>
             <th>Meslek Adı</th>
-            {userType == "admin" && <th>Aksiyon</th>}
+            <th>Meslek Skor</th>
+            {userType == "admin" && <th>Sil</th>}
+            {userType == "admin" && <th>Güncelle</th>}
           </tr>
         </thead>
         <tbody>
@@ -36,6 +38,7 @@ function OccupationsTable() {
             >
               <td>{o.occupation_id}</td>
               <td>{o.occupation_name}</td>
+              <td>{o.occupation_score}</td>
               {userType == "admin" && (
                 <td>
                   <button
@@ -44,6 +47,21 @@ function OccupationsTable() {
                   >
                     Sil
                   </button>
+                </td>
+              )}
+              {userType == "admin" && (
+                <td>
+                  <Link
+                    to="/change-occupation"
+                    className="bg-blue-300 text-white px-8 py-2"
+                    state={{
+                      occupation_id: o.occupation_id,
+                      occupation_name: o.occupation_name,
+                      occupation_score: o.occupation_score,
+                    }}
+                  >
+                    Değiştir
+                  </Link>
                 </td>
               )}
             </tr>

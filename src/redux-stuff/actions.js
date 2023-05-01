@@ -34,6 +34,8 @@ export const GET_PRIORITIES = "GET_PRIORITIES";
 export const GET_TYPEFORM_DATA = "GET_TYPEFORM_DATA";
 export const ADD_CUSTOMER = "ADD_CUSTOMER";
 export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
+export const UPDATE_SECTOR = "UPDATE_SECTOR";
+export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
 
 const axiosWithAuth = () => {
   const tokenObj = JSON.parse(localStorage.getItem(key));
@@ -244,6 +246,32 @@ export const updateCustomer = (updates) => (dispatch) => {
     .then((res) => {
       if (res.status === 201) {
         dispatch({ type: UPDATE_CUSTOMER, payload: res.data });
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const updateSector = (updates, navigate) => (dispatch) => {
+  axiosWithAuth()
+    .put(url + "api/sector/:sector_id", updates)
+    .then((res) => {
+      if (res.status === 201) {
+        dispatch({ type: UPDATE_SECTOR, payload: res.data });
+        toast.success("Sektör güncellendi");
+        navigate("/sectors");
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const updateOccupation = (updates, navigate) => (dispatch) => {
+  axiosWithAuth()
+    .put(url + "api/occ/:occupation_id", updates)
+    .then((res) => {
+      if (res.status === 201) {
+        dispatch({ type: UPDATE_OCCUPATION, payload: res.data });
+        toast.success("Meslek güncellendi");
+        navigate("/occupations");
       }
     })
     .catch((err) => console.log(err));
