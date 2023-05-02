@@ -40,7 +40,7 @@ function EmployeesTable() {
               <td>{u.role_name}</td>
               <td>
                 <button
-                  className="bg-red-300 p-2"
+                  className="deleteButton"
                   onClick={() => deleteEmployee(u.user_id)}
                 >
                   Sil

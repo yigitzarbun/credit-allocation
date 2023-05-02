@@ -18,7 +18,7 @@ function AddSector() {
   };
 
   return (
-    <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto xs:w-2/3">
+    <div className="formContainer">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-4xl">Sektör Ekle</h2>
         <Link to="/sectors">
@@ -27,9 +27,9 @@ function AddSector() {
       </div>
       <form
         onSubmit={handleSubmit(handleAddSector)}
-        className="addSectorForm flex flex-col mt-4"
+        className="flex flex-col mt-4"
       >
-        <div className="addSectorFormContainer">
+        <div>
           <label htmlFor="sector_name" className="flex">
             Sektör Adı
           </label>
@@ -38,11 +38,11 @@ function AddSector() {
             className="border-2 rounded-md w-full p-2 mt-4"
             {...register("sector_name", { required: "Sektör adı zorunlu" })}
           />
-          {errors.name && (
-            <span className="fieldError">{errors.name.message}</span>
+          {errors.sector_name && (
+            <span className="fieldError">{errors.sector_name.message}</span>
           )}
         </div>
-        <div className="addSectorFormContainer">
+        <div>
           <label htmlFor="sector_score" className="flex">
             Sektör Skoru
           </label>
@@ -55,11 +55,7 @@ function AddSector() {
             <span className="fieldError">{errors.sector_score.message}</span>
           )}
         </div>
-        <button
-          className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
-          disabled={!isValid}
-          type="submit"
-        >
+        <button className="positiveButton" disabled={!isValid} type="submit">
           <p className="font-bold">Ekle</p>
         </button>
       </form>

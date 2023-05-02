@@ -23,7 +23,7 @@ function AddEmployee() {
   };
 
   return (
-    <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto xs:w-2/3">
+    <div className="formContainer">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-4xl">Çalışan Ekle</h2>
         <Link to="/employees">
@@ -32,9 +32,9 @@ function AddEmployee() {
       </div>
       <form
         onSubmit={handleSubmit(handleAddEmployee)}
-        className="addEmployeeForm flex flex-col mt-4"
+        className=" flex flex-col mt-4"
       >
-        <div className="addEmployeeFormContainer">
+        <div>
           <label htmlFor="email" className="flex">
             Email
           </label>
@@ -47,7 +47,7 @@ function AddEmployee() {
             <span className="fieldError">{errors.email.message}</span>
           )}
         </div>
-        <div className="addEmployeeFormContainer">
+        <div>
           <label htmlFor="fname" className="flex">
             İsim
           </label>
@@ -60,7 +60,7 @@ function AddEmployee() {
             <span className="fieldError">{errors.fname.message}</span>
           )}
         </div>
-        <div className="addEmployeeFormContainer">
+        <div>
           <label htmlFor="fname" className="flex">
             Soyisim
           </label>
@@ -73,7 +73,7 @@ function AddEmployee() {
             <span className="fieldError">{errors.lname.message}</span>
           )}
         </div>
-        <div className="addEmployeeFormContainer">
+        <div>
           <label htmlFor="password" className="flex">
             Password
           </label>
@@ -86,11 +86,7 @@ function AddEmployee() {
             <span className="fieldError">{errors.password.message}</span>
           )}
         </div>
-        <button
-          className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
-          disabled={!isValid}
-          type="submit"
-        >
+        <button className="positiveButton" disabled={!isValid} type="submit">
           <p className="font-bold">Ekle</p>
         </button>
       </form>
@@ -101,7 +97,7 @@ function AddEmployee() {
 export default AddEmployee;
 
 /*
- <div className="addEmployeeFormContainer">
+ <div>
           <label htmlFor="fname" className="flex">
             İsim
           </label>
@@ -114,7 +110,7 @@ export default AddEmployee;
             <span className="fieldError">{errors.fname.message}</span>
           )}
         </div>
-        <div className="addEmployeeFormContainer">
+        <div>
           <label htmlFor="lname" className="flex">
             Soyisim
           </label>

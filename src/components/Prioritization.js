@@ -24,15 +24,15 @@ function Prioritization() {
   }, []);
   return (
     <div className="mt-12">
-      <div className="flex justify-between">
-        <h2 className="subHeading">Önceliklendirme</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="pageHeader">Önceliklendirme</h2>
         <Link to="/add-prioritization">
-          <button className="bg-green-300 p-2">Yeni Ekle</button>
+          <button className="actionSendButton">Yeni Ekle</button>
         </Link>
       </div>
       {filteredPriorities && filteredPriorities.length > 0 ? (
-        <table className="w-full text-left mt-4">
-          <thead className="bg-[#F6EACC]">
+        <table className="table">
+          <thead className="tableHead">
             <tr className="leading-loose">
               <th>Sektör</th>
               <th>Meslek</th>
@@ -41,14 +41,11 @@ function Prioritization() {
               {userType == "admin" && <th>Öncelik Değiştir</th>}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="tableBody">
             {Array.isArray(filteredPriorities) &&
               filteredPriorities &&
               filteredPriorities.map((p) => (
-                <tr
-                  key={p.priority_id}
-                  className="border-b-2 border-b-slate-200 leading-loose"
-                >
+                <tr key={p.priority_id} className="tableRow">
                   <td>{p.sector_name}</td>
                   <td>{p.occupation_name}</td>
                   <th>{p.experience_years}</th>
@@ -57,7 +54,7 @@ function Prioritization() {
                     <td>
                       <Link
                         to="/change-prioritization"
-                        className="bg-blue-300 text-white px-8 py-2"
+                        className="actionGetButton"
                         state={{
                           sector: p.sector_name,
                           occupation: p.occupation_name,

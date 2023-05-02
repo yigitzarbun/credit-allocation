@@ -64,7 +64,9 @@ function ProcessedLoanRequests() {
     <div className="mt-12">
       <div className="flex justify-between items-center">
         <h2 className="pageHeader ">Müşteriler</h2>
-        <button className="actionSendButton">Tümünü Gönder</button>
+        {filteredCustomers && filteredCustomers.length > 0 && (
+          <button className="actionSendButton">Tümünü Gönder</button>
+        )}
       </div>
       {filteredCustomers && filteredCustomers.length > 0 ? (
         <table className="table">
@@ -109,16 +111,16 @@ function ProcessedLoanRequests() {
           </tbody>
         </table>
       ) : (
-        <>
-          <h2>Görüntülenecek veri yok</h2>
-          <p>
-            Yeni müşteri verilerini almak için Müşteri Listesi sayfasını ziyaret
-            edin
+        <div className="formContainer">
+          <h2 className="pageHeader">Görüntülenecek veri yok</h2>
+          <p className="mt-8">
+            Yeni müşteri verilerini edinemk için Müşteri Listesi sayfasını
+            ziyaret edin.
           </p>
           <Link to="/unprocessed-loan-requests">
-            <button>Müşteri Listesi</button>
+            <button className="actionGetButton w-full">Müşteri Listesi</button>
           </Link>
-        </>
+        </div>
       )}
     </div>
   );

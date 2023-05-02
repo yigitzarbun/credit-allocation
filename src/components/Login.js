@@ -27,7 +27,7 @@ function Login() {
           onSubmit={handleSubmit(handleLogin)}
           className="loginForm flex flex-col mt-4"
         >
-          <div className="loginFormContainer">
+          <div>
             <label htmlFor="email" className="flex">
               Email
             </label>
@@ -42,7 +42,7 @@ function Login() {
             )}
           </div>
 
-          <div className="loginFormContainer mt-4">
+          <div>
             <label className="flex">Şifre</label>
             <input
               type="password"
@@ -57,7 +57,7 @@ function Login() {
           </div>
           <div className="flex">
             <button
-              className="positiveButton"
+              className="positiveButtonLogin"
               disabled={!isValid}
               type="submit"
             >

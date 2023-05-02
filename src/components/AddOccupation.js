@@ -18,7 +18,7 @@ function AddOccupation() {
   };
 
   return (
-    <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto xs:w-2/3">
+    <div className=" formContainer">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-4xl">Meslek Ekle</h2>
         <Link to="/occupations">
@@ -27,9 +27,9 @@ function AddOccupation() {
       </div>
       <form
         onSubmit={handleSubmit(handleAddOccupation)}
-        className="addOccupationForm flex flex-col mt-4"
+        className=" flex flex-col mt-4"
       >
-        <div className="addOccupationFormContainer">
+        <div>
           <label htmlFor="occupation_name" className="flex">
             Meslek Adı
           </label>
@@ -42,7 +42,7 @@ function AddOccupation() {
             <span className="fieldError">{errors.occupation_name.message}</span>
           )}
         </div>
-        <div className="addOccupationFormContainer">
+        <div>
           <label htmlFor="occupation_score" className="flex">
             Meslek Skoru
           </label>
@@ -59,11 +59,7 @@ function AddOccupation() {
             </span>
           )}
         </div>
-        <button
-          className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
-          disabled={!isValid}
-          type="submit"
-        >
+        <button className="positiveButton" disabled={!isValid} type="submit">
           <p className="font-bold">Ekle</p>
         </button>
       </form>

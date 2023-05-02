@@ -29,20 +29,23 @@ function ChangeSector(props) {
     reset();
   };
   return (
-    <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto">
+    <div className="formContainer">
       <div className="flex justify-between items-center">
-        <h2 className="font-bold text-4xl">Sektör Değiştir</h2>
+        <h2 className="font-bold text-4xl">Sektör Skoru Değiştir</h2>
         <Link to="/sectors">
           <img src="/images/cancel.png" alt="cancel" className="h-4 w-4" />
         </Link>
       </div>
       <form
         onSubmit={handleSubmit(handleChangeSector)}
-        className="changePrioritizationForm flex flex-col mt-4"
+        className=" flex flex-col mt-4"
       >
-        <div className="changePrioritizationFormContainer">
+        <div>
           <label htmlFor="sector_score" className="flex">
-            <p>{`${propsData.sector_name} -- ${propsData.sector_score}`}</p>
+            <p>
+              Değiştirilecek sektör:{" "}
+              <span className="text-blue-400 font-bold">{`${propsData.sector_name}`}</span>
+            </p>
           </label>
           <input
             type="number"
@@ -53,11 +56,7 @@ function ChangeSector(props) {
             <span className="fieldError">{errors.sector_score.message}</span>
           )}
         </div>
-        <button
-          className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
-          disabled={!isValid}
-          type="submit"
-        >
+        <button className="positiveButton" disabled={!isValid} type="submit">
           <p className="font-bold">Değiştir</p>
         </button>
       </form>

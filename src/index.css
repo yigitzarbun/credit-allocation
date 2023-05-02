@@ -38,11 +38,18 @@ button {
 .formContainer {
   @apply bg-[#1C1C20] p-8 mt-8 rounded-md shadow-md w-1/2 mx-auto;
 }
-
-.positiveButton {
-  @apply mt-4 mr-2  border-2 w-1/2 cursor-pointer border-green-500 rounded-md hover:bg-green-500 hover:text-white p-2;
+.formContainer label {
+  @apply mt-8;
 }
-
+.formContainer input {
+  @apply text-black;
+}
+.positiveButton {
+  @apply mt-4 mr-2  border-2 w-full cursor-pointer border-green-500 rounded-md hover:bg-green-500 hover:text-white p-2;
+}
+.positiveButtonLogin {
+  @apply mt-4 mr-2 w-1/2 border-2 cursor-pointer border-green-500 rounded-md hover:bg-green-500 hover:text-white p-2;
+}
 .negativeButton {
   @apply font-bold mt-4 ml-2 w-1/2 border-2 border-red-500 rounded-md hover:bg-red-500 hover:text-white p-2 text-center;
 }

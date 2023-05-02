@@ -39,74 +39,57 @@ const SideBar = () => {
           </span>
           <span>Dashboard</span>
         </NavLink>
-        <li
-          onClick={() => setSubMenuOpen(!subMenuOpen)}
-          className=" text-lg flex justify-between items-center  gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
-        >
-          <span className="flex  gap-x-4 items-center">
-            <span>
-              <BsFillClipboardDataFill />
-            </span>
-            <span className="cursor-pointer">Tablolar</span>
-          </span>
+        <ul>
+          <NavLink
+            to="/unprocessed-loan-requests"
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending"
+                : isActive
+                ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+            }
+          >
+            Müşteri Listesi
+          </NavLink>
+          <NavLink
+            to="/sectors"
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending"
+                : isActive
+                ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+            }
+          >
+            Sektörler
+          </NavLink>
+          <NavLink
+            to="/occupations"
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending"
+                : isActive
+                ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+            }
+          >
+            Meslekler
+          </NavLink>
+          <NavLink
+            to="/processed-loan-requests"
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending"
+                : isActive
+                ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+            }
+          >
+            İşlenmiş Müşteri Listesi
+          </NavLink>
+        </ul>
 
-          <span>
-            <BsChevronDown className="cursor-pointer" />
-          </span>
-        </li>
-
-        {subMenuOpen && (
-          <ul>
-            <NavLink
-              to="/unprocessed-loan-requests"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
-              }
-            >
-              Müşteri Listesi
-            </NavLink>
-            <NavLink
-              to="/sectors"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
-              }
-            >
-              Sektörler
-            </NavLink>
-            <NavLink
-              to="/occupations"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
-              }
-            >
-              Meslekler
-            </NavLink>
-            <NavLink
-              to="/processed-loan-requests"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
-              }
-            >
-              İşlenmiş Müşteri Listesi
-            </NavLink>
-          </ul>
-        )}
         {userType === "admin" && (
           <>
             <NavLink
@@ -136,7 +119,7 @@ const SideBar = () => {
           </>
         )}
       </ul>
-      <div className={subMenuOpen === false ? "mt-80 p-2" : " mt-12 p-2 "}>
+      <div className="mt-12">
         {user && (
           <div>
             <p>{user && user.role_name.toUpperCase()}</p>

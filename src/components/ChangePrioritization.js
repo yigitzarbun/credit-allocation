@@ -30,7 +30,7 @@ function ChangePrioritization(props) {
     reset();
   };
   return (
-    <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto">
+    <div className="formContainer">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-4xl">Öncelik</h2>
         <Link to="/prioritization">
@@ -39,11 +39,14 @@ function ChangePrioritization(props) {
       </div>
       <form
         onSubmit={handleSubmit(handleChangePrioritization)}
-        className="changePrioritizationForm flex flex-col mt-4"
+        className=" flex flex-col mt-4"
       >
-        <div className="changePrioritizationFormContainer">
+        <div>
           <label htmlFor="priority" className="flex">
-            <p>{`${propsData.sector} -- ${propsData.occupation} -- ${propsData.experience} (Yıl)`}</p>
+            <p>
+              Değiştirilecek öncelik:{" "}
+              <span className="text-blue-400 font-bold">{`${propsData.sector} -- ${propsData.occupation} -- ${propsData.experience} (Yıl)`}</span>
+            </p>
           </label>
           <input
             type="number"
@@ -55,11 +58,7 @@ function ChangePrioritization(props) {
           )}
         </div>
 
-        <button
-          className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
-          disabled={!isValid}
-          type="submit"
-        >
+        <button className="positiveButton" disabled={!isValid} type="submit">
           <p className="font-bold">Değiştir</p>
         </button>
       </form>
