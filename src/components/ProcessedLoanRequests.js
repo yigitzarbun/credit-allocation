@@ -62,10 +62,13 @@ function ProcessedLoanRequests() {
   }, []);
   return (
     <div className="mt-12">
-      <h2 className="subHeading">Müşteri Listesi</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="pageHeader ">Müşteriler</h2>
+        <button className="actionSendButton">Tümünü Gönder</button>
+      </div>
       {filteredCustomers && filteredCustomers.length > 0 ? (
-        <table className="w-full text-left mt-4">
-          <thead className="bg-[#F6EACC]">
+        <table className="table">
+          <thead className="tableHead">
             <tr className="leading-loose">
               <th>Müşteri ID</th>
               <th>İsim</th>
@@ -78,12 +81,9 @@ function ProcessedLoanRequests() {
               <th>Pipedrive</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="tableBody">
             {filteredCustomers.map((c) => (
-              <tr
-                key={c.customer_id}
-                className="border-b-2 border-b-slate-200 leading-loose"
-              >
+              <tr key={c.customer_id} className="tableRow">
                 <td>{c.customer_id}</td>
                 <td>{c.fname}</td>
                 <td>{c.lname}</td>
@@ -94,7 +94,12 @@ function ProcessedLoanRequests() {
                 <td>{c.priority}</td>
                 <td>
                   {c.pipedrive === 0 ? (
-                    <button onClick={() => handlePipedrive(c)}>Gönder</button>
+                    <button
+                      onClick={() => handlePipedrive(c)}
+                      className="font-bold border-2 border-blue-500 rounded-md hover:bg-blue-500 hover:text-white px-2 text-center"
+                    >
+                      Gönder
+                    </button>
                   ) : (
                     "Gönderildi"
                   )}

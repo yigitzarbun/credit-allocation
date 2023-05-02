@@ -14,14 +14,14 @@ function OccupationsTable() {
   const userType = "admin";
   return (
     <div className="mt-12">
-      <div className="flex justify-between">
-        <h2 className="subHeading">Meslekler</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="pageHeader">Meslekler</h2>
         <Link to="/add-occupation">
-          <button className="bg-green-300 p-2">Meslek Ekle</button>
+          <button className="actionSendButton">Meslek Ekle</button>
         </Link>
       </div>
-      <table className="w-full text-left mt-4">
-        <thead className="bg-[#F6EACC]">
+      <table className="table">
+        <thead className="tableHead">
           <tr className="leading-loose">
             <th>Meslek ID</th>
             <th>Meslek Adı</th>
@@ -30,12 +30,9 @@ function OccupationsTable() {
             {userType == "admin" && <th>Güncelle</th>}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="tableBody">
           {occupations.map((o) => (
-            <tr
-              key={o.occupation_id}
-              className="border-b-2 border-b-slate-200 leading-loose"
-            >
+            <tr key={o.occupation_id} className="tableRow">
               <td>{o.occupation_id}</td>
               <td>{o.occupation_name}</td>
               <td>{o.occupation_score}</td>
@@ -43,7 +40,7 @@ function OccupationsTable() {
                 <td>
                   <button
                     onClick={() => handleDelete(o.occupation_id)}
-                    className="bg-red-300 text-white px-8 py-2"
+                    className="deleteButton"
                   >
                     Sil
                   </button>
@@ -53,7 +50,7 @@ function OccupationsTable() {
                 <td>
                   <Link
                     to="/change-occupation"
-                    className="bg-blue-300 text-white px-8 py-2"
+                    className="actionGetButton"
                     state={{
                       occupation_id: o.occupation_id,
                       occupation_name: o.occupation_name,

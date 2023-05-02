@@ -21,8 +21,8 @@ function Login() {
   };
   return (
     <div>
-      <div className="bg-[#D09600] text-white p-8 mt-8 rounded-md shadow-md w-1/2 mx-auto xs:w-2/3">
-        <h2 className="font-bold text-4xl">Login</h2>
+      <div className="formContainer ">
+        <h2 className="font-bold text-4xl">Giriş</h2>
         <form
           onSubmit={handleSubmit(handleLogin)}
           className="loginForm flex flex-col mt-4"
@@ -35,7 +35,7 @@ function Login() {
               placeholder="e.g. user@email.com"
               className="rounded-md w-full p-2 text-black"
               type="email"
-              {...register("email", { required: "You must enter an email" })}
+              {...register("email", { required: "Email gereklidir" })}
             />
             {errors.email && (
               <span className="fieldError">{errors.email.message}</span>
@@ -43,12 +43,12 @@ function Login() {
           </div>
 
           <div className="loginFormContainer mt-4">
-            <label className="flex">Password</label>
+            <label className="flex">Şifre</label>
             <input
               type="password"
               className="rounded-md w-full p-2 text-black"
               {...register("password", {
-                required: "Password is required",
+                required: "Şifre gereklidir",
               })}
             />
             {errors.password && (
@@ -57,17 +57,14 @@ function Login() {
           </div>
           <div className="flex">
             <button
-              className="mt-4 mr-2  border-2 w-1/2 cursor-pointer border-green-500 rounded-md hover:bg-green-500 hover:text-white p-2"
+              className="positiveButton"
               disabled={!isValid}
               type="submit"
             >
-              <p className="font-bold">Login</p>
+              <p className="font-bold">Giriş</p>
             </button>
-            <button
-              onClick={handleClearForm}
-              className="font-bold mt-4 ml-2 w-1/2 border-2 border-red-500 rounded-md hover:bg-red-500 hover:text-white p-2 text-center"
-            >
-              <p>Clear</p>
+            <button onClick={handleClearForm} className="negativeButton">
+              <p>Vazgeç</p>
             </button>
           </div>
         </form>

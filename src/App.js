@@ -19,8 +19,8 @@ import ChangeSector from "./components/ChangeSector";
 import ChangeOccupation from "./components/ChangeOccupation";
 function App() {
   return (
-    <div className="max-w-6xl mx-auto flex justify-between">
-      <div className="w-1/5 mr-4">
+    <div className="flex justify-between p-4">
+      <div className="w-1/5 mr-8">
         <SideBar />
       </div>
       <div className="w-4/5">

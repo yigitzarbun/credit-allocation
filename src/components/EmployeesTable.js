@@ -13,14 +13,14 @@ function EmployeesTable() {
   }, []);
   return (
     <div className="mt-12">
-      <div className="flex justify-between">
-        <h2 className="subHeading">Çalışanlar</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="pageHeader">Çalışanlar</h2>
         <Link to="/add-employee">
-          <button className="bg-green-300 p-2">Çalışan Ekle</button>
+          <button className="actionSendButton">Çalışan Ekle</button>
         </Link>
       </div>
-      <table className="w-full text-left mt-4 text-black">
-        <thead className="bg-[#F6EACC]">
+      <table className="table">
+        <thead className="tableHead">
           <tr className="leading-loose">
             <th>Çalışan ID</th>
             <th>İsim</th>
@@ -30,12 +30,9 @@ function EmployeesTable() {
             <th>Aksiyon</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="tableBody">
           {users.map((u) => (
-            <tr
-              key={u.user_id}
-              className="border-b-2 border-b-slate-200 leading-loose"
-            >
+            <tr key={u.user_id} className="tableRow">
               <td>{u.user_id}</td>
               <td>{u.fname}</td>
               <td>{u.lname}</td>

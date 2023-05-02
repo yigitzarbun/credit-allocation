@@ -14,28 +14,25 @@ function SectorsTable() {
   const userType = "admin";
   return (
     <div className="mt-12">
-      <div className="flex justify-between">
-        <h2 className="subHeading">Sektörler</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="pageHeader">Sektörler</h2>
         <Link to="/add-sector">
-          <button className="bg-green-300 p-2">Sektör Ekle</button>
+          <button className="actionSendButton">Sektör Ekle</button>
         </Link>
       </div>
-      <table className="w-full text-left mt-4">
-        <thead className="bg-[#F6EACC]">
+      <table className="table">
+        <thead className="tableHead">
           <tr className="leading-loose">
             <th>Sektör ID</th>
             <th>Sektör Adı</th>
             <th>Sektör Skor</th>
             {userType == "admin" && <th>Sil</th>}
-            {userType == "admin" && <th>Güncelle</th>}
+            {userType == "admin" && <th>Değiştir</th>}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="tableBody">
           {sectors.map((s) => (
-            <tr
-              key={s.sector_id}
-              className="border-b-2 border-b-slate-200 leading-loose"
-            >
+            <tr key={s.sector_id} className="tableRow">
               <td>{s.sector_id}</td>
               <td>{s.sector_name}</td>
               <td>{s.sector_score}</td>
@@ -43,7 +40,7 @@ function SectorsTable() {
                 <td>
                   <button
                     onClick={() => handleDelete(s.sector_id)}
-                    className="bg-red-300 text-white px-8 py-2"
+                    className="deleteButton"
                   >
                     Sil
                   </button>
@@ -53,7 +50,7 @@ function SectorsTable() {
                 <td>
                   <Link
                     to="/change-sector"
-                    className="bg-blue-300 text-white px-8 py-2"
+                    className="actionGetButton"
                     state={{
                       sector_id: s.sector_id,
                       sector_name: s.sector_name,

@@ -22,7 +22,7 @@ const SideBar = () => {
     navigate("/login");
   };
   return (
-    <div className=" bg-white h-screen p5 text-ternanry pt-8 p-4">
+    <div className="bg-[#1C1C20] p5 text-ternanry pt-8 p-4 rounded-md">
       <ul className="pt-2">
         <NavLink
           to="/"
@@ -30,7 +30,7 @@ const SideBar = () => {
             isPending
               ? "pending"
               : isActive
-              ? " bg-yellow-700 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+              ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
               : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
           }
         >
@@ -63,7 +63,7 @@ const SideBar = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? " bg-yellow-700 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
                   : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
               }
             >
@@ -75,7 +75,7 @@ const SideBar = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? " bg-yellow-700 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
                   : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
               }
             >
@@ -87,7 +87,7 @@ const SideBar = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? " bg-yellow-700 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
                   : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
               }
             >
@@ -99,7 +99,7 @@ const SideBar = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? " bg-yellow-700 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
                   : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
               }
             >
@@ -115,13 +115,10 @@ const SideBar = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? " bg-yellow-700 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  ? " bg-blue-500 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
                   : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
               }
             >
-              <span>
-                <GrUserWorker />
-              </span>
               <span>Çalışanlar</span>
             </NavLink>
             <NavLink
@@ -130,7 +127,7 @@ const SideBar = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? " bg-yellow-700 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  ? " bg-blue-500 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
                   : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
               }
             >
@@ -149,7 +146,7 @@ const SideBar = () => {
         {user && (
           <button
             onClick={handleLogout}
-            className=" bg-red-300 text-red-700 px-14 py-2 rounded-md mt-6 "
+            className=" bg-red-500 text-white px-14 py-2 rounded-md mt-6 "
           >
             Çıkış
           </button>
