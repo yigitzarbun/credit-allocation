@@ -16,7 +16,6 @@ function ProcessedLoanRequests() {
   ) {
     filteredCustomers = customers.filter((c) => c.pipedrive == false);
   }
-  console.log(customers);
   const handlePipedrive = (data) => {
     const dataWidePipedrive = {
       name: `${data.fname}_${data.lname}`,
@@ -74,6 +73,7 @@ function ProcessedLoanRequests() {
               <th>Tecrübe Yıl</th>
               <th>Sektör</th>
               <th>Meslek</th>
+              <th>Kredi Skoru</th>
               <th>Öncelik</th>
               <th>Pipedrive</th>
             </tr>
@@ -90,6 +90,7 @@ function ProcessedLoanRequests() {
                 <td>{c.experience_years}</td>
                 <td>{c.sector_name}</td>
                 <td>{c.occupation_name}</td>
+                <td>{c.credit_score}</td>
                 <td>{c.priority}</td>
                 <td>
                   {c.pipedrive === 0 ? (

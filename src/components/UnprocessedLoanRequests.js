@@ -35,6 +35,7 @@ function UnprocessedLoanRequests() {
       })
       .catch((err) => console.log(err));
   };
+
   const sectorWeight = 0.5;
   const occupationWeight = 0.4;
   const experienceWeight = 0.1;
@@ -42,6 +43,12 @@ function UnprocessedLoanRequests() {
   let creditScore = null;
   let priority = null;
 
+  let customPriorities = "";
+  if (priorities && priorities.length > 0 && Array.isArray(priorities)) {
+    customPriorities = priorities.filter(
+      (p) => p.experience_years && p.sector_id && p.occupation_id
+    );
+  }
   if (formData && sectors && occupations) {
     creditScore =
       sectorWeight *
@@ -53,19 +60,27 @@ function UnprocessedLoanRequests() {
           (o) => o.occupation_id == Number(formData[4]["text"])
         )[0]["occupation_score"] +
       experienceWeight * formData[2]["number"];
-    if (creditScore >= 90) {
-      priority = 1;
-    } else if (creditScore >= 80) {
-      priority = 2;
-    } else if (creditScore >= 70) {
-      priority = 3;
-    } else if (creditScore >= 60) {
-      priority = 4;
-    } else {
-      priority = 5;
+
+    for (let i = 0; i < customPriorities.length; i++) {
+      if (
+        customPriorities[i]["experience_years"] == formData[2]["number"] &&
+        customPriorities[i]["sector_id"] == Number(formData[3]["text"]) &&
+        customPriorities[i]["occupation_id"] == Number(formData[4]["text"])
+      ) {
+        priority = customPriorities[i]["priority"];
+      } else if (creditScore >= 90) {
+        priority = 1;
+      } else if (creditScore >= 80) {
+        priority = 2;
+      } else if (creditScore >= 70) {
+        priority = 3;
+      } else if (creditScore >= 60) {
+        priority = 4;
+      } else {
+        priority = 5;
+      }
     }
   }
-
   const sendTypeForm = () => {
     const dbData = {
       fname: formData[0]["text"],

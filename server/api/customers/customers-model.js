@@ -1,6 +1,20 @@
 const db = require("../../data/db-config");
 async function getAllCustomers() {
   const customers = await db("customers")
+    .select(
+      "customers.customer_id",
+      "customers.fname",
+      "customers.lname",
+      "customers.experience_years",
+      "customers.pipedrive",
+      "customers.credit_score",
+      "sectors.sector_name",
+      "sectors.sector_score",
+      "occupations.occupation_name",
+      "occupations.occupation_score",
+      "priorities.priority",
+      "priorities.experience_years as priority_experience_years"
+    )
     .leftJoin("sectors", "sectors.sector_id", "customers.sector_id")
     .leftJoin(
       "occupations",
