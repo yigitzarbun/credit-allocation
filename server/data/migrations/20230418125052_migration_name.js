@@ -43,6 +43,7 @@ exports.up = function (knex) {
     })
     .createTable("customers", (tablo) => {
       tablo.increments("customer_id");
+      tablo.string("landing_id").notNullable().unique();
       tablo.string("fname").notNullable();
       tablo.string("lname").notNullable();
       tablo.integer("experience_years").notNullable();

@@ -15,7 +15,6 @@ function UnprocessedLoanRequests() {
   const { customers, priorities, sectors, occupations } = useSelector(
     (store) => store
   );
-  const [formData, setFormData] = useState(null);
   let filteredCustomers = [];
   if (
     customers &&
@@ -25,16 +24,6 @@ function UnprocessedLoanRequests() {
   ) {
     filteredCustomers = customers.filter((c) => c.pipedrive == false);
   }
-
-  const getTypeForm = () => {
-    axios
-      .get("http://localhost:9000/typeform")
-      .then((res) => {
-        setFormData(res.data.items[0]["answers"]);
-        toast.success("Data obtained");
-      })
-      .catch((err) => console.log(err));
-  };
 
   const sectorWeight = 0.5;
   const occupationWeight = 0.4;
@@ -49,54 +38,87 @@ function UnprocessedLoanRequests() {
       (p) => p.experience_years && p.sector_id && p.occupation_id
     );
   }
-  if (formData && sectors && occupations) {
-    creditScore =
-      sectorWeight *
-        sectors.filter((s) => s.sector_id == Number(formData[3]["text"]))[0][
-          "sector_score"
-        ] +
-      occupationWeight *
-        occupations.filter(
-          (o) => o.occupation_id == Number(formData[4]["text"])
-        )[0]["occupation_score"] +
-      experienceWeight * formData[2]["number"];
 
-    for (let i = 0; i < customPriorities.length; i++) {
-      if (
-        customPriorities[i]["experience_years"] == formData[2]["number"] &&
-        customPriorities[i]["sector_id"] == Number(formData[3]["text"]) &&
-        customPriorities[i]["occupation_id"] == Number(formData[4]["text"])
-      ) {
-        priority = customPriorities[i]["priority"];
-      } else if (creditScore >= 90) {
-        priority = 1;
-      } else if (creditScore >= 80) {
-        priority = 2;
-      } else if (creditScore >= 70) {
-        priority = 3;
-      } else if (creditScore >= 60) {
-        priority = 4;
-      } else {
-        priority = 5;
-      }
-    }
-  }
-  const sendTypeForm = () => {
-    const dbData = {
-      fname: formData[0]["text"],
-      lname: formData[1]["text"],
-      experience_years: formData[2]["number"],
-      sector_id: Number(formData[3]["text"]),
-      occupation_id: Number(formData[4]["text"]),
-      pipedrive: false,
-      credit_score: creditScore,
-      priority_id: priority,
-    };
-    if (dbData["fname"]) {
-      dispatch(postTypeformDataToDb(dbData));
-    }
-    setFormData(null);
+  const getTypeForm = () => {
+    axios
+      .get("http://localhost:9000/typeform")
+      .then((res) => {
+        console.log(res.data.items);
+        let form = null;
+        for (let f = 0; f < res.data.items.length; f++) {
+          let found = false;
+          for (let c = 0; c < customers.length; c++) {
+            if (
+              res.data.items[f]["landing_id"] === customers[c]["landing_id"]
+            ) {
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            form = res.data.items[f];
+          }
+        }
+        if (form["answers"] && sectors && occupations) {
+          creditScore =
+            sectorWeight *
+              sectors.filter(
+                (s) => s.sector_id == Number(form["answers"][3]["text"])
+              )[0]["sector_score"] +
+            occupationWeight *
+              occupations.filter(
+                (o) => o.occupation_id == Number(form["answers"][4]["text"])
+              )[0]["occupation_score"] +
+            experienceWeight * form["answers"][2]["number"];
+        }
+        if (customPriorities.length > 0) {
+          for (let i = 0; i < customPriorities.length; i++) {
+            if (
+              customPriorities[i]["experience_years"] ==
+                form["answers"][2]["number"] &&
+              customPriorities[i]["sector_id"] ==
+                Number(form["answers"][3]["text"]) &&
+              customPriorities[i]["occupation_id"] ==
+                Number(form["answers"][4]["text"])
+            ) {
+              priority = customPriorities[i]["priority"];
+            }
+          }
+        } else if (creditScore >= 90) {
+          priority = 1;
+        } else if (creditScore >= 80) {
+          priority = 2;
+        } else if (creditScore >= 70) {
+          priority = 3;
+        } else if (creditScore >= 60) {
+          priority = 4;
+        } else {
+          priority = 5;
+        }
+        const dbData = {
+          landing_id: form["landing_id"],
+          fname: form["answers"][0]["text"],
+          lname: form["answers"][1]["text"],
+          experience_years: form["answers"][2]["number"],
+          sector_id: Number(form["answers"][3]["text"]),
+          occupation_id: Number(form["answers"][4]["text"]),
+          pipedrive: false,
+          credit_score: creditScore,
+          priority_id: priority,
+        };
+        const existingRecord = customers.find(
+          (c) => c.landing_id === form.landing_id
+        );
+        if (existingRecord) {
+          toast.error("Yeni Typeform kaydı bulunamadı");
+          return;
+        } else {
+          dispatch(postTypeformDataToDb(dbData));
+        }
+      })
+      .catch((err) => console.log(err));
   };
+
   useEffect(() => {
     dispatch(getCustomers());
     dispatch(getPriorities());
@@ -107,16 +129,9 @@ function UnprocessedLoanRequests() {
     <div className="mt-12">
       <div className="flex justify-between items-center">
         <h2 className="pageHeader">Müşteri Listesi</h2>
-        {!formData && (
-          <button className="actionSendButton" onClick={getTypeForm}>
-            Veri Çek
-          </button>
-        )}
-        {formData && (
-          <button className="actionGetButton" onClick={sendTypeForm}>
-            Veri Kaydet
-          </button>
-        )}
+        <button className="actionSendButton" onClick={getTypeForm}>
+          Veri Çek
+        </button>
       </div>
       <table className="table">
         <thead className="tableHead">

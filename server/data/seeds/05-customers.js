@@ -8,6 +8,7 @@ exports.seed = async function (knex) {
   await knex("customers").insert([
     {
       customer_id: 1,
+      landing_id: "abc",
       fname: "Ali",
       lname: "Veli",
       experience_years: 2,
@@ -19,6 +20,7 @@ exports.seed = async function (knex) {
     },
     {
       customer_id: 2,
+      landing_id: "def",
       fname: "Orhan",
       lname: "Kasap",
       experience_years: 2,
