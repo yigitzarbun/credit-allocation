@@ -39,11 +39,18 @@ function UnprocessedLoanRequests() {
     );
   }
 
+  const checkForExistingRecord = (landingId) => {
+    const existingRecord = customers.find((c) => c.landing_id === landingId);
+    if (existingRecord) {
+      return true;
+    }
+    return false;
+  };
+
   const getTypeForm = () => {
     axios
       .get("http://localhost:9000/typeform")
       .then((res) => {
-        console.log(res.data.items);
         let form = null;
         for (let f = 0; f < res.data.items.length; f++) {
           let found = false;
@@ -59,7 +66,7 @@ function UnprocessedLoanRequests() {
             form = res.data.items[f];
           }
         }
-        if (form["answers"] && sectors && occupations) {
+        if (form && form["answers"] && sectors && occupations) {
           creditScore =
             sectorWeight *
               sectors.filter(
@@ -95,25 +102,23 @@ function UnprocessedLoanRequests() {
         } else {
           priority = 5;
         }
-        const dbData = {
-          landing_id: form["landing_id"],
-          fname: form["answers"][0]["text"],
-          lname: form["answers"][1]["text"],
-          experience_years: form["answers"][2]["number"],
-          sector_id: Number(form["answers"][3]["text"]),
-          occupation_id: Number(form["answers"][4]["text"]),
-          pipedrive: false,
-          credit_score: creditScore,
-          priority_id: priority,
-        };
-        const existingRecord = customers.find(
-          (c) => c.landing_id === form.landing_id
-        );
-        if (existingRecord) {
-          toast.error("Yeni Typeform kaydı bulunamadı");
-          return;
+        if (form === null) {
+          toast.error("Yeni kullanıcı kaydı bulunmamaktadır");
         } else {
-          dispatch(postTypeformDataToDb(dbData));
+          const dbData = {
+            landing_id: form["landing_id"],
+            fname: form["answers"][0]["text"],
+            lname: form["answers"][1]["text"],
+            experience_years: form["answers"][2]["number"],
+            sector_id: Number(form["answers"][3]["text"]),
+            occupation_id: Number(form["answers"][4]["text"]),
+            pipedrive: false,
+            credit_score: creditScore,
+            priority_id: priority,
+          };
+          if (!checkForExistingRecord(dbData.landing_id)) {
+            dispatch(postTypeformDataToDb(dbData));
+          }
         }
       })
       .catch((err) => console.log(err));
@@ -153,6 +158,9 @@ function UnprocessedLoanRequests() {
               <td>{c.experience_years}</td>
               <td>{c.sector_name}</td>
               <td>{c.occupation_name}</td>
+              <td>
+                <button>Güncelle</button>
+              </td>
             </tr>
           ))}
         </tbody>

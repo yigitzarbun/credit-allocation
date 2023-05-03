@@ -29,6 +29,11 @@ async function getById(customer_id) {
   return await db("customers").where("customer_id", customer_id).first();
 }
 
+async function getByFilter(filter) {
+  const customer = await db("customers").where(filter).first();
+  return customer;
+}
+
 async function add(customers) {
   const customerIdArray = await db("customers").insert(customers);
   const customerId = customerIdArray[0];
@@ -44,6 +49,7 @@ async function update(customer_id, changes) {
 module.exports = {
   getAllCustomers,
   getById,
+  getByFilter,
   add,
   update,
 };

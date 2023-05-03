@@ -208,7 +208,10 @@ export const postTypeformDataToDb = (data) => (dispatch) => {
         toast.success("Data added to database");
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      toast.error(err.response.data.message);
+    });
 };
 
 export const updatePrioritization = (data, navigate) => (dispatch) => {

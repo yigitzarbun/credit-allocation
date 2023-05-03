@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const customersModel = require("./customers-model");
-
+const md = require("./customers-middleware");
 router.get("/", async (req, res, next) => {
   try {
     const allCustomers = await customersModel.getAllCustomers();
@@ -10,7 +10,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", md.customerUnique, async (req, res, next) => {
   try {
     const customer = await customersModel.add(req.body);
     res.status(201).json(customer);
