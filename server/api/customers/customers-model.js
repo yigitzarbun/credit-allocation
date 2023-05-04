@@ -3,8 +3,8 @@ async function getAllCustomers() {
   const customers = await db("customers")
     .select(
       "customers.customer_id",
-      "customers.fname",
-      "customers.lname",
+      "customers.full_name",
+      "customers.landing_id",
       "customers.experience_years",
       "customers.pipedrive",
       "customers.credit_score",

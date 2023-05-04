@@ -5,6 +5,8 @@ import {
   getPriorities,
   getSectors,
   getOccupations,
+  addSector,
+  addOccupation,
 } from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -53,7 +55,6 @@ function UnprocessedLoanRequests() {
     axios
       .get("http://localhost:9000/typeform")
       .then((res) => {
-        console.log(res.data);
         let form = null;
         // Check if there are any new customers at Typeform and obtain the first new customer's response data
         for (let f = 0; f < res.data.items.length; f++) {
@@ -70,29 +71,94 @@ function UnprocessedLoanRequests() {
             form = res.data.items[f];
           }
         }
-        // Calculate the credit score
+
+        // Calculate the credit score AND add sector if it doesnt exist in DB
+        let customerSector = null;
+        let customerSectorExists = null;
+        let customerOccupation = null;
+        let customerOccupationExists = null;
+
+        if (form) {
+          customerSectorExists = sectors.find(
+            (s) => s.sector_name === form["answers"][2]["choice"]["label"]
+          );
+          if (customerSectorExists == undefined) {
+            dispatch(
+              addSector({
+                sector_name: form["answers"][2]["choice"]["label"],
+                sector_score: 0,
+              })
+            );
+            dispatch(getSectors());
+            if (
+              sectors.find(
+                (s) => s.sector_name === form["answers"][2]["choice"]["label"]
+              )
+            ) {
+              customerSector = sectors.find(
+                (s) => s.sector_name === form["answers"][2]["choice"]["label"]
+              )["sector_id"];
+            } else {
+              customerSector = customerSectorExists.sector_id;
+            }
+          }
+
+          customerOccupationExists = occupations.find(
+            (o) => o.occupation_name === form["answers"][3]["choice"]["label"]
+          );
+          if (customerOccupationExists == undefined) {
+            dispatch(
+              addOccupation({
+                occupation_name: form["answers"][3]["choice"]["label"],
+                occupation_score: 0,
+              })
+            );
+            dispatch(getOccupations());
+            if (
+              occupations.find(
+                (o) =>
+                  o.occupation_name === form["answers"][2]["choice"]["label"]
+              )
+            ) {
+              customerOccupation = occupations.find(
+                (o) =>
+                  o.occupation_name === form["answers"][2]["choice"]["label"]
+              )["occupation_id"];
+            } else {
+              customerOccupation = customerOccupationExists.occupation_id;
+            }
+          }
+        }
         if (form && form["answers"] && sectors && occupations) {
+          // sector
+          customerSector = sectors.find(
+            (s) => s.sector_name === form["answers"][2]["choice"]["label"]
+          )["sector_id"];
+          // occupation
+          customerOccupation = occupations.find(
+            (o) => o.occupation_name === form["answers"][3]["choice"]["label"]
+          )["occupation_id"];
+
           creditScore =
             sectorWeight *
               sectors.filter(
-                (s) => s.sector_id == Number(form["answers"][3]["text"])
+                (s) => s.sector_name == form["answers"][2]["choice"]["label"]
               )[0]["sector_score"] +
             occupationWeight *
               occupations.filter(
-                (o) => o.occupation_id == Number(form["answers"][4]["text"])
+                (o) =>
+                  o.occupation_name == form["answers"][3]["choice"]["label"]
               )[0]["occupation_score"] +
-            experienceWeight * form["answers"][2]["number"];
+            experienceWeight * form["answers"][1]["number"];
         }
         // Calculate the priority. Check if the customer's responses match 'custom priorities scheme'
         if (customPriorities.length > 0) {
           for (let i = 0; i < customPriorities.length; i++) {
             if (
               customPriorities[i]["experience_years"] ==
-                form["answers"][2]["number"] &&
-              customPriorities[i]["sector_id"] ==
-                Number(form["answers"][3]["text"]) &&
-              customPriorities[i]["occupation_id"] ==
-                Number(form["answers"][4]["text"])
+                form["answers"][1]["number"] &&
+              customPriorities[i]["sector_id"] == customerSector &&
+              customPriorities[i]["occupation_id"] == customerOccupation
             ) {
               priority = customPriorities[i]["priority"];
             }
@@ -114,11 +180,16 @@ function UnprocessedLoanRequests() {
         } else {
           const dbData = {
             landing_id: form["landing_id"],
-            fname: form["answers"][0]["text"],
-            lname: form["answers"][1]["text"],
-            experience_years: form["answers"][2]["number"],
-            sector_id: Number(form["answers"][3]["text"]),
-            occupation_id: Number(form["answers"][4]["text"]),
+            full_name: form["answers"][0]["text"],
+            experience_years: form["answers"][1]["number"],
+            sector_id: customerSector,
+            occupation_id: customerOccupation,
+            email: form["answers"][4]["email"],
+            product_choice: form["answers"][5]["choice"]["label"],
+            gender: form["answers"][6]["choice"]["label"],
+            source: form["answers"][7]["choice"]["label"],
+            phone: form["answers"][8]["phone_number"],
+            age: form["answers"][9]["number"],
             pipedrive: false,
             credit_score: creditScore,
             priority_id: priority,
@@ -150,7 +221,6 @@ function UnprocessedLoanRequests() {
           <tr className="leading-loose">
             <th>Müşteri ID</th>
             <th>İsim</th>
-            <th>Soyisim</th>
             <th>Tecrübe Yıl</th>
             <th>Sektör</th>
             <th>Meslek</th>
@@ -160,8 +230,7 @@ function UnprocessedLoanRequests() {
           {filteredCustomers.map((c) => (
             <tr key={c.customer_id} className="tableRow">
               <td>{c.customer_id}</td>
-              <td>{c.fname}</td>
-              <td>{c.lname}</td>
+              <td>{c.full_name}</td>
               <td>{c.experience_years}</td>
               <td>{c.sector_name}</td>
               <td>{c.occupation_name}</td>

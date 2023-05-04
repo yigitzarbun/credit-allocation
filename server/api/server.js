@@ -17,7 +17,7 @@ server.use("/api/occ", occRouter);
 server.use("/api/customers", customersRouter);
 server.use("/api/priorities", prioritiesRouter);
 
-const typeFormId = "KEB0Hw0E";
+const typeFormId = "G6vvOlZz";
 const typeFormToken = process.env.REACT_APP_TYPE_FORM;
 
 server.use("/typeform", async (req, res) => {

@@ -74,7 +74,6 @@ function ProcessedLoanRequests() {
             <tr className="leading-loose">
               <th>Müşteri ID</th>
               <th>İsim</th>
-              <th>Soyisim</th>
               <th>Tecrübe Yıl</th>
               <th>Sektör</th>
               <th>Meslek</th>
@@ -87,8 +86,7 @@ function ProcessedLoanRequests() {
             {filteredCustomers.map((c) => (
               <tr key={c.customer_id} className="tableRow">
                 <td>{c.customer_id}</td>
-                <td>{c.fname}</td>
-                <td>{c.lname}</td>
+                <td>{c.full_name}</td>
                 <td>{c.experience_years}</td>
                 <td>{c.sector_name}</td>
                 <td>{c.occupation_name}</td>

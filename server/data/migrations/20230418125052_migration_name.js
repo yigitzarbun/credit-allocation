@@ -44,11 +44,16 @@ exports.up = function (knex) {
     .createTable("customers", (tablo) => {
       tablo.increments("customer_id");
       tablo.string("landing_id").notNullable().unique();
-      tablo.string("fname");
-      tablo.string("lname");
+      tablo.string("full_name");
+      tablo.string("email");
+      tablo.string("product_choice");
+      tablo.string("gender");
       tablo.integer("experience_years");
+      tablo.integer("phone");
+      tablo.integer("age");
+      tablo.string("source");
       tablo.boolean("pipedrive").notNullable().defaultTo(false);
-      tablo.integer("credit_score");
+      tablo.integer("credit_score").notNullable();
       tablo
         .integer("priority_id")
         .unsigned()
