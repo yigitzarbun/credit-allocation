@@ -1,17 +1,27 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getSectors, deleteSector } from "../redux-stuff/actions";
+import {
+  getSectors,
+  deleteSector,
+  getUsers,
+  GET_USER,
+} from "../redux-stuff/actions";
 function SectorsTable() {
   const dispatch = useDispatch();
-  const sectors = useSelector((store) => store.sectors);
+  const { sectors, users, user } = useSelector((store) => store);
   const handleDelete = (sector_id) => {
     dispatch(deleteSector(sector_id));
   };
+  let userType = "";
+  if (users && user) {
+    userType = users.filter((u) => u.email === user.email)[0]["role_name"];
+  }
   useEffect(() => {
     dispatch(getSectors());
+    dispatch(getUsers());
+    dispatch({ type: GET_USER });
   }, []);
-  const userType = "admin";
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center">

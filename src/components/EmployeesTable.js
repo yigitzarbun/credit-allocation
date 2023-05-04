@@ -1,23 +1,30 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, getUsers } from "../redux-stuff/actions";
+import { deleteUser, getUsers, GET_USER } from "../redux-stuff/actions";
 function EmployeesTable() {
-  const users = useSelector((store) => store.users);
+  const { users, user } = useSelector((store) => store);
   const dispatch = useDispatch();
   const deleteEmployee = (user_id) => {
     dispatch(deleteUser(user_id));
   };
+  let userType = "";
+  if (users && user) {
+    userType = users.filter((u) => u.email === user.email)[0]["role_name"];
+  }
   useEffect(() => {
     dispatch(getUsers());
+    dispatch({ type: GET_USER });
   }, []);
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center">
         <h2 className="pageHeader">Çalışanlar</h2>
-        <Link to="/add-employee">
-          <button className="actionSendButton">Çalışan Ekle</button>
-        </Link>
+        {userType === "admin" && (
+          <Link to="/add-employee">
+            <button className="actionSendButton">Çalışan Ekle</button>
+          </Link>
+        )}
       </div>
       <table className="table">
         <thead className="tableHead">

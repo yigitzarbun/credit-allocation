@@ -53,7 +53,9 @@ function UnprocessedLoanRequests() {
     axios
       .get("http://localhost:9000/typeform")
       .then((res) => {
+        console.log(res.data);
         let form = null;
+        // Check if there are any new customers at Typeform and obtain the first new customer's response data
         for (let f = 0; f < res.data.items.length; f++) {
           let found = false;
           for (let c = 0; c < customers.length; c++) {
@@ -68,6 +70,7 @@ function UnprocessedLoanRequests() {
             form = res.data.items[f];
           }
         }
+        // Calculate the credit score
         if (form && form["answers"] && sectors && occupations) {
           creditScore =
             sectorWeight *
@@ -80,6 +83,7 @@ function UnprocessedLoanRequests() {
               )[0]["occupation_score"] +
             experienceWeight * form["answers"][2]["number"];
         }
+        // Calculate the priority. Check if the customer's responses match 'custom priorities scheme'
         if (customPriorities.length > 0) {
           for (let i = 0; i < customPriorities.length; i++) {
             if (
@@ -104,6 +108,7 @@ function UnprocessedLoanRequests() {
         } else {
           priority = 5;
         }
+        // Prepare customer data to be sent to the database
         if (form === null) {
           toast.error("Yeni kullanıcı kaydı bulunmamaktadır");
         } else {
@@ -118,6 +123,7 @@ function UnprocessedLoanRequests() {
             credit_score: creditScore,
             priority_id: priority,
           };
+          // Post customer data to database
           if (!checkForExistingRecord(dbData.landing_id)) {
             dispatch(postTypeformDataToDb(dbData));
           }

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getPriorities } from "../redux-stuff/actions";
+import { getPriorities, getUsers, GET_USER } from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 function Prioritization() {
-  const { user, priorities } = useSelector((store) => store);
+  const { user, users, priorities } = useSelector((store) => store);
   const dispatch = useDispatch();
   let userType = "";
-  if (user) {
-    userType = user.role_name;
+  if (user && users) {
+    userType = users.filter((u) => u.email === user.email)[0]["role_name"];
   }
   let filteredPriorities = [];
   if (priorities === null) {
@@ -21,13 +21,15 @@ function Prioritization() {
   }
   useEffect(() => {
     dispatch(getPriorities());
+    dispatch(getUsers());
+    dispatch({ type: GET_USER });
   }, []);
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center">
         <h2 className="pageHeader">Önceliklendirme</h2>
         <Link to="/add-prioritization">
-          <button className="actionSendButton">Yeni Ekle</button>
+          <button className="positiveButton">Yeni Ekle</button>
         </Link>
       </div>
       {filteredPriorities && filteredPriorities.length > 0 ? (
@@ -74,12 +76,21 @@ function Prioritization() {
           </tbody>
         </table>
       ) : (
-        <>
-          <h2>İstisnai önceliklendirme bulunmuyor.</h2>{" "}
-          <Link to="/add-prioritization">
-            <button className="bg-green-300 p-2">Yeni Ekle</button>
+        <div className="w-1/2 mx-auto text-center formContainer">
+          <h2 className="font-bold text-slate-300 text-xl mt-4">
+            İstisnai önceliklendirme bulunmuyor
+          </h2>
+          <p className="mt-4 text-sm">
+            Yeni bir istisnai önceliklendirme ekleyerek, müşterilerin kredi
+            skorlarından bağımsız olarak önceliklendirilmelerini
+            sağlayabilirsin.
+          </p>
+          <Link to="/add-prioritization" className="w-1/2 mx-auto">
+            <button className="positiveButton">
+              Yeni Önceliklendirme Ekle
+            </button>
           </Link>
-        </>
+        </div>
       )}
     </div>
   );

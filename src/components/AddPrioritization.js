@@ -29,7 +29,7 @@ function AddPrioritization() {
     dispatch(getOccupations());
   }, []);
   return (
-    <div className=" p-8 mt-8 rounded-md shadow-md w-1/3 mx-auto">
+    <div className="formContainer">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-4xl">Öncelik Ekle</h2>
         <Link to="/prioritization">
@@ -38,9 +38,9 @@ function AddPrioritization() {
       </div>
       <form
         onSubmit={handleSubmit(handleAddPrioritization)}
-        className="changePrioritizationForm flex flex-col mt-4"
+        className=" flex flex-col mt-4"
       >
-        <div className="changePrioritizationFormContainer">
+        <div>
           <label htmlFor="priority" className="flex">
             Öncelik
           </label>
@@ -53,7 +53,7 @@ function AddPrioritization() {
             <span className="fieldError">{errors.priority.message}</span>
           )}
         </div>
-        <div className="changePrioritizationFormContainer">
+        <div>
           <label htmlFor="sector_id" className="flex">
             Sektör
           </label>
@@ -74,7 +74,7 @@ function AddPrioritization() {
             <span className="fieldError">{errors.sector_id.message}</span>
           )}
         </div>
-        <div className="changePrioritizationFormContainer">
+        <div>
           <label htmlFor="occupation_id" className="flex">
             Meslek
           </label>
@@ -98,7 +98,7 @@ function AddPrioritization() {
             <span className="fieldError">{errors.sector_id.message}</span>
           )}
         </div>
-        <div className="changePrioritizationFormContainer">
+        <div>
           <label htmlFor="experience_years" className="flex">
             Kıdem (Yıl)
           </label>
@@ -115,11 +115,7 @@ function AddPrioritization() {
             </span>
           )}
         </div>
-        <button
-          className="mt-4 mx-auto border-2 w-1/2 cursor-pointer border-[#D09600] rounded-md hover:bg-[#D09600] hover:text-white p-2"
-          disabled={!isValid}
-          type="submit"
-        >
+        <button className="positiveButton" disabled={!isValid} type="submit">
           <p className="font-bold">Ekle</p>
         </button>
       </form>

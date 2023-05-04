@@ -5,22 +5,34 @@ import { BsChevronDown } from "react-icons/bs";
 import { GrUserWorker } from "react-icons/gr";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { getUserFromLs, LOGOUT } from "../redux-stuff/actions";
+import { getUsers, GET_USER, LOGOUT } from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 //import logo1 from "../logo.png";
 const SideBar = () => {
-  const user = useSelector((store) => store.user);
+  const { user, users } = useSelector((store) => store);
+  let userType = "";
+
+  if (
+    users &&
+    user &&
+    users != null &&
+    user != null &&
+    Array.isArray(users) & (users.length > 0)
+  ) {
+    userType = users.filter((u) => u.email === user.email)[0]["role_name"];
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //  const [subMenuOpen, setSubMenuOpen] = useState(false);
-  let userType = "";
-  if (user) {
-    userType = user.role_name;
-  }
   const handleLogout = () => {
     dispatch({ type: LOGOUT });
     navigate("/login");
   };
+
+  useEffect(() => {
+    dispatch(getUsers());
+    dispatch({ type: GET_USER });
+  }, []);
   return (
     <div className="bg-[#1C1C20] p5 text-ternanry pt-8 p-4 rounded-md">
       <ul className="pt-2">

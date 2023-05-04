@@ -1,17 +1,28 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOccupations, deleteOccupation } from "../redux-stuff/actions";
+import {
+  getOccupations,
+  deleteOccupation,
+  getUsers,
+  GET_USER,
+} from "../redux-stuff/actions";
 function OccupationsTable() {
   const dispatch = useDispatch();
-  const occupations = useSelector((store) => store.occupations);
+  const { occupations, users, user } = useSelector((store) => store);
   const handleDelete = (occupation_id) => {
     dispatch(deleteOccupation(occupation_id));
   };
+  let userType = "";
+  if (user && users) {
+    userType = users.filter((u) => u.email === user.email)[0]["role_name"];
+  }
   useEffect(() => {
     dispatch(getOccupations());
+    dispatch(getUsers());
+    dispatch({ type: GET_USER });
   }, []);
-  const userType = "admin";
+
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center">

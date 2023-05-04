@@ -51,7 +51,7 @@ function ChangeCustomer() {
   return (
     <div className="formContainer">
       <div className="flex justify-between items-center">
-        <h2 className="font-bold text-4xl">Müşteri Bilgileri Değiştir</h2>
+        <h2 className="font-bold text-4xl">Müşteri Güncelle</h2>
         <Link to="/unprocessed-loan-requests">
           <img src="/images/cancel.png" alt="cancel" className="h-4 w-4" />
         </Link>

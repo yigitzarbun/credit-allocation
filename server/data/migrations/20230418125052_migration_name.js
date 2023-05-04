@@ -44,15 +44,14 @@ exports.up = function (knex) {
     .createTable("customers", (tablo) => {
       tablo.increments("customer_id");
       tablo.string("landing_id").notNullable().unique();
-      tablo.string("fname").notNullable();
-      tablo.string("lname").notNullable();
-      tablo.integer("experience_years").notNullable();
+      tablo.string("fname");
+      tablo.string("lname");
+      tablo.integer("experience_years");
       tablo.boolean("pipedrive").notNullable().defaultTo(false);
-      tablo.integer("credit_score").notNullable();
+      tablo.integer("credit_score");
       tablo
         .integer("priority_id")
         .unsigned()
-        .notNullable()
         .references("priority_id")
         .inTable("priorities")
         .onUpdate("CASCADE")
@@ -60,7 +59,6 @@ exports.up = function (knex) {
       tablo
         .integer("sector_id")
         .unsigned()
-        .notNullable()
         .references("sector_id")
         .inTable("sectors")
         .onUpdate("CASCADE")
@@ -68,7 +66,6 @@ exports.up = function (knex) {
       tablo
         .integer("occupation_id")
         .unsigned()
-        .notNullable()
         .references("occupation_id")
         .inTable("occupations")
         .onUpdate("CASCADE")
