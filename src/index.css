@@ -41,14 +41,15 @@ button {
 .formContainer label {
   @apply mt-8;
 }
-.formContainer input {
-  @apply text-black;
+.formContainer input,
+select {
+  @apply text-black w-full;
 }
 .positiveButton {
-  @apply mt-4 mr-2  border-2 w-full cursor-pointer border-green-500 rounded-md hover:bg-green-500 hover:text-white p-2;
+  @apply mt-4 mr-2  border-2 w-full cursor-pointer border-green-500 rounded-md hover:bg-green-500 hover:text-white p-2 font-bold;
 }
 .positiveButtonLogin {
-  @apply mt-4 mr-2 w-1/2 border-2 cursor-pointer border-green-500 rounded-md hover:bg-green-500 hover:text-white p-2;
+  @apply mt-4 mr-2 w-1/2 border-2 cursor-pointer border-green-500 rounded-md hover:bg-green-500 hover:text-white p-2 font-bold;
 }
 .negativeButton {
   @apply font-bold mt-4 ml-2 w-1/2 border-2 border-red-500 rounded-md hover:bg-red-500 hover:text-white p-2 text-center;

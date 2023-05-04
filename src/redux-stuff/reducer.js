@@ -19,6 +19,7 @@ import {
   UPDATE_CUSTOMER,
   UPDATE_SECTOR,
   UPDATE_OCCUPATION,
+  GET_USER,
 } from "./actions";
 
 const initialState = {
@@ -42,6 +43,11 @@ export function myReducer(state = initialState, action) {
       return {
         ...state,
         user: null,
+      };
+    case GET_USER:
+      return {
+        ...state,
+        user: state.user,
       };
     case ADD_USER:
       return {

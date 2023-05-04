@@ -36,9 +36,11 @@ export const ADD_CUSTOMER = "ADD_CUSTOMER";
 export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
 export const UPDATE_SECTOR = "UPDATE_SECTOR";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
+export const GET_USER = "GET_USER";
 
 const axiosWithAuth = () => {
   const tokenObj = JSON.parse(localStorage.getItem(key));
+
   const token = tokenObj.token;
   return axios.create({
     headers: {
@@ -205,7 +207,7 @@ export const postTypeformDataToDb = (data) => (dispatch) => {
     .then((res) => {
       if (res.status === 201) {
         dispatch({ type: ADD_CUSTOMER, payload: res.data });
-        toast.success("Data added to database");
+        toast.success("Müşteri eklendi");
       }
     })
     .catch((err) => {
@@ -220,7 +222,7 @@ export const updatePrioritization = (data, navigate) => (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         dispatch({ type: UPDATE_PRIORITIZATION, payload: res.data });
-        navigate("/prioritization");
+        navigate(-1);
         toast.success("Öncelik değiştirildi");
       }
     })
@@ -234,7 +236,7 @@ export const addPrioritization = (formData, navigate) => (dispatch) => {
       if (res.status == 201) {
         dispatch({ type: ADD_PRIORITIZATION, payload: res.data });
         toast.success("Önceliklendirme eklendi");
-        navigate("/prioritization");
+        navigate(-1);
       }
     })
     .catch((err) => {
@@ -243,12 +245,14 @@ export const addPrioritization = (formData, navigate) => (dispatch) => {
     });
 };
 
-export const updateCustomer = (updates) => (dispatch) => {
+export const updateCustomer = (updates, navigate) => (dispatch) => {
   axiosWithAuth()
     .put(url + "api/customers/:customer_id", updates)
     .then((res) => {
       if (res.status === 201) {
         dispatch({ type: UPDATE_CUSTOMER, payload: res.data });
+        toast.success("Müşteri bilgileri güncellendi");
+        navigate(-1);
       }
     })
     .catch((err) => console.log(err));
@@ -261,7 +265,7 @@ export const updateSector = (updates, navigate) => (dispatch) => {
       if (res.status === 201) {
         dispatch({ type: UPDATE_SECTOR, payload: res.data });
         toast.success("Sektör güncellendi");
-        navigate("/sectors");
+        navigate(-1);
       }
     })
     .catch((err) => console.log(err));
@@ -274,7 +278,7 @@ export const updateOccupation = (updates, navigate) => (dispatch) => {
       if (res.status === 201) {
         dispatch({ type: UPDATE_OCCUPATION, payload: res.data });
         toast.success("Meslek güncellendi");
-        navigate("/occupations");
+        navigate(-1);
       }
     })
     .catch((err) => console.log(err));

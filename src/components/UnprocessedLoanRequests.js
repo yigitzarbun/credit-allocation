@@ -8,10 +8,12 @@ import {
 } from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
 function UnprocessedLoanRequests() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { customers, priorities, sectors, occupations } = useSelector(
     (store) => store
   );
@@ -123,7 +125,6 @@ function UnprocessedLoanRequests() {
       })
       .catch((err) => console.log(err));
   };
-
   useEffect(() => {
     dispatch(getCustomers());
     dispatch(getPriorities());
@@ -159,7 +160,13 @@ function UnprocessedLoanRequests() {
               <td>{c.sector_name}</td>
               <td>{c.occupation_name}</td>
               <td>
-                <button>Güncelle</button>
+                <Link
+                  to="/change-customer"
+                  className="actionGetButton"
+                  state={{ customer: c }}
+                >
+                  Değiştir
+                </Link>
               </td>
             </tr>
           ))}

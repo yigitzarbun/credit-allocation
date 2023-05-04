@@ -20,7 +20,7 @@ function Login() {
     reset();
   };
   return (
-    <div>
+    <div className="flex">
       <div className="formContainer ">
         <h2 className="font-bold text-4xl">Giriş</h2>
         <form

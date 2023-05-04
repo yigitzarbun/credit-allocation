@@ -12,7 +12,7 @@ const SideBar = () => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
+  //  const [subMenuOpen, setSubMenuOpen] = useState(false);
   let userType = "";
   if (user) {
     userType = user.role_name;
@@ -129,7 +129,7 @@ const SideBar = () => {
         {user && (
           <button
             onClick={handleLogout}
-            className=" bg-red-500 text-white px-14 py-2 rounded-md mt-6 "
+            className=" hover:bg-red-500 border-2 border-red-500 text-white w-full px-4 py-2 rounded-md font-bold text-sm mt-6"
           >
             Çıkış
           </button>

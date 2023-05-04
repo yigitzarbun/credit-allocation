@@ -17,41 +17,50 @@ import PrivateRoutes from "./components/PrivateRoutes";
 import AddPrioritization from "./components/AddPrioritization";
 import ChangeSector from "./components/ChangeSector";
 import ChangeOccupation from "./components/ChangeOccupation";
+import ChangeCustomer from "./components/ChangeCustomer";
+import Header from "./components/Header";
 function App() {
   return (
-    <div className="flex justify-between p-4">
-      <div className="w-1/5 mr-8">
-        <SideBar />
-      </div>
-      <div className="w-4/5">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route element={<PrivateRoutes />}>
-            <Route exact path="/" element={<Dashboard />} />
-            <Route path="/add-occupation" element={<AddOccupation />} />
-            <Route path="/add-sector" element={<AddSector />} />
-            <Route path="/add-employee" element={<AddEmployee />} />
-            <Route path="/sectors" element={<SectorsTable />} />
-            <Route path="/occupations" element={<OccupationsTable />} />
-            <Route path="/employees" element={<EmployeesTable />} />
-            <Route path="/prioritization" element={<Prioritization />} />
-            <Route path="/add-prioritization" element={<AddPrioritization />} />
-            <Route
-              path="/change-prioritization"
-              element={<ChangePrioritization />}
-            />
-            <Route
-              path="/unprocessed-loan-requests"
-              element={<UnprocessedLoanRequests />}
-            />
-            <Route
-              path="/processed-loan-requests"
-              element={<ProcessedLoanRequests />}
-            />
-            <Route path="/change-sector" element={<ChangeSector />} />
-            <Route path="/change-occupation" element={<ChangeOccupation />} />
-          </Route>
-        </Routes>
+    <div>
+      <Header />
+      <div className="flex justify-between p-4">
+        <div className="w-1/5 mr-8">
+          <SideBar />
+        </div>
+        <div className="w-4/5">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route element={<PrivateRoutes />}>
+              <Route exact path="/" element={<Dashboard />} />
+              <Route path="/add-occupation" element={<AddOccupation />} />
+              <Route path="/add-sector" element={<AddSector />} />
+              <Route path="/add-employee" element={<AddEmployee />} />
+              <Route path="/sectors" element={<SectorsTable />} />
+              <Route path="/occupations" element={<OccupationsTable />} />
+              <Route path="/employees" element={<EmployeesTable />} />
+              <Route path="/prioritization" element={<Prioritization />} />
+              <Route
+                path="/add-prioritization"
+                element={<AddPrioritization />}
+              />
+              <Route
+                path="/change-prioritization"
+                element={<ChangePrioritization />}
+              />
+              <Route path="/change-customer" element={<ChangeCustomer />} />
+              <Route
+                path="/unprocessed-loan-requests"
+                element={<UnprocessedLoanRequests />}
+              />
+              <Route
+                path="/processed-loan-requests"
+                element={<ProcessedLoanRequests />}
+              />
+              <Route path="/change-sector" element={<ChangeSector />} />
+              <Route path="/change-occupation" element={<ChangeOccupation />} />
+            </Route>
+          </Routes>
+        </div>
       </div>
     </div>
   );
