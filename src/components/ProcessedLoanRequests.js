@@ -18,25 +18,35 @@ function ProcessedLoanRequests() {
   }
   const handlePipedrive = (data) => {
     const dataWidePipedrive = {
-      name: `${data.fname}_${data.lname}`,
-      email: data.email,
+      name: data.full_name,
+      "17c609ff2110797a5a8cb5bebf23ebf7f2b4c907": data.age,
       "5976947d51a616982813da1436c6a6dd57a3b183": data.customer_id,
+      "78f205ffdaa498bfb1898c4cc05b5546b773399f": data.email,
       "8f3d9b3f96d2cf5ad4b2f64a0bdc89b17a805150": data.experience_years,
-      b1b1278b2f82a5823ce469c0937dcef024a18384: data.fname,
-      "35d36111ce0c577a505402baf8064a3ce80c19ba": data.lname,
+      cf5bd57bfa793c13702d7b12951c8f67a0cfebd6: data.gender,
       "377a4938941350838ac7abb868c3b372ac9426a7": data.occupation_id,
-      "865693ada6c3199a7dc795d975470d3006d979b6": data.priority_id,
+      "5fa76ef2a70fb2214496897f922b3be104866baa": data.phone,
+      cfd860d3ad9aecfb28c4f1354a72c443191626c5: data.priority,
+      c242f4b6c1a6a61ab62b9546974deebb0058b00a: data.product_choice,
       "646c04ebfa05ebc031c93ba032341904bb1b120c": data.sector_id,
+      cf7566fd6daf06c3075075c5bf48b035f81ed007: data.source,
     };
     const dataWideDb = {
       pipedrive: true,
+      landing_id: data.landing_id,
       customer_id: data.customer_id,
-      fname: data.fname,
-      lname: data.lname,
+      full_name: data.full_name,
       experience_years: data.experience_years,
       priority_id: data.priority_id,
       sector_id: data.sector_id,
       occupation_id: data.occupation_id,
+      email: data.email,
+      product_choice: data.product_choice,
+      gender: data.gender,
+      phone: data.phone,
+      age: data.age,
+      source: data.source,
+      credit_score: data.credit_score,
     };
     axios
       .post(
@@ -90,7 +100,7 @@ function ProcessedLoanRequests() {
                 <td>{c.experience_years}</td>
                 <td>{c.sector_name}</td>
                 <td>{c.occupation_name}</td>
-                <td>{c.credit_score}</td>
+                <td>{c.credit_score.toFixed(1)}</td>
                 <td>{c.priority}</td>
                 <td>
                   {c.pipedrive === 0 ? (

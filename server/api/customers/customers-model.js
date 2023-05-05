@@ -8,6 +8,12 @@ async function getAllCustomers() {
       "customers.experience_years",
       "customers.pipedrive",
       "customers.credit_score",
+      "customers.email",
+      "customers.product_choice",
+      "customers.gender",
+      "customers.phone",
+      "customers.age",
+      "customers.source",
       "sectors.sector_id",
       "sectors.sector_name",
       "sectors.sector_score",
@@ -15,6 +21,7 @@ async function getAllCustomers() {
       "occupations.occupation_name",
       "occupations.occupation_score",
       "priorities.priority",
+      "priorities.priority_id",
       "priorities.experience_years as priority_experience_years"
     )
     .leftJoin("sectors", "sectors.sector_id", "customers.sector_id")

@@ -55,6 +55,7 @@ function UnprocessedLoanRequests() {
     axios
       .get("http://localhost:9000/typeform")
       .then((res) => {
+        console.log(res.data.items);
         let form = null;
         // Check if there are any new customers at Typeform and obtain the first new customer's response data
         for (let f = 0; f < res.data.items.length; f++) {
@@ -71,13 +72,11 @@ function UnprocessedLoanRequests() {
             form = res.data.items[f];
           }
         }
-
         // Calculate the credit score AND add sector if it doesnt exist in DB
         let customerSector = null;
         let customerSectorExists = null;
         let customerOccupation = null;
         let customerOccupationExists = null;
-
         if (form) {
           customerSectorExists = sectors.find(
             (s) => s.sector_name === form["answers"][2]["choice"]["label"]
@@ -90,6 +89,7 @@ function UnprocessedLoanRequests() {
               })
             );
             dispatch(getSectors());
+
             if (
               sectors.find(
                 (s) => s.sector_name === form["answers"][2]["choice"]["label"]
@@ -138,7 +138,6 @@ function UnprocessedLoanRequests() {
           customerOccupation = occupations.find(
             (o) => o.occupation_name === form["answers"][3]["choice"]["label"]
           )["occupation_id"];
-
           creditScore =
             sectorWeight *
               sectors.filter(
@@ -195,13 +194,42 @@ function UnprocessedLoanRequests() {
             priority_id: priority,
           };
           // Post customer data to database
-          if (!checkForExistingRecord(dbData.landing_id)) {
+          if (
+            !checkForExistingRecord(dbData.landing_id) &&
+            dbData.sector_id &&
+            dbData.occupation_id
+          ) {
             dispatch(postTypeformDataToDb(dbData));
           }
         }
       })
       .catch((err) => console.log(err));
   };
+  let missingInfoCustomers = [];
+  let missingScoreCustomers = [];
+
+  for (let i = 0; i < customers.length; i++) {
+    if (
+      customers[i]["experience_years"] == null ||
+      customers[i]["full_name"] == null ||
+      customers[i]["occupation_id"] == null ||
+      customers[i]["sector_id"] == null ||
+      customers[i]["email"] == null ||
+      customers[i]["product_choice"] == null ||
+      customers[i]["gender"] == null ||
+      customers[i]["phone"] == null ||
+      customers[i]["source"] == null
+    ) {
+      missingInfoCustomers.push(customers[i]["customer_id"]);
+    }
+    if (
+      customers[i]["sector_score"] === 0 ||
+      customers[i]["occupation_score"] === 0
+    ) {
+      missingScoreCustomers.push(customers[i]["customer_id"]);
+    }
+  }
+
   useEffect(() => {
     dispatch(getCustomers());
     dispatch(getPriorities());
@@ -219,6 +247,7 @@ function UnprocessedLoanRequests() {
       <table className="table">
         <thead className="tableHead">
           <tr className="leading-loose">
+            <th>Status</th>
             <th>Müşteri ID</th>
             <th>İsim</th>
             <th>Tecrübe Yıl</th>
@@ -229,11 +258,41 @@ function UnprocessedLoanRequests() {
         <tbody className="tableBody">
           {filteredCustomers.map((c) => (
             <tr key={c.customer_id} className="tableRow">
+              <td>
+                {missingInfoCustomers.includes(c.customer_id) &&
+                missingScoreCustomers.includes(c.customer_id) ? (
+                  <p className="text-yellow-500">
+                    Eksik Bilgi & Sektör/Meslek Skoru
+                  </p>
+                ) : missingScoreCustomers.includes(c.customer_id) ? (
+                  <p className="text-yellow-500">Sektör / Meslek Skoru</p>
+                ) : missingInfoCustomers.includes(c.customer_id) ? (
+                  <p className="text-yellow-500">Eksik Bilgi</p>
+                ) : (
+                  <p className="text-green-500">Hazır</p>
+                )}
+              </td>
               <td>{c.customer_id}</td>
               <td>{c.full_name}</td>
               <td>{c.experience_years}</td>
-              <td>{c.sector_name}</td>
-              <td>{c.occupation_name}</td>
+              <td>
+                {c.sector_name ? (
+                  c.sector_name
+                ) : (
+                  <p className="text-yellow-400 font-bold">
+                    Değişiklik Gerekli
+                  </p>
+                )}
+              </td>
+              <td>
+                {c.occupation_name ? (
+                  c.occupation_name
+                ) : (
+                  <p className="text-yellow-400 font-bold">
+                    Değişiklik Gerekli
+                  </p>
+                )}
+              </td>
               <td>
                 <Link
                   to="/change-customer"

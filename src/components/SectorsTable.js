@@ -14,7 +14,7 @@ function SectorsTable() {
     dispatch(deleteSector(sector_id));
   };
   let userType = "";
-  if (users && user) {
+  if (users && user && users.filter((u) => u.email === user.email)[0]) {
     userType = users.filter((u) => u.email === user.email)[0]["role_name"];
   }
   useEffect(() => {

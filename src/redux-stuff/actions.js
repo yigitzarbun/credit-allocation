@@ -40,8 +40,11 @@ export const GET_USER = "GET_USER";
 
 const axiosWithAuth = () => {
   const tokenObj = JSON.parse(localStorage.getItem(key));
+  let token = null;
+  if (tokenObj) {
+    token = tokenObj.token;
+  }
 
-  const token = tokenObj.token;
   return axios.create({
     headers: {
       Authorization: token,

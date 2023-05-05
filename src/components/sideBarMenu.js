@@ -5,13 +5,29 @@ import { BsChevronDown } from "react-icons/bs";
 import { GrUserWorker } from "react-icons/gr";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { getUsers, GET_USER, LOGOUT } from "../redux-stuff/actions";
+import {
+  getOccupations,
+  getSectors,
+  getUsers,
+  GET_USER,
+  LOGOUT,
+} from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 //import logo1 from "../logo.png";
 const SideBar = () => {
-  const { user, users } = useSelector((store) => store);
+  const { user, users, sectors, occupations } = useSelector((store) => store);
   let userType = "";
+  let missingSectorScores = null;
+  let missingOccupationScores = null;
+  if (sectors) {
+    missingSectorScores = sectors.filter((s) => s.sector_score === 0).length;
+  }
 
+  if (occupations) {
+    missingOccupationScores = occupations.filter(
+      (o) => o.occupation_score === 0
+    ).length;
+  }
   if (
     users &&
     user &&
@@ -32,6 +48,8 @@ const SideBar = () => {
   useEffect(() => {
     dispatch(getUsers());
     dispatch({ type: GET_USER });
+    dispatch(getSectors());
+    dispatch(getOccupations());
   }, []);
   return (
     <div className="bg-[#1C1C20] p5 text-ternanry pt-8 p-4 rounded-md">
@@ -42,8 +60,8 @@ const SideBar = () => {
             isPending
               ? "pending"
               : isActive
-              ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-              : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+              ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+              : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6  hover:text-blue-500"
           }
         >
           <span>
@@ -59,7 +77,7 @@ const SideBar = () => {
                 ? "pending"
                 : isActive
                 ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 hover:text-blue-500"
             }
           >
             Müşteri Listesi
@@ -71,10 +89,15 @@ const SideBar = () => {
                 ? "pending"
                 : isActive
                 ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 hover:text-blue-500"
             }
           >
             Sektörler
+            {missingSectorScores > 0 && (
+              <span className="text-yellow-500 text-sm">
+                ({missingSectorScores})
+              </span>
+            )}
           </NavLink>
           <NavLink
             to="/occupations"
@@ -83,10 +106,15 @@ const SideBar = () => {
                 ? "pending"
                 : isActive
                 ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 hover:text-blue-500"
             }
           >
             Meslekler
+            {missingOccupationScores > 0 && (
+              <span className="text-yellow-500 text-sm">
+                ({missingOccupationScores})
+              </span>
+            )}
           </NavLink>
           <NavLink
             to="/processed-loan-requests"
@@ -95,7 +123,7 @@ const SideBar = () => {
                 ? "pending"
                 : isActive
                 ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+                : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 hover:text-blue-500"
             }
           >
             İşlenmiş Müşteri Listesi
@@ -111,7 +139,7 @@ const SideBar = () => {
                   ? "pending"
                   : isActive
                   ? " bg-blue-500 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 hover:text-blue-500"
               }
             >
               <span>Çalışanlar</span>
@@ -123,7 +151,7 @@ const SideBar = () => {
                   ? "pending"
                   : isActive
                   ? " bg-blue-500 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
-                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6"
+                  : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 hover:text-blue-500"
               }
             >
               <span>Önceliklendirme</span>
