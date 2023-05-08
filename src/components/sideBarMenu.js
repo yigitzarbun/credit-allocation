@@ -138,7 +138,7 @@ const SideBar = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? " bg-blue-500 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
                   : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 hover:text-blue-500"
               }
             >
@@ -150,7 +150,7 @@ const SideBar = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? " bg-blue-500 text-black text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
+                  ? " bg-blue-500 text-white text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 "
                   : " text-lg flex items-center gap-x-4 p-2 hover:bg-ternanry/50 rounded-md mt-6 hover:text-blue-500"
               }
             >

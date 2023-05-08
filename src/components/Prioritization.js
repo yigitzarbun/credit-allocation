@@ -29,7 +29,7 @@ function Prioritization() {
       <div className="flex justify-between items-center">
         <h2 className="pageHeader">Önceliklendirme</h2>
         <Link to="/add-prioritization">
-          <button className="positiveButton">Yeni Ekle</button>
+          <button className="actionGetButtonGreen">Yeni Ekle</button>
         </Link>
       </div>
       {filteredPriorities && filteredPriorities.length > 0 ? (

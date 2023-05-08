@@ -14,7 +14,7 @@ function OccupationsTable() {
     dispatch(deleteOccupation(occupation_id));
   };
   let userType = "";
-  if (user && users) {
+  if (user && users && users.filter((u) => u.email === user.email)[0]) {
     userType = users.filter((u) => u.email === user.email)[0]["role_name"];
   }
   useEffect(() => {
@@ -28,7 +28,7 @@ function OccupationsTable() {
       <div className="flex justify-between items-center">
         <h2 className="pageHeader">Meslekler</h2>
         <Link to="/add-occupation">
-          <button className="actionSendButton">Meslek Ekle</button>
+          <button className="actionGetButtonGreen">Meslek Ekle</button>
         </Link>
       </div>
       <table className="table">

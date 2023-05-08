@@ -22,7 +22,7 @@ function EmployeesTable() {
         <h2 className="pageHeader">Çalışanlar</h2>
         {userType === "admin" && (
           <Link to="/add-employee">
-            <button className="actionSendButton">Çalışan Ekle</button>
+            <button className="actionGetButtonGreen">Çalışan Ekle</button>
           </Link>
         )}
       </div>

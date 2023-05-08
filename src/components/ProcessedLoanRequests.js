@@ -75,7 +75,7 @@ function ProcessedLoanRequests() {
       <div className="flex justify-between items-center">
         <h2 className="pageHeader ">Müşteriler</h2>
         {filteredCustomers && filteredCustomers.length > 0 && (
-          <button className="actionSendButton">Tümünü Gönder</button>
+          <button className="actionGetButtonGreen">Tümünü Gönder</button>
         )}
       </div>
       {filteredCustomers && filteredCustomers.length > 0 ? (

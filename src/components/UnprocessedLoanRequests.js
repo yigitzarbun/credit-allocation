@@ -15,7 +15,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 function UnprocessedLoanRequests() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { customers, priorities, sectors, occupations } = useSelector(
     (store) => store
   );
@@ -55,7 +54,6 @@ function UnprocessedLoanRequests() {
     axios
       .get("http://localhost:9000/typeform")
       .then((res) => {
-        console.log(res.data.items);
         let form = null;
         // Check if there are any new customers at Typeform and obtain the first new customer's response data
         for (let f = 0; f < res.data.items.length; f++) {
@@ -159,7 +157,7 @@ function UnprocessedLoanRequests() {
               customPriorities[i]["sector_id"] == customerSector &&
               customPriorities[i]["occupation_id"] == customerOccupation
             ) {
-              priority = customPriorities[i]["priority"];
+              priority = customPriorities[i]["priority_id"];
             }
           }
         } else if (creditScore >= 90) {
@@ -240,7 +238,7 @@ function UnprocessedLoanRequests() {
     <div className="mt-12">
       <div className="flex justify-between items-center">
         <h2 className="pageHeader">Müşteri Listesi</h2>
-        <button className="actionSendButton" onClick={getTypeForm}>
+        <button className="actionGetButtonGreen" onClick={getTypeForm}>
           Veri Çek
         </button>
       </div>

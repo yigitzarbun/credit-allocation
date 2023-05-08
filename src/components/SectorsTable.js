@@ -27,7 +27,7 @@ function SectorsTable() {
       <div className="flex justify-between items-center">
         <h2 className="pageHeader">Sektörler</h2>
         <Link to="/add-sector">
-          <button className="actionSendButton">Sektör Ekle</button>
+          <button className="actionGetButtonGreen">Sektör Ekle</button>
         </Link>
       </div>
       <table className="table">
