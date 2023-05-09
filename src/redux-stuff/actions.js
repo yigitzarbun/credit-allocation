@@ -74,7 +74,7 @@ export const addUser = (formData, navigate) => (dispatch) => {
     .then((res) => {
       if (res.status == 201) {
         toast.success("Kullanıcı oluşturuldu");
-        navigate("/employees");
+        navigate(-1);
       }
     })
     .catch((err) => {
@@ -89,6 +89,7 @@ export const deleteUser = (user_id) => (dispatch) => {
     .then((res) => {
       if (res.status == 200) {
         dispatch({ type: DELETE_USER, payload: user_id });
+        toast.success("Çalışan eklendi");
       }
     })
     .catch((err) => {
@@ -126,7 +127,7 @@ export const addSector = (formData, navigate) => (dispatch) => {
       if (res.status == 201) {
         dispatch({ type: ADD_SECTOR, payload: res.data });
         toast.success("Sektör eklendi");
-        navigate("/sectors");
+        navigate(-1);
       }
     })
     .catch((err) => console.log(err));
@@ -165,7 +166,7 @@ export const addOccupation = (formData, navigate) => (dispatch) => {
       if (res.status == 201) {
         dispatch({ type: ADD_OCCUPATION, payload: res.data });
         toast.success("Meslek eklendi");
-        navigate("/occupations");
+        navigate(-1);
       }
     })
     .catch((err) => console.log(err));

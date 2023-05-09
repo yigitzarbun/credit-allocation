@@ -132,15 +132,127 @@ function ProcessedLoanRequests() {
               })
               .map((c) => (
                 <tr key={c.customer_id} className="tableRow">
-                  <td>{c.customer_id}</td>
-                  <td>{c.full_name}</td>
-                  <td>{c.experience_years}</td>
-                  <td>{c.sector_name}</td>
-                  <td>{c.occupation_name}</td>
-                  <td>{c.credit_score.toFixed(1)}</td>
+                  <td
+                    className={
+                      c.age === null ||
+                      c.email === null ||
+                      c.experience_years === null ||
+                      c.full_name === null ||
+                      c.gender === null ||
+                      c.occupation_name === null ||
+                      c.phone === null ||
+                      c.priority === null ||
+                      c.product_choice === null ||
+                      c.sector_name === null ||
+                      (c.source === null && "text-yellow-400")
+                    }
+                  >
+                    {c.customer_id}
+                  </td>
+                  <td
+                    className={
+                      c.age === null ||
+                      c.email === null ||
+                      c.experience_years === null ||
+                      c.full_name === null ||
+                      c.gender === null ||
+                      c.occupation_name === null ||
+                      c.phone === null ||
+                      c.priority === null ||
+                      c.product_choice === null ||
+                      c.sector_name === null ||
+                      (c.source === null && "text-yellow-400")
+                    }
+                  >
+                    {c.full_name}
+                  </td>
+                  <td
+                    className={
+                      c.age === null ||
+                      c.email === null ||
+                      c.experience_years === null ||
+                      c.full_name === null ||
+                      c.gender === null ||
+                      c.occupation_name === null ||
+                      c.phone === null ||
+                      c.priority === null ||
+                      c.product_choice === null ||
+                      c.sector_name === null ||
+                      (c.source === null && "text-yellow-400")
+                    }
+                  >
+                    {c.experience_years}
+                  </td>
+                  <td
+                    className={
+                      c.age === null ||
+                      c.email === null ||
+                      c.experience_years === null ||
+                      c.full_name === null ||
+                      c.gender === null ||
+                      c.occupation_name === null ||
+                      c.phone === null ||
+                      c.priority === null ||
+                      c.product_choice === null ||
+                      c.sector_name === null ||
+                      (c.source === null && "text-yellow-400")
+                    }
+                  >
+                    {c.sector_name}
+                  </td>
+                  <td
+                    className={
+                      c.age === null ||
+                      c.email === null ||
+                      c.experience_years === null ||
+                      c.full_name === null ||
+                      c.gender === null ||
+                      c.occupation_name === null ||
+                      c.phone === null ||
+                      c.priority === null ||
+                      c.product_choice === null ||
+                      c.sector_name === null ||
+                      (c.source === null && "text-yellow-400")
+                    }
+                  >
+                    {c.occupation_name}
+                  </td>
+                  <td
+                    className={
+                      c.age === null ||
+                      c.email === null ||
+                      c.experience_years === null ||
+                      c.full_name === null ||
+                      c.gender === null ||
+                      c.occupation_name === null ||
+                      c.phone === null ||
+                      c.priority === null ||
+                      c.product_choice === null ||
+                      c.sector_name === null ||
+                      (c.source === null && "text-yellow-400")
+                    }
+                  >
+                    {c.credit_score.toFixed(1)}
+                  </td>
                   <td>{c.priority}</td>
-                  <td>
-                    {c.pipedrive === 0 ? (
+                  <td
+                    className={
+                      c.age === null ||
+                      c.email === null ||
+                      c.experience_years === null ||
+                      c.full_name === null ||
+                      c.gender === null ||
+                      c.occupation_name === null ||
+                      c.phone === null ||
+                      c.priority === null ||
+                      c.product_choice === null ||
+                      c.sector_name === null ||
+                      (c.source === null && "text-yellow-400")
+                    }
+                  >
+                    {c.pipedrive === 0 &&
+                    c.sector_score !== 0 &&
+                    c.occupation_score !== 0 ? (
                       <button
                         onClick={() => handlePipedrive(c)}
                         className="font-bold border-2 border-blue-500 rounded-md hover:bg-blue-500 hover:text-white px-2 text-center"
@@ -148,7 +260,12 @@ function ProcessedLoanRequests() {
                         Gönder
                       </button>
                     ) : (
-                      "Gönderildi"
+                      <Link to="/unprocessed-loan-requests">
+                        {" "}
+                        <button className="font-bold border-2 border-yellow-500 rounded-md hover:bg-yellow-500 hover:text-black px-2 text-center">
+                          Düzenle
+                        </button>
+                      </Link>
                     )}
                   </td>
                 </tr>

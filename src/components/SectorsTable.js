@@ -40,7 +40,7 @@ function SectorsTable() {
       <input
         type="text"
         className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
-        placeholder="Müşterilerde ara"
+        placeholder="Sektörlerde ara"
         onChange={handleSearch}
         value={search}
       />
@@ -72,9 +72,15 @@ function SectorsTable() {
             })
             .map((s) => (
               <tr key={s.sector_id} className="tableRow">
-                <td>{s.sector_id}</td>
-                <td>{s.sector_name}</td>
-                <td>{s.sector_score}</td>
+                <td className={s.sector_score === 0 && "text-yellow-400"}>
+                  {s.sector_id}
+                </td>
+                <td className={s.sector_score === 0 && "text-yellow-400"}>
+                  {s.sector_name}
+                </td>
+                <td className={s.sector_score === 0 && "text-yellow-400"}>
+                  {s.sector_score}
+                </td>
                 {userType == "admin" && (
                   <td>
                     <button

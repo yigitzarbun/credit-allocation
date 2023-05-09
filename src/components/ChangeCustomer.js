@@ -11,6 +11,14 @@ function ChangeCustomer() {
   const { sectors, occupations } = useSelector((store) => store);
   const location = useLocation();
   const propsData = location.state.customer;
+  let missingValues = [];
+  if (propsData) {
+    Object.keys(propsData).filter((p) => {
+      if (propsData[p] === null) {
+        missingValues.push(p);
+      }
+    });
+  }
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -70,6 +78,34 @@ function ChangeCustomer() {
         Değiştirilecek müşteri:{" "}
         <span className="text-blue-400 font-bold">{`${propsData.full_name}`}</span>
       </p>
+      <div className="mt-4">
+        {missingValues &&
+        Array.isArray(missingValues) &&
+        missingValues.length > 0 ? (
+          missingValues
+            .filter((v) => {
+              return (
+                v === "full_name" ||
+                v === "experience_years" ||
+                v === "sector_name" ||
+                v === "occupation_name" ||
+                v === "age" ||
+                v === "email" ||
+                v === "phone" ||
+                v === "source" ||
+                v === "gender" ||
+                v === "product_choice"
+              );
+            })
+            .map((v) => (
+              <p key={v} className="text-red-400">
+                <span className="text-white"> Eksik bilgi: </span> {v}
+              </p>
+            ))
+        ) : (
+          <p className="text-green-400">Tüm bilgiler bulunuyor</p>
+        )}
+      </div>
       <form
         onSubmit={handleSubmit(handleUpdateCustomer)}
         className=" flex flex-col mt-4"

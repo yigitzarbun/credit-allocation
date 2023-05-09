@@ -41,7 +41,7 @@ function OccupationsTable() {
       <input
         type="text"
         className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
-        placeholder="Müşterilerde ara"
+        placeholder="Mesleklerde ara"
         onChange={handleSearch}
         value={search}
       />
@@ -73,9 +73,15 @@ function OccupationsTable() {
             })
             .map((o) => (
               <tr key={o.occupation_id} className="tableRow">
-                <td>{o.occupation_id}</td>
-                <td>{o.occupation_name}</td>
-                <td>{o.occupation_score}</td>
+                <td className={o.occupation_score === 0 && "text-yellow-400"}>
+                  {o.occupation_id}
+                </td>
+                <td className={o.occupation_score === 0 && "text-yellow-400"}>
+                  {o.occupation_name}
+                </td>
+                <td className={o.occupation_score === 0 && "text-yellow-400"}>
+                  {o.occupation_score}
+                </td>
                 {userType == "admin" && (
                   <td>
                     <button

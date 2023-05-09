@@ -211,7 +211,8 @@ function UnprocessedLoanRequests() {
       .catch((err) => console.log(err));
   };
   let missingInfoCustomers = [];
-  let missingScoreCustomers = [];
+  let missingSectorCustomers = [];
+  let missingOccupationCustomers = [];
 
   for (let i = 0; i < customers.length; i++) {
     if (
@@ -227,11 +228,11 @@ function UnprocessedLoanRequests() {
     ) {
       missingInfoCustomers.push(customers[i]["customer_id"]);
     }
-    if (
-      customers[i]["sector_score"] === 0 ||
-      customers[i]["occupation_score"] === 0
-    ) {
-      missingScoreCustomers.push(customers[i]["customer_id"]);
+    if (customers[i]["sector_score"] === 0) {
+      missingSectorCustomers.push(customers[i]["customer_id"]);
+    }
+    if (customers[i]["occupation_score"] === 0) {
+      missingOccupationCustomers.push(customers[i]["customer_id"]);
     }
   }
 
@@ -294,15 +295,27 @@ function UnprocessedLoanRequests() {
             .map((c) => (
               <tr key={c.customer_id} className="tableRow">
                 <td>
-                  {missingInfoCustomers.includes(c.customer_id) &&
-                  missingScoreCustomers.includes(c.customer_id) ? (
-                    <p className="text-yellow-500">
-                      Eksik Bilgi & Sektör/Meslek Skoru
-                    </p>
-                  ) : missingScoreCustomers.includes(c.customer_id) ? (
-                    <p className="text-yellow-500">Sektör / Meslek Skoru</p>
-                  ) : missingInfoCustomers.includes(c.customer_id) ? (
-                    <p className="text-yellow-500">Eksik Bilgi</p>
+                  {missingInfoCustomers.includes(c.customer_id) ? (
+                    <Link to="/change-customer" state={{ customer: c }}>
+                      {" "}
+                      <button className="p-1 border-2 border-yellow-400 font-bold hover:text-black hover:bg-yellow-400">
+                        Eksik Bilgi
+                      </button>
+                    </Link>
+                  ) : missingSectorCustomers.includes(c.customer_id) ? (
+                    <Link to="/sectors">
+                      {" "}
+                      <button className="p-1 border-2 border-yellow-400 font-bold hover:text-black hover:bg-yellow-400">
+                        Eksik Sektör Skoru
+                      </button>
+                    </Link>
+                  ) : missingOccupationCustomers.includes(c.customer_id) ? (
+                    <Link to="/occupations">
+                      {" "}
+                      <button className="p-1 border-2 border-yellow-400 font-bold hover:text-black hover:bg-yellow-400">
+                        Eksik Meslek Skoru
+                      </button>
+                    </Link>
                   ) : (
                     <p className="text-green-500">Hazır</p>
                   )}

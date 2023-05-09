@@ -16,7 +16,7 @@ function EmployeesTable() {
     setSearch("");
   };
   let userType = "";
-  if (users && user) {
+  if (users && user && users.filter((u) => u.email === user.email)[0]) {
     userType = users.filter((u) => u.email === user.email)[0]["role_name"];
   }
   useEffect(() => {
@@ -36,7 +36,7 @@ function EmployeesTable() {
       <input
         type="text"
         className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
-        placeholder="Müşterilerde ara"
+        placeholder="Çalışanlarda ara"
         onChange={handleSearch}
         value={search}
       />
