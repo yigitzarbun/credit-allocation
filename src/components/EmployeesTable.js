@@ -15,6 +15,18 @@ function EmployeesTable() {
   const handleClear = () => {
     setSearch("");
   };
+  let roles = [];
+  if (users && users.length > 0) {
+    users.forEach((u) => {
+      if (roles.includes(u.role_name) === false) {
+        roles.push(u.role_name);
+      }
+    });
+  }
+  const [filter, setFilter] = useState("");
+  const handleFilter = (e) => {
+    setFilter(e.target.value);
+  };
   let userType = "";
   if (users && user && users.filter((u) => u.email === user.email)[0]) {
     userType = users.filter((u) => u.email === user.email)[0]["role_name"];
@@ -33,18 +45,36 @@ function EmployeesTable() {
           </Link>
         )}
       </div>
-      <input
-        type="text"
-        className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
-        placeholder="Çalışanlarda ara"
-        onChange={handleSearch}
-        value={search}
-      />
-      {search && (
-        <button className="deleteButton py-2" onClick={handleClear}>
-          Temizle
-        </button>
-      )}
+      <div className="flex justify-between mt-8 mb-4">
+        <div className="w-2/4 ">
+          <input
+            type="text"
+            className="p-2 w-1/2 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
+            placeholder="Çalışanlarda ara"
+            onChange={handleSearch}
+            value={search}
+          />
+          {search && (
+            <button className="deleteButton py-2" onClick={handleClear}>
+              Temizle
+            </button>
+          )}
+        </div>
+        <select
+          onChange={handleFilter}
+          className="w-1/6 p-2 border-2 border-blue-400 text-blue-400 bg-slate-950 rounded-md"
+        >
+          <option className="font-bold" value="">
+            Tüm Roller
+          </option>
+          {roles.length > 0 &&
+            roles.map((r) => (
+              <option className="font-bold" key={r}>
+                {r}
+              </option>
+            ))}
+        </select>
+      </div>
       <table className="table">
         <thead className="tableHead">
           <tr className="leading-loose">
@@ -67,6 +97,13 @@ function EmployeesTable() {
                 e.email.toLowerCase().includes(search.toLowerCase()) ||
                 e.role_name.toLowerCase().includes(search.toLowerCase())
               ) {
+                return e;
+              }
+            })
+            .filter((e) => {
+              if (filter === "") {
+                return e;
+              } else if (e.role_name === filter) {
                 return e;
               }
             })
