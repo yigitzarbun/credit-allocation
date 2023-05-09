@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,6 +10,13 @@ import {
 function OccupationsTable() {
   const dispatch = useDispatch();
   const { occupations, users, user } = useSelector((store) => store);
+  const [search, setSearch] = useState("");
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  const handleClear = () => {
+    setSearch("");
+  };
   const handleDelete = (occupation_id) => {
     dispatch(deleteOccupation(occupation_id));
   };
@@ -31,6 +38,18 @@ function OccupationsTable() {
           <button className="actionGetButtonGreen">Meslek Ekle</button>
         </Link>
       </div>
+      <input
+        type="text"
+        className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
+        placeholder="Müşterilerde ara"
+        onChange={handleSearch}
+        value={search}
+      />
+      {search && (
+        <button className="deleteButton py-2" onClick={handleClear}>
+          Temizle
+        </button>
+      )}
       <table className="table">
         <thead className="tableHead">
           <tr className="leading-loose">
@@ -42,38 +61,48 @@ function OccupationsTable() {
           </tr>
         </thead>
         <tbody className="tableBody">
-          {occupations.map((o) => (
-            <tr key={o.occupation_id} className="tableRow">
-              <td>{o.occupation_id}</td>
-              <td>{o.occupation_name}</td>
-              <td>{o.occupation_score}</td>
-              {userType == "admin" && (
-                <td>
-                  <button
-                    onClick={() => handleDelete(o.occupation_id)}
-                    className="deleteButton"
-                  >
-                    Sil
-                  </button>
-                </td>
-              )}
-              {userType == "admin" && (
-                <td>
-                  <Link
-                    to="/change-occupation"
-                    className="actionGetButton"
-                    state={{
-                      occupation_id: o.occupation_id,
-                      occupation_name: o.occupation_name,
-                      occupation_score: o.occupation_score,
-                    }}
-                  >
-                    Değiştir
-                  </Link>
-                </td>
-              )}
-            </tr>
-          ))}
+          {occupations
+            .filter((o) => {
+              if (search === "") {
+                return o;
+              } else if (
+                o.occupation_name.toLowerCase().includes(search.toLowerCase())
+              ) {
+                return o;
+              }
+            })
+            .map((o) => (
+              <tr key={o.occupation_id} className="tableRow">
+                <td>{o.occupation_id}</td>
+                <td>{o.occupation_name}</td>
+                <td>{o.occupation_score}</td>
+                {userType == "admin" && (
+                  <td>
+                    <button
+                      onClick={() => handleDelete(o.occupation_id)}
+                      className="deleteButton"
+                    >
+                      Sil
+                    </button>
+                  </td>
+                )}
+                {userType == "admin" && (
+                  <td>
+                    <Link
+                      to="/change-occupation"
+                      className="actionGetButton"
+                      state={{
+                        occupation_id: o.occupation_id,
+                        occupation_name: o.occupation_name,
+                        occupation_score: o.occupation_score,
+                      }}
+                    >
+                      Değiştir
+                    </Link>
+                  </td>
+                )}
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

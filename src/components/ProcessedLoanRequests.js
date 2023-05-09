@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCustomers, updateCustomer } from "../redux-stuff/actions";
 import { toast } from "react-toastify";
@@ -6,6 +6,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 function ProcessedLoanRequests() {
   const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  const handleClear = () => {
+    setSearch("");
+  };
   const customers = useSelector((store) => store.customers);
   let filteredCustomers = [];
   if (
@@ -78,6 +85,18 @@ function ProcessedLoanRequests() {
           <button className="actionGetButtonGreen">Tümünü Gönder</button>
         )}
       </div>
+      <input
+        type="text"
+        className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
+        placeholder="Müşterilerde ara"
+        onChange={handleSearch}
+        value={search}
+      />
+      {search && (
+        <button className="deleteButton py-2" onClick={handleClear}>
+          Temizle
+        </button>
+      )}
       {filteredCustomers && filteredCustomers.length > 0 ? (
         <table className="table">
           <thead className="tableHead">
@@ -93,29 +112,47 @@ function ProcessedLoanRequests() {
             </tr>
           </thead>
           <tbody className="tableBody">
-            {filteredCustomers.map((c) => (
-              <tr key={c.customer_id} className="tableRow">
-                <td>{c.customer_id}</td>
-                <td>{c.full_name}</td>
-                <td>{c.experience_years}</td>
-                <td>{c.sector_name}</td>
-                <td>{c.occupation_name}</td>
-                <td>{c.credit_score.toFixed(1)}</td>
-                <td>{c.priority}</td>
-                <td>
-                  {c.pipedrive === 0 ? (
-                    <button
-                      onClick={() => handlePipedrive(c)}
-                      className="font-bold border-2 border-blue-500 rounded-md hover:bg-blue-500 hover:text-white px-2 text-center"
-                    >
-                      Gönder
-                    </button>
-                  ) : (
-                    "Gönderildi"
-                  )}
-                </td>
-              </tr>
-            ))}
+            {filteredCustomers
+              .filter((c) => {
+                if (search === "") {
+                  return c;
+                } else if (
+                  c.full_name
+                    .toLowerCase()
+                    .includes(search.toLocaleLowerCase()) ||
+                  c.sector_name
+                    .toLocaleLowerCase()
+                    .includes(search.toLocaleLowerCase()) ||
+                  c.occupation_name
+                    .toLocaleLowerCase()
+                    .includes(search.toLocaleLowerCase())
+                ) {
+                  return c;
+                }
+              })
+              .map((c) => (
+                <tr key={c.customer_id} className="tableRow">
+                  <td>{c.customer_id}</td>
+                  <td>{c.full_name}</td>
+                  <td>{c.experience_years}</td>
+                  <td>{c.sector_name}</td>
+                  <td>{c.occupation_name}</td>
+                  <td>{c.credit_score.toFixed(1)}</td>
+                  <td>{c.priority}</td>
+                  <td>
+                    {c.pipedrive === 0 ? (
+                      <button
+                        onClick={() => handlePipedrive(c)}
+                        className="font-bold border-2 border-blue-500 rounded-md hover:bg-blue-500 hover:text-white px-2 text-center"
+                      >
+                        Gönder
+                      </button>
+                    ) : (
+                      "Gönderildi"
+                    )}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       ) : (

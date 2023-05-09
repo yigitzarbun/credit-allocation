@@ -18,6 +18,13 @@ function UnprocessedLoanRequests() {
   const { customers, priorities, sectors, occupations } = useSelector(
     (store) => store
   );
+  const [search, setSearch] = useState("");
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  const handleClear = () => {
+    setSearch("");
+  };
   let filteredCustomers = [];
   if (
     customers &&
@@ -242,6 +249,18 @@ function UnprocessedLoanRequests() {
           Veri Çek
         </button>
       </div>
+      <input
+        type="text"
+        className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
+        placeholder="Müşterilerde ara"
+        onChange={handleSearch}
+        value={search}
+      />
+      {search && (
+        <button className="deleteButton py-2" onClick={handleClear}>
+          Temizle
+        </button>
+      )}
       <table className="table">
         <thead className="tableHead">
           <tr className="leading-loose">
@@ -254,54 +273,72 @@ function UnprocessedLoanRequests() {
           </tr>
         </thead>
         <tbody className="tableBody">
-          {filteredCustomers.map((c) => (
-            <tr key={c.customer_id} className="tableRow">
-              <td>
-                {missingInfoCustomers.includes(c.customer_id) &&
-                missingScoreCustomers.includes(c.customer_id) ? (
-                  <p className="text-yellow-500">
-                    Eksik Bilgi & Sektör/Meslek Skoru
-                  </p>
-                ) : missingScoreCustomers.includes(c.customer_id) ? (
-                  <p className="text-yellow-500">Sektör / Meslek Skoru</p>
-                ) : missingInfoCustomers.includes(c.customer_id) ? (
-                  <p className="text-yellow-500">Eksik Bilgi</p>
-                ) : (
-                  <p className="text-green-500">Hazır</p>
-                )}
-              </td>
-              <td>{c.customer_id}</td>
-              <td>{c.full_name}</td>
-              <td>{c.experience_years}</td>
-              <td>
-                {c.sector_name ? (
-                  c.sector_name
-                ) : (
-                  <p className="text-yellow-400 font-bold">
-                    Değişiklik Gerekli
-                  </p>
-                )}
-              </td>
-              <td>
-                {c.occupation_name ? (
-                  c.occupation_name
-                ) : (
-                  <p className="text-yellow-400 font-bold">
-                    Değişiklik Gerekli
-                  </p>
-                )}
-              </td>
-              <td>
-                <Link
-                  to="/change-customer"
-                  className="actionGetButton"
-                  state={{ customer: c }}
-                >
-                  Değiştir
-                </Link>
-              </td>
-            </tr>
-          ))}
+          {filteredCustomers
+            .filter((c) => {
+              if (search === "") {
+                return c;
+              } else if (
+                c.full_name
+                  .toLowerCase()
+                  .includes(search.toLocaleLowerCase()) ||
+                c.sector_name
+                  .toLocaleLowerCase()
+                  .includes(search.toLocaleLowerCase()) ||
+                c.occupation_name
+                  .toLocaleLowerCase()
+                  .includes(search.toLocaleLowerCase())
+              ) {
+                return c;
+              }
+            })
+            .map((c) => (
+              <tr key={c.customer_id} className="tableRow">
+                <td>
+                  {missingInfoCustomers.includes(c.customer_id) &&
+                  missingScoreCustomers.includes(c.customer_id) ? (
+                    <p className="text-yellow-500">
+                      Eksik Bilgi & Sektör/Meslek Skoru
+                    </p>
+                  ) : missingScoreCustomers.includes(c.customer_id) ? (
+                    <p className="text-yellow-500">Sektör / Meslek Skoru</p>
+                  ) : missingInfoCustomers.includes(c.customer_id) ? (
+                    <p className="text-yellow-500">Eksik Bilgi</p>
+                  ) : (
+                    <p className="text-green-500">Hazır</p>
+                  )}
+                </td>
+                <td>{c.customer_id}</td>
+                <td>{c.full_name}</td>
+                <td>{c.experience_years}</td>
+                <td>
+                  {c.sector_name ? (
+                    c.sector_name
+                  ) : (
+                    <p className="text-yellow-400 font-bold">
+                      Değişiklik Gerekli
+                    </p>
+                  )}
+                </td>
+                <td>
+                  {c.occupation_name ? (
+                    c.occupation_name
+                  ) : (
+                    <p className="text-yellow-400 font-bold">
+                      Değişiklik Gerekli
+                    </p>
+                  )}
+                </td>
+                <td>
+                  <Link
+                    to="/change-customer"
+                    className="actionGetButton"
+                    state={{ customer: c }}
+                  >
+                    Değiştir
+                  </Link>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
