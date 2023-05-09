@@ -44,7 +44,6 @@ const axiosWithAuth = () => {
   if (tokenObj) {
     token = tokenObj.token;
   }
-
   return axios.create({
     headers: {
       Authorization: token,

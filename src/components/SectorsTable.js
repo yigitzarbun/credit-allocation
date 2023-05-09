@@ -11,6 +11,7 @@ function SectorsTable() {
   const dispatch = useDispatch();
   const { sectors, users, user } = useSelector((store) => store);
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState(false);
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -19,6 +20,9 @@ function SectorsTable() {
   };
   const handleDelete = (sector_id) => {
     dispatch(deleteSector(sector_id));
+  };
+  const handleFilter = () => {
+    setFilter(!filter);
   };
   let userType = "";
   if (users && user && users.filter((u) => u.email === user.email)[0]) {
@@ -37,18 +41,35 @@ function SectorsTable() {
           <button className="actionGetButtonGreen">Sektör Ekle</button>
         </Link>
       </div>
-      <input
-        type="text"
-        className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
-        placeholder="Sektörlerde ara"
-        onChange={handleSearch}
-        value={search}
-      />
-      {search && (
-        <button className="deleteButton py-2" onClick={handleClear}>
-          Temizle
-        </button>
-      )}
+      <div className="flex justify-between items-center mt-8 mb-4">
+        <div className="w-1/2">
+          <input
+            type="text"
+            className="p-2 w-1/2 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
+            placeholder="Sektörlerde ara"
+            onChange={handleSearch}
+            value={search}
+          />
+          {search && (
+            <button className="deleteButton py-2" onClick={handleClear}>
+              Temizle
+            </button>
+          )}
+        </div>
+        {sectors.filter((s) => s.sector_score === 0).length > 0 && (
+          <label className="hover:text-blue-400 cursor-pointer">
+            <input
+              type="checkbox"
+              id="empty_scores"
+              name="empty_scores"
+              value={filter}
+              onClick={handleFilter}
+              className="mr-2"
+            />
+            Değişiklik gerekenler
+          </label>
+        )}
+      </div>
       <table className="table">
         <thead className="tableHead">
           <tr className="leading-loose">
@@ -67,6 +88,13 @@ function SectorsTable() {
               } else if (
                 s.sector_name.toLowerCase().includes(search.toLowerCase())
               ) {
+                return s;
+              }
+            })
+            .filter((s) => {
+              if (s.sector_score === 0 && filter === true) {
+                return s;
+              } else if (filter === false) {
                 return s;
               }
             })

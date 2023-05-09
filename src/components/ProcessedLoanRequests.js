@@ -7,11 +7,16 @@ import { Link } from "react-router-dom";
 function ProcessedLoanRequests() {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState(false);
+
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
   const handleClear = () => {
     setSearch("");
+  };
+  const handleFilter = () => {
+    setFilter(!filter);
   };
   const customers = useSelector((store) => store.customers);
   let filteredCustomers = [];
@@ -74,6 +79,31 @@ function ProcessedLoanRequests() {
       })
       .catch((err) => console.log(err));
   };
+  let missingInfoCustomers = [];
+  let missingSectorCustomers = [];
+  let missingOccupationCustomers = [];
+
+  for (let i = 0; i < filteredCustomers.length; i++) {
+    if (
+      filteredCustomers[i]["experience_years"] == null ||
+      filteredCustomers[i]["full_name"] == null ||
+      filteredCustomers[i]["occupation_id"] == null ||
+      filteredCustomers[i]["sector_id"] == null ||
+      filteredCustomers[i]["email"] == null ||
+      filteredCustomers[i]["product_choice"] == null ||
+      filteredCustomers[i]["gender"] == null ||
+      filteredCustomers[i]["phone"] == null ||
+      filteredCustomers[i]["source"] == null
+    ) {
+      missingInfoCustomers.push(filteredCustomers[i]["customer_id"]);
+    }
+    if (filteredCustomers[i]["sector_score"] === 0) {
+      missingSectorCustomers.push(filteredCustomers[i]["customer_id"]);
+    }
+    if (filteredCustomers[i]["occupation_score"] === 0) {
+      missingOccupationCustomers.push(filteredCustomers[i]["customer_id"]);
+    }
+  }
   useEffect(() => {
     dispatch(getCustomers());
   }, []);
@@ -85,18 +115,35 @@ function ProcessedLoanRequests() {
           <button className="actionGetButtonGreen">Tümünü Gönder</button>
         )}
       </div>
-      <input
-        type="text"
-        className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
-        placeholder="Müşterilerde ara"
-        onChange={handleSearch}
-        value={search}
-      />
-      {search && (
-        <button className="deleteButton py-2" onClick={handleClear}>
-          Temizle
-        </button>
-      )}
+      <div className="flex justify-between items-center mt-8 mb-4">
+        <div className="w-1/2">
+          <input
+            type="text"
+            className="p-2 w-1/2 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
+            placeholder="Müşterilerde ara"
+            onChange={handleSearch}
+            value={search}
+          />
+          {search && (
+            <button className="deleteButton py-2" onClick={handleClear}>
+              Temizle
+            </button>
+          )}
+        </div>
+        {missingInfoCustomers.length > 0 && (
+          <label className="hover:text-blue-400 cursor-pointer">
+            <input
+              type="checkbox"
+              id="empty_scores"
+              name="empty_scores"
+              value={filter}
+              onClick={handleFilter}
+              className="mr-2"
+            />
+            Eksik kişisel veri
+          </label>
+        )}
+      </div>
       {filteredCustomers && filteredCustomers.length > 0 ? (
         <table className="table">
           <thead className="tableHead">
@@ -126,6 +173,16 @@ function ProcessedLoanRequests() {
                   c.occupation_name
                     .toLocaleLowerCase()
                     .includes(search.toLocaleLowerCase())
+                ) {
+                  return c;
+                }
+              })
+              .filter((c) => {
+                if (filter === false) {
+                  return c;
+                } else if (
+                  filter === true &&
+                  missingInfoCustomers.includes(c.customer_id)
                 ) {
                   return c;
                 }

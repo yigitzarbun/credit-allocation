@@ -19,11 +19,15 @@ function UnprocessedLoanRequests() {
     (store) => store
   );
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState(false);
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
   const handleClear = () => {
     setSearch("");
+  };
+  const handleFilter = () => {
+    setFilter(!filter);
   };
   let filteredCustomers = [];
   if (
@@ -250,18 +254,35 @@ function UnprocessedLoanRequests() {
           Veri Çek
         </button>
       </div>
-      <input
-        type="text"
-        className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
-        placeholder="Müşterilerde ara"
-        onChange={handleSearch}
-        value={search}
-      />
-      {search && (
-        <button className="deleteButton py-2" onClick={handleClear}>
-          Temizle
-        </button>
-      )}
+      <div className="flex justify-between items-center mt-8 mb-4">
+        <div className="w-1/2">
+          <input
+            type="text"
+            className="p-2 w-1/2 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
+            placeholder="Müşterilerde ara"
+            onChange={handleSearch}
+            value={search}
+          />
+          {search && (
+            <button className="deleteButton py-2" onClick={handleClear}>
+              Temizle
+            </button>
+          )}
+        </div>
+        {missingInfoCustomers.length > 0 && (
+          <label className="hover:text-blue-400 cursor-pointer">
+            <input
+              type="checkbox"
+              id="empty_scores"
+              name="empty_scores"
+              value={filter}
+              onClick={handleFilter}
+              className="mr-2"
+            />
+            Değişiklik gerekenler
+          </label>
+        )}
+      </div>
       <table className="table">
         <thead className="tableHead">
           <tr className="leading-loose">
@@ -288,6 +309,16 @@ function UnprocessedLoanRequests() {
                 c.occupation_name
                   .toLocaleLowerCase()
                   .includes(search.toLocaleLowerCase())
+              ) {
+                return c;
+              }
+            })
+            .filter((c) => {
+              if (filter === false) {
+                return c;
+              } else if (
+                filter === true &&
+                missingInfoCustomers.includes(c.customer_id)
               ) {
                 return c;
               }
@@ -328,7 +359,7 @@ function UnprocessedLoanRequests() {
                     c.sector_name
                   ) : (
                     <p className="text-yellow-400 font-bold">
-                      Değişiklik Gerekli
+                      Eksik kişisel veri
                     </p>
                   )}
                 </td>

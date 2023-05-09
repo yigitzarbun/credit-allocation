@@ -11,6 +11,7 @@ function OccupationsTable() {
   const dispatch = useDispatch();
   const { occupations, users, user } = useSelector((store) => store);
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState(false);
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -19,6 +20,9 @@ function OccupationsTable() {
   };
   const handleDelete = (occupation_id) => {
     dispatch(deleteOccupation(occupation_id));
+  };
+  const handleFilter = () => {
+    setFilter(!filter);
   };
   let userType = "";
   if (user && users && users.filter((u) => u.email === user.email)[0]) {
@@ -38,18 +42,35 @@ function OccupationsTable() {
           <button className="actionGetButtonGreen">Meslek Ekle</button>
         </Link>
       </div>
-      <input
-        type="text"
-        className="p-2 my-4 w-1/3 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
-        placeholder="Mesleklerde ara"
-        onChange={handleSearch}
-        value={search}
-      />
-      {search && (
-        <button className="deleteButton py-2" onClick={handleClear}>
-          Temizle
-        </button>
-      )}
+      <div className="flex justify-between items-center mt-8 mb-4">
+        <div className="w-1/2">
+          <input
+            type="text"
+            className="p-2 w-1/2 border-2 text-black bg-slate-200 rounded-md mr-2 hover:border-blue-400 hover:bg-white"
+            placeholder="Mesleklerde ara"
+            onChange={handleSearch}
+            value={search}
+          />
+          {search && (
+            <button className="deleteButton py-2" onClick={handleClear}>
+              Temizle
+            </button>
+          )}
+        </div>
+        {occupations.filter((o) => o.occupation_score === 0).length > 0 && (
+          <label className="hover:text-blue-400 cursor-pointer">
+            <input
+              type="checkbox"
+              id="empty_scores"
+              name="empty_scores"
+              value={filter}
+              onClick={handleFilter}
+              className="mr-2"
+            />
+            Değişiklik gerekenler
+          </label>
+        )}
+      </div>
       <table className="table">
         <thead className="tableHead">
           <tr className="leading-loose">
