@@ -21,29 +21,39 @@ function ChangeCustomer() {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      fname: propsData.fname,
-      lname: propsData.lname,
+      age: propsData.age,
+      email: propsData.email,
       experience_years: propsData.experience_years,
-      sector_id: propsData.sector_id,
+      full_name: propsData.full_name,
+      gender: propsData.gender,
       occupation_id: propsData.occupation_id,
+      phone: propsData.phone,
+      product_choice: propsData.product_choice,
+      sector_id: propsData.sector_id,
+      source: propsData.source,
     },
   });
   const handleUpdateCustomer = (changes) => {
     const dataWide = {
-      customer_id: propsData.customer_id,
-      fname: changes.fname,
-      lname: changes.lname,
-      occupation_id: changes.occupation_id,
-      sector_id: changes.sector_id,
-      experience_years: changes.experience_years,
-      pipedrive: propsData.pipedrive,
+      age: changes.age,
       credit_score: propsData.credit_score,
-      priority_id: propsData.priority_id,
+      customer_id: propsData.customer_id,
+      email: changes.email,
+      experience_years: changes.experience_years,
+      full_name: changes.full_name,
+      gender: changes.gender,
+      landing_id: propsData.landing_id,
+      occupation_id: changes.occupation_id,
+      phone: changes.phone,
+      pipedrive: propsData.pipedrive,
+      priority_id: changes.priority_id,
+      product_choice: changes.product_choice,
+      sector_id: changes.sector_id,
+      source: changes.source,
     };
     dispatch(updateCustomer(dataWide, navigate));
     reset();
   };
-
   useEffect(() => {
     dispatch(getSectors());
     dispatch(getOccupations());
@@ -58,36 +68,23 @@ function ChangeCustomer() {
       </div>
       <p className="mt-8">
         Değiştirilecek müşteri:{" "}
-        <span className="text-blue-400 font-bold">{`${propsData.fname} ${propsData.lname}`}</span>
+        <span className="text-blue-400 font-bold">{`${propsData.full_name}`}</span>
       </p>
       <form
         onSubmit={handleSubmit(handleUpdateCustomer)}
         className=" flex flex-col mt-4"
       >
         <div>
-          <label htmlFor="fname" className="flex">
+          <label htmlFor="full_name" className="flex">
             Müşteri Adı
           </label>
           <input
             type="text"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("fname", { required: "İsim zorunlu" })}
+            {...register("full_name", { required: "İsim zorunlu" })}
           />
-          {errors.fname && (
-            <span className="fieldError">{errors.fname.message}</span>
-          )}
-        </div>
-        <div>
-          <label htmlFor="lname" className="flex">
-            Müşteri Soyadı
-          </label>
-          <input
-            type="text"
-            className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("lname", { required: "Soyisim zorunlu" })}
-          />
-          {errors.lname && (
-            <span className="fieldError">{errors.lname.message}</span>
+          {errors.full_name && (
+            <span className="fieldError">{errors.full_name.message}</span>
           )}
         </div>
         <div>
@@ -144,6 +141,84 @@ function ChangeCustomer() {
           </select>
           {errors.occupation_id && (
             <span className="fieldError">{errors.occupation_id.message}</span>
+          )}
+        </div>
+        <div>
+          <label htmlFor="age" className="flex">
+            Yaş
+          </label>
+          <input
+            type="number"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("age", { required: "Yaş zorunlu" })}
+          />
+          {errors.age && (
+            <span className="fieldError">{errors.age.message}</span>
+          )}
+        </div>
+        <div>
+          <label htmlFor="email" className="flex">
+            Email
+          </label>
+          <input
+            type="text"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("email", { required: "Email zorunlu" })}
+          />
+          {errors.email && (
+            <span className="fieldError">{errors.email.message}</span>
+          )}
+        </div>
+        <div>
+          <label htmlFor="phone" className="flex">
+            Telefon
+          </label>
+          <input
+            type="number"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("phone", { required: "Yaş zorunlu" })}
+          />
+          {errors.phone && (
+            <span className="fieldError">{errors.phone.message}</span>
+          )}
+        </div>
+        <div>
+          <label htmlFor="source" className="flex">
+            Kaynak
+          </label>
+          <input
+            type="text"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("source", { required: "Kaynak zorunlu" })}
+          />
+          {errors.source && (
+            <span className="fieldError">{errors.source.message}</span>
+          )}
+        </div>
+        <div>
+          <label htmlFor="gender" className="flex">
+            Cinsiyet
+          </label>
+          <input
+            type="text"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("gender", { required: "Cinsiyet zorunlu" })}
+          />
+          {errors.gender && (
+            <span className="fieldError">{errors.gender.message}</span>
+          )}
+        </div>
+        <div>
+          <label htmlFor="product_choice" className="flex">
+            Ürün Tercihi
+          </label>
+          <input
+            type="text"
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("product_choice", { required: "Kaynak zorunlu" })}
+          />
+          {errors.product_choice && (
+            <span className="fieldError">{errors.product_choice.message}</span>
           )}
         </div>
         <button className="positiveButton" disabled={!isValid} type="submit">
