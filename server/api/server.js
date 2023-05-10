@@ -11,11 +11,13 @@ const sectorRouter = require("./sectors/sectors-router");
 const occRouter = require("./occupations/occupations-router");
 const customersRouter = require("./customers/customers-router");
 const prioritiesRouter = require("./priorities/priorities-router");
+const weightsRouter = require("./weights/weights-router");
 server.use("/api/users", userRouter);
 server.use("/api/sector", sectorRouter);
 server.use("/api/occ", occRouter);
 server.use("/api/customers", customersRouter);
 server.use("/api/priorities", prioritiesRouter);
+server.use("/api/weights", weightsRouter);
 
 const typeFormId = "G6vvOlZz";
 const typeFormToken = process.env.REACT_APP_TYPE_FORM;

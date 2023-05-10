@@ -41,6 +41,11 @@ exports.up = function (knex) {
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
     })
+    .createTable("weights", (tablo) => {
+      tablo.increments("weight_id");
+      tablo.string("field");
+      tablo.float("weight_score");
+    })
     .createTable("customers", (tablo) => {
       tablo.increments("customer_id");
       tablo.string("landing_id").notNullable().unique();
@@ -85,6 +90,7 @@ exports.up = function (knex) {
 exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists("customers")
+    .dropTableIfExists("weights")
     .dropTableIfExists("priorities")
     .dropTableIfExists("occupations")
     .dropTableIfExists("sectors")

@@ -25,7 +25,6 @@ router.put("/:priority_id", async (req, res, next) => {
     const updates = req.body;
     await prioritiesModel.update(updates.priority_id, updates);
     const updatedPriority = await prioritiesModel.getById(updates.priority_id);
-    console.log(updatedPriority);
     res.status(200).json(updatedPriority);
   } catch (error) {
     next(error);

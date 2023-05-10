@@ -47,7 +47,10 @@ function AddPrioritization() {
           <input
             type="number"
             className="border-2 rounded-md w-full p-2 mt-2"
-            {...register("priority", { required: "Önceliklendirme zorunlu" })}
+            {...register("priority", {
+              required: "Önceliklendirme zorunlu",
+              min: { value: 1, message: "Min 1" },
+            })}
           />
           {errors.priority && (
             <span className="fieldError">{errors.priority.message}</span>

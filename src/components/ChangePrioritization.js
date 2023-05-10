@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { updatePrioritization } from "../redux-stuff/actions";
 function ChangePrioritization(props) {
@@ -51,7 +51,10 @@ function ChangePrioritization(props) {
           <input
             type="number"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("priority", { required: "Önceliklendirme zorunlu" })}
+            {...register("priority", {
+              required: "Önceliklendirme zorunlu",
+              min: { value: 1, message: "Min 1" },
+            })}
           />
           {errors.priority && (
             <span className="fieldError">{errors.priority.message}</span>

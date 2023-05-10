@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCustomers, updateCustomer } from "../redux-stuff/actions";
+import {
+  getCustomers,
+  getOccupations,
+  getPriorities,
+  getSectors,
+  getWeights,
+  updateCustomer,
+} from "../redux-stuff/actions";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function ProcessedLoanRequests() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(false);
-
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
-  const handleClear = () => {
-    setSearch("");
-  };
-  const handleFilter = () => {
-    setFilter(!filter);
-  };
-  const customers = useSelector((store) => store.customers);
+  const { customers, weights, sectors, occupations, priorities } = useSelector(
+    (store) => store
+  );
+  let customPriorities = "";
+  if (priorities && priorities.length > 0 && Array.isArray(priorities)) {
+    customPriorities = priorities.filter(
+      (p) => p.experience_years && p.sector_id && p.occupation_id
+    );
+  }
   let filteredCustomers = [];
   if (
     customers &&
@@ -28,6 +34,59 @@ function ProcessedLoanRequests() {
   ) {
     filteredCustomers = customers.filter((c) => c.pipedrive == false);
   }
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  const handleClear = () => {
+    setSearch("");
+  };
+  const handleFilter = () => {
+    setFilter(!filter);
+  };
+  const handleRecalculate = () => {
+    customers.forEach((c) => {
+      // calculate credit score
+      let creditScore =
+        weights.find((w) => w.field === "sector")["weight_score"] *
+          sectors.filter((s) => s.sector_name == c.sector_name)[0][
+            "sector_score"
+          ] +
+        weights.find((w) => w.field === "occupation")["weight_score"] *
+          occupations.filter((o) => o.occupation_name == c.occupation_name)[0][
+            "occupation_score"
+          ] +
+        weights.find((w) => w.field === "experience")["weight_score"] *
+          c.experience_years;
+      let priority = null;
+      if (customPriorities.length > 0) {
+        for (let i = 0; i < customPriorities.length; i++) {
+          if (
+            customPriorities[i]["experience_years"] == c.experience_years &&
+            customPriorities[i]["sector_id"] == c.sector_id &&
+            customPriorities[i]["occupation_id"] == c.occupation_id
+          ) {
+            priority = customPriorities[i]["priority_id"];
+          }
+        }
+      } else if (creditScore >= 90) {
+        priority = 2;
+      } else if (creditScore >= 80) {
+        priority = 3;
+      } else if (creditScore >= 70) {
+        priority = 4;
+      } else if (creditScore >= 60) {
+        priority = 5;
+      } else {
+        priority = 6;
+      }
+      const dataWide = {
+        priority_id: priority,
+        customer_id: c.customer_id,
+      };
+      dispatch(updateCustomer(dataWide, navigate));
+    });
+  };
+
   const handlePipedrive = (data) => {
     const dataWidePipedrive = {
       name: data.full_name,
@@ -106,14 +165,27 @@ function ProcessedLoanRequests() {
   }
   useEffect(() => {
     dispatch(getCustomers());
+    dispatch(getWeights());
+    dispatch(getSectors());
+    dispatch(getOccupations());
+    dispatch(getPriorities());
   }, []);
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center">
         <h2 className="pageHeader ">Müşteriler</h2>
-        {filteredCustomers && filteredCustomers.length > 0 && (
-          <button className="actionGetButtonGreen">Tümünü Gönder</button>
-        )}
+        {filteredCustomers &&
+          filteredCustomers.length > 0 &&
+          sectors &&
+          occupations &&
+          weights && (
+            <button
+              className="actionGetButtonGreen"
+              onClick={handleRecalculate}
+            >
+              Yeniden Hesapla
+            </button>
+          )}
       </div>
       <div className="flex justify-between items-center mt-8 mb-4">
         <div className="w-1/2">

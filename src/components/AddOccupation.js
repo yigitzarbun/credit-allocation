@@ -16,7 +16,6 @@ function AddOccupation() {
     dispatch(addOccupation(formData, navigate));
     reset();
   };
-
   return (
     <div className=" formContainer">
       <div className="flex justify-between items-center">
@@ -51,6 +50,8 @@ function AddOccupation() {
             className="border-2 rounded-md w-full p-2 mt-4"
             {...register("occupation_score", {
               required: "Meslek skoru zorunlu",
+              max: { value: 100, message: "Max 100" },
+              min: { value: 0, message: "Min 0" },
             })}
           />
           {errors.occupation_score && (

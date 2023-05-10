@@ -50,7 +50,11 @@ function ChangeOccupation() {
           <input
             type="number"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("occupation_score", { required: "Skor zorunlu" })}
+            {...register("occupation_score", {
+              required: "Skor zorunlu",
+              min: { value: 0, message: "Min 0" },
+              max: { value: 100, message: "Max 100" },
+            })}
           />
           {errors.occupation_score && (
             <span className="fieldError">

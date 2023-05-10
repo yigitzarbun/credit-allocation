@@ -37,6 +37,8 @@ export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
 export const UPDATE_SECTOR = "UPDATE_SECTOR";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
 export const GET_USER = "GET_USER";
+export const GET_WEIGHTS = "GET_WEIGHTS";
+export const UPDATE_WEIGHT = "UPDATE_WEIGHT";
 
 const axiosWithAuth = () => {
   const tokenObj = JSON.parse(localStorage.getItem(key));
@@ -281,6 +283,30 @@ export const updateOccupation = (updates, navigate) => (dispatch) => {
       if (res.status === 201) {
         dispatch({ type: UPDATE_OCCUPATION, payload: res.data });
         toast.success("Meslek güncellendi");
+        navigate(-1);
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const getWeights = () => (dispatch) => {
+  axiosWithAuth()
+    .get(url + "api/weights")
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch({ type: GET_WEIGHTS, payload: res.data });
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+export const updateWeight = (updates, navigate) => (dispatch) => {
+  axiosWithAuth()
+    .put(url + "api/weights/:weight_id", updates)
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch({ type: UPDATE_WEIGHT, payload: res.data });
+        toast.success("Ağırlık güncellendi");
         navigate(-1);
       }
     })

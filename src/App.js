@@ -10,7 +10,7 @@ import OccupationsTable from "./components/OccupationsTable";
 import UnprocessedLoanRequests from "./components/UnprocessedLoanRequests";
 import ProcessedLoanRequests from "./components/ProcessedLoanRequests";
 import EmployeesTable from "./components/EmployeesTable";
-import Prioritization from "./components/Prioritization";
+import PrioritiesTable from "./components/PrioritiesTable";
 import ChangePrioritization from "./components/ChangePrioritization";
 import AddEmployee from "./components/AddEmployee";
 import PrivateRoutes from "./components/PrivateRoutes";
@@ -19,6 +19,7 @@ import ChangeSector from "./components/ChangeSector";
 import ChangeOccupation from "./components/ChangeOccupation";
 import ChangeCustomer from "./components/ChangeCustomer";
 import Header from "./components/Header";
+import ChangeWeight from "./components/ChangeWeight";
 function App() {
   return (
     <div>
@@ -38,7 +39,7 @@ function App() {
               <Route path="/sectors" element={<SectorsTable />} />
               <Route path="/occupations" element={<OccupationsTable />} />
               <Route path="/employees" element={<EmployeesTable />} />
-              <Route path="/prioritization" element={<Prioritization />} />
+              <Route path="/prioritization" element={<PrioritiesTable />} />
               <Route
                 path="/add-prioritization"
                 element={<AddPrioritization />}
@@ -58,6 +59,7 @@ function App() {
               />
               <Route path="/change-sector" element={<ChangeSector />} />
               <Route path="/change-occupation" element={<ChangeOccupation />} />
+              <Route path="/change-weight" element={<ChangeWeight />} />
             </Route>
           </Routes>
         </div>

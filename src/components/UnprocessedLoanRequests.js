@@ -7,15 +7,16 @@ import {
   getOccupations,
   addSector,
   addOccupation,
+  getWeights,
 } from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function UnprocessedLoanRequests() {
   const dispatch = useDispatch();
-  const { customers, priorities, sectors, occupations } = useSelector(
+  const { customers, priorities, sectors, occupations, weights } = useSelector(
     (store) => store
   );
   const [search, setSearch] = useState("");
@@ -60,7 +61,6 @@ function UnprocessedLoanRequests() {
     }
     return false;
   };
-
   const getTypeForm = () => {
     axios
       .get("http://localhost:9000/typeform")
@@ -138,7 +138,7 @@ function UnprocessedLoanRequests() {
             }
           }
         }
-        if (form && form["answers"] && sectors && occupations) {
+        if (form && form["answers"] && sectors && occupations && weights) {
           // sector
           customerSector = sectors.find(
             (s) => s.sector_name === form["answers"][2]["choice"]["label"]
@@ -148,16 +148,17 @@ function UnprocessedLoanRequests() {
             (o) => o.occupation_name === form["answers"][3]["choice"]["label"]
           )["occupation_id"];
           creditScore =
-            sectorWeight *
+            weights.find((w) => w.field === "sector")["weight_score"] *
               sectors.filter(
                 (s) => s.sector_name == form["answers"][2]["choice"]["label"]
               )[0]["sector_score"] +
-            occupationWeight *
+            weights.find((w) => w.field === "occupation")["weight_score"] *
               occupations.filter(
                 (o) =>
                   o.occupation_name == form["answers"][3]["choice"]["label"]
               )[0]["occupation_score"] +
-            experienceWeight * form["answers"][1]["number"];
+            weights.find((w) => w.field === "experience")["weight_score"] *
+              form["answers"][1]["number"];
         }
         // Calculate the priority. Check if the customer's responses match 'custom priorities scheme'
         if (customPriorities.length > 0) {
@@ -172,15 +173,15 @@ function UnprocessedLoanRequests() {
             }
           }
         } else if (creditScore >= 90) {
-          priority = 1;
-        } else if (creditScore >= 80) {
           priority = 2;
-        } else if (creditScore >= 70) {
+        } else if (creditScore >= 80) {
           priority = 3;
-        } else if (creditScore >= 60) {
+        } else if (creditScore >= 70) {
           priority = 4;
-        } else {
+        } else if (creditScore >= 60) {
           priority = 5;
+        } else {
+          priority = 6;
         }
         // Prepare customer data to be sent to the database
         if (form === null) {
@@ -245,6 +246,7 @@ function UnprocessedLoanRequests() {
     dispatch(getPriorities());
     dispatch(getSectors());
     dispatch(getOccupations());
+    dispatch(getWeights());
   }, []);
   return (
     <div className="mt-12">
@@ -292,6 +294,7 @@ function UnprocessedLoanRequests() {
             <th>Tecrübe Yıl</th>
             <th>Sektör</th>
             <th>Meslek</th>
+            <th>Değiştir</th>
           </tr>
         </thead>
         <tbody className="tableBody">

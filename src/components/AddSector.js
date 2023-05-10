@@ -16,7 +16,6 @@ function AddSector() {
     dispatch(addSector(data, navigate));
     reset();
   };
-
   return (
     <div className="formContainer">
       <div className="flex justify-between items-center">
@@ -49,7 +48,11 @@ function AddSector() {
           <input
             type="number"
             className="border-2 rounded-md w-full p-2 mt-4"
-            {...register("sector_score", { required: "Sektör skoru zorunlu" })}
+            {...register("sector_score", {
+              required: "Sektör skoru zorunlu",
+              max: { value: 100, message: "Max 100" },
+              min: { value: 0, message: "Min 0" },
+            })}
           />
           {errors.sector_score && (
             <span className="fieldError">{errors.sector_score.message}</span>

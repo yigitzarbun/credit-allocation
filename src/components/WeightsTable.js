@@ -1,64 +1,55 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { getPriorities, getUsers, GET_USER } from "../redux-stuff/actions";
 import { useDispatch, useSelector } from "react-redux";
-function Prioritization() {
-  const { user, users, priorities } = useSelector((store) => store);
+import { getUsers, getWeights, GET_USER } from "../redux-stuff/actions";
+import { Link } from "react-router-dom";
+
+function WeightsTable() {
   const dispatch = useDispatch();
+  const { weights, users, user } = useSelector((store) => store);
   let userType = "";
   if (user && users && users.filter((u) => u.email === user.email)[0]) {
     userType = users.filter((u) => u.email === user.email)[0]["role_name"];
   }
-  let filteredPriorities = [];
-  if (priorities === null) {
-    filteredPriorities = "Loading";
-  } else if (priorities.length === 0) {
-    filteredPriorities = "İstisnai önceliklendirme yok";
-  } else if (Array.isArray(priorities) && priorities) {
-    filteredPriorities = priorities.filter(
-      (p) => p.sector_id && p.occupation_id && p.experience_years
-    );
-  }
   useEffect(() => {
-    dispatch(getPriorities());
+    dispatch(getWeights());
     dispatch(getUsers());
     dispatch({ type: GET_USER });
   }, []);
   return (
     <div>
-      {filteredPriorities && filteredPriorities.length > 0 ? (
+      {weights && weights.length > 0 ? (
         <table className="table">
           <thead className="tableHead">
             <tr className="leading-loose">
-              <th>Sektör</th>
-              <th>Meslek</th>
-              <th>Kıdem (Yıl)</th>
-              <th>Öncelik Sıra</th>
-              {userType == "admin" && <th>Öncelik Değiştir</th>}
+              <th>Ağırlık ID</th>
+              <th>Alan</th>
+              <th>Ağırlık</th>
+              {userType == "admin" && <th>Ağırlık Değiştir</th>}
             </tr>
           </thead>
           <tbody className="tableBody">
-            {Array.isArray(filteredPriorities) &&
-              filteredPriorities &&
-              filteredPriorities.map((p) => (
-                <tr key={p.priority_id} className="tableRow">
-                  <td>{p.sector_name}</td>
-                  <td>{p.occupation_name}</td>
-                  <th>{p.experience_years}</th>
-                  <td>{p.priority}</td>
+            {Array.isArray(weights) &&
+              weights &&
+              weights.map((w) => (
+                <tr key={w.weight_id} className="tableRow">
+                  <td>{w.weight_id}</td>
+                  <td>
+                    {w.field === "sector"
+                      ? "Sektör"
+                      : w.field === "occupation"
+                      ? "Meslek"
+                      : "Kıdem (Yıl)"}
+                  </td>
+                  <th>{w.weight_score}</th>
                   {userType == "admin" && (
                     <td>
                       <Link
-                        to="/change-prioritization"
+                        to="/change-weight"
                         className="actionGetButton"
                         state={{
-                          sector: p.sector_name,
-                          occupation: p.occupation_name,
-                          experience: p.experience_years,
-                          priority: p.priority,
-                          priority_id: p.priority_id,
-                          sector_id: p.sector_id,
-                          occupation_id: p.occupation_id,
+                          weight_id: w.weight_id,
+                          field: w.field,
+                          weight_score: w.weight_score,
                         }}
                       >
                         Değiştir
@@ -90,4 +81,4 @@ function Prioritization() {
   );
 }
 
-export default Prioritization;
+export default WeightsTable;

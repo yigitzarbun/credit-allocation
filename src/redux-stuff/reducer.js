@@ -20,6 +20,8 @@ import {
   UPDATE_SECTOR,
   UPDATE_OCCUPATION,
   GET_USER,
+  GET_WEIGHTS,
+  UPDATE_WEIGHT,
 } from "./actions";
 
 const initialState = {
@@ -29,6 +31,7 @@ const initialState = {
   occupations: [],
   customers: [],
   priorities: [],
+  weights: [],
 };
 export function myReducer(state = initialState, action) {
   switch (action.type) {
@@ -164,6 +167,22 @@ export function myReducer(state = initialState, action) {
       return {
         ...state,
         occupations: [...copyOccupations2],
+      };
+    case GET_WEIGHTS:
+      return {
+        ...state,
+        weights: [...action.payload],
+      };
+    case UPDATE_WEIGHT:
+      const copyWeights = [...state.weights];
+      const oldWeight = copyWeights.filter(
+        (w) => w.weight_id === action.payload.weight_id
+      )[0];
+      const indexWeight = copyWeights.indexOf(oldWeight);
+      copyWeights.splice(indexWeight, 1, action.payload);
+      return {
+        ...state,
+        weights: [...copyWeights],
       };
     default:
       return state;
