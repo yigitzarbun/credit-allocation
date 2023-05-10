@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# Credit Allocation Site
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Credit Allocation module is a web application that allows employees of a fictional bank -- Neptune --
 
-## Available Scripts
+1.  to process customer applications for commercial loans,
+2.  automatically calculate the credit score for each customer by taking into account parameters such as occupation, sector and work experience,
+3.  allocate a priority for each application, and
+4.  send processed customer application data to Pipedrive.
 
-In the project directory, you can run:
+Employees of the fictional Neptune bank may also add/remove sector and occupations and edit sector and occupation scores, which in turn determine the credit score and the priority for each customer to be contacted by the customer support team, who may reach loan application data from Pipedrive.
 
-### `npm start`
+Besides, users who are authorized as admins may also add custom prioritization logics, which would supersede existing credit score calculations.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To run the Credit Allocation Site on your local machine, follow these steps:
 
-### `npm test`
+1. Clone this repository: `git clone https://github.com/yigitzarbun/credit-allocation.git`
+2. Install dependencies: `npm install`
+3. Set up environment variables by creating a `.env` file in the root directory of the project. The file should include the following variables:
+   ```
+   TYPEFORM_API_KEY=<typeform API key>
+   PIPELINE_ID=<Pipedrive pipeline ID>
+   PIPEDRIVE_API_KEY=<Pipedrive API key>
+   ```
+4. Start the app: `npm start`
+5. Start the server: `npm run server` (which runs on PORT: 9000)
+6. Open your browser and go to `http://localhost:3000`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Usage
 
-### `npm run build`
+Initially send a post request to `http://localhost:9000/api/users/register` with the following body details:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+{
+"email": "YOUR EMAIL",
+"fname": "FIRST NAME",
+"lname": "LAST NAME",
+"password": "PASSWORD",
+"role_name": "admin"
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+As a result, the account holder will be authenticated and authorized as an admin upon signing in. Next, the admin may add other employees, who'd be regarded as "analyst" and will have view-only permissions.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Here's how to use the Credit Allocation Site:
 
-### `npm run eject`
+1. Employees log in to the site using their credentials.
+2. They may retreive applications from Typeform via `/unprocessed-loan-requests`.
+3. After obtaining applications from Typeform, the data is displayed on the site, where the employee can allocate a priority for the application.
+4. The site calculates the credit score and priority based on the sector and occupation scores, which can be edited by the user.
+5. The employee can then send the processed customer application data to Pipedrive.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Contributing
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you want to contribute to the Credit Allocation Site, please submit a pull request. Make sure your code passes the tests before submitting.
