@@ -279,7 +279,7 @@ function UnprocessedLoanRequests() {
               onClick={handleFilter}
               className="mr-2"
             />
-            Değişiklik gerekenler
+            Eksik kişisel veri
           </label>
         )}
       </div>
@@ -328,21 +328,32 @@ function UnprocessedLoanRequests() {
                 <td>
                   {missingInfoCustomers.includes(c.customer_id) ? (
                     <Link to="/change-customer" state={{ customer: c }}>
-                      {" "}
                       <button className="p-1 border-2 border-yellow-400 font-bold hover:text-black hover:bg-yellow-400">
                         Eksik Bilgi
                       </button>
                     </Link>
                   ) : missingSectorCustomers.includes(c.customer_id) ? (
-                    <Link to="/sectors">
-                      {" "}
+                    <Link
+                      to="/change-sector"
+                      state={{
+                        sector_id: c.sector_id,
+                        sector_name: c.sector_name,
+                        sector_score: c.sector_score,
+                      }}
+                    >
                       <button className="p-1 border-2 border-yellow-400 font-bold hover:text-black hover:bg-yellow-400">
                         Eksik Sektör Skoru
                       </button>
                     </Link>
                   ) : missingOccupationCustomers.includes(c.customer_id) ? (
-                    <Link to="/occupations">
-                      {" "}
+                    <Link
+                      to="/change-occupation"
+                      state={{
+                        occupation_id: c.occupation_id,
+                        occupation_name: c.occupation_name,
+                        occupation_score: c.occupation_score,
+                      }}
+                    >
                       <button className="p-1 border-2 border-yellow-400 font-bold hover:text-black hover:bg-yellow-400">
                         Eksik Meslek Skoru
                       </button>

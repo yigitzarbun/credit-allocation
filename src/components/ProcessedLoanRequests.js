@@ -201,7 +201,9 @@ function ProcessedLoanRequests() {
                       c.priority === null ||
                       c.product_choice === null ||
                       c.sector_name === null ||
-                      (c.source === null && "text-yellow-400")
+                      c.source === null
+                        ? "text-yellow-400"
+                        : "text-white"
                     }
                   >
                     {c.customer_id}
@@ -218,7 +220,9 @@ function ProcessedLoanRequests() {
                       c.priority === null ||
                       c.product_choice === null ||
                       c.sector_name === null ||
-                      (c.source === null && "text-yellow-400")
+                      c.source === null
+                        ? "text-yellow-400"
+                        : "text-white"
                     }
                   >
                     {c.full_name}
@@ -235,7 +239,9 @@ function ProcessedLoanRequests() {
                       c.priority === null ||
                       c.product_choice === null ||
                       c.sector_name === null ||
-                      (c.source === null && "text-yellow-400")
+                      c.source === null
+                        ? "text-yellow-400"
+                        : "text-white"
                     }
                   >
                     {c.experience_years}
@@ -252,7 +258,9 @@ function ProcessedLoanRequests() {
                       c.priority === null ||
                       c.product_choice === null ||
                       c.sector_name === null ||
-                      (c.source === null && "text-yellow-400")
+                      c.source === null
+                        ? "text-yellow-400"
+                        : "text-white"
                     }
                   >
                     {c.sector_name}
@@ -269,7 +277,9 @@ function ProcessedLoanRequests() {
                       c.priority === null ||
                       c.product_choice === null ||
                       c.sector_name === null ||
-                      (c.source === null && "text-yellow-400")
+                      c.source === null
+                        ? "text-yellow-400"
+                        : "text-white"
                     }
                   >
                     {c.occupation_name}
@@ -286,12 +296,13 @@ function ProcessedLoanRequests() {
                       c.priority === null ||
                       c.product_choice === null ||
                       c.sector_name === null ||
-                      (c.source === null && "text-yellow-400")
+                      c.source === null
+                        ? "text-yellow-400"
+                        : "text-white"
                     }
                   >
                     {c.credit_score.toFixed(1)}
                   </td>
-                  <td>{c.priority}</td>
                   <td
                     className={
                       c.age === null ||
@@ -304,25 +315,58 @@ function ProcessedLoanRequests() {
                       c.priority === null ||
                       c.product_choice === null ||
                       c.sector_name === null ||
-                      (c.source === null && "text-yellow-400")
+                      c.source === null
+                        ? "text-yellow-400"
+                        : "text-white"
                     }
                   >
+                    {c.priority}
+                  </td>
+                  <td>
                     {c.pipedrive === 0 &&
                     c.sector_score !== 0 &&
-                    c.occupation_score !== 0 ? (
+                    c.occupation_score !== 0 &&
+                    missingInfoCustomers.includes(c.customer_id) === false ? (
                       <button
                         onClick={() => handlePipedrive(c)}
                         className="font-bold border-2 border-blue-500 rounded-md hover:bg-blue-500 hover:text-white px-2 text-center"
                       >
                         Gönder
                       </button>
-                    ) : (
-                      <Link to="/unprocessed-loan-requests">
-                        {" "}
+                    ) : c.sector_score === 0 ? (
+                      <Link
+                        to="/change-sector"
+                        state={{
+                          sector_id: c.sector_id,
+                          sector_name: c.sector_name,
+                          sector_score: c.sector_score,
+                        }}
+                      >
                         <button className="font-bold border-2 border-yellow-500 rounded-md hover:bg-yellow-500 hover:text-black px-2 text-center">
                           Düzenle
                         </button>
                       </Link>
+                    ) : c.occupation_score === 0 ? (
+                      <Link
+                        to="/change-occupation"
+                        state={{
+                          occupation_id: c.occupation_id,
+                          occupation_name: c.occupation_name,
+                          occupation_score: c.occupation_score,
+                        }}
+                      >
+                        <button className="font-bold border-2 border-yellow-500 rounded-md hover:bg-yellow-500 hover:text-black px-2 text-center">
+                          Düzenle
+                        </button>
+                      </Link>
+                    ) : (
+                      missingInfoCustomers.includes(c.customer_id) && (
+                        <Link to="/change-customer" state={{ customer: c }}>
+                          <button className="font-bold border-2 border-yellow-500 rounded-md hover:bg-yellow-500 hover:text-black px-2 text-center">
+                            Düzenle
+                          </button>
+                        </Link>
+                      )
                     )}
                   </td>
                 </tr>
