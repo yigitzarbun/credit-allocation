@@ -59,7 +59,8 @@ function ChangeCustomer() {
       sector_id: changes.sector_id,
       source: changes.source,
     };
-    dispatch(updateCustomer(dataWide, navigate));
+    dispatch(updateCustomer(dataWide));
+    navigate("/unprocessed-loan-requests");
     reset();
   };
   useEffect(() => {

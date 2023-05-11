@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const occModel = require("./occupations-model");
+const md = require("./occupations-middleware");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -9,15 +10,20 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-router.post("/addOcc", async (req, res, next) => {
-  try {
-    const newSector = req.body;
-    const addSector = await occModel.createOccupation(newSector);
-    res.status(201).json(newSector);
-  } catch (error) {
-    next(error);
+router.post(
+  "/addOcc",
+  md.infoExists,
+  md.occupationUnique,
+  async (req, res, next) => {
+    try {
+      const newSector = req.body;
+      const addSector = await occModel.createOccupation(newSector);
+      res.status(201).json(newSector);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 router.put("/:occupation_id", async (req, res, next) => {
   try {
     const updates = { ...req.body };

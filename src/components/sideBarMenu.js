@@ -36,6 +36,8 @@ const SideBar = () => {
     Array.isArray(users) & (users.length > 0)
   ) {
     userType = users.filter((u) => u.email === user.email)[0]["role_name"];
+  } else if (user) {
+    userType = user.role_name;
   }
 
   const dispatch = useDispatch();
@@ -52,7 +54,7 @@ const SideBar = () => {
     dispatch(getOccupations());
   }, []);
   return (
-    <div className="bg-[#1C1C20] p5 text-ternanry pt-8 p-4 rounded-md">
+    <div className="bg-[#1C1C20] p5 text-ternanry pt-8 p-4 rounded-md sticky top-0">
       <ul className="pt-2">
         <NavLink
           to="/"

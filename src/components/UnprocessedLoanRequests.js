@@ -40,10 +40,6 @@ function UnprocessedLoanRequests() {
     filteredCustomers = customers.filter((c) => c.pipedrive == false);
   }
 
-  const sectorWeight = 0.5;
-  const occupationWeight = 0.4;
-  const experienceWeight = 0.1;
-
   let creditScore = null;
   let priority = null;
 

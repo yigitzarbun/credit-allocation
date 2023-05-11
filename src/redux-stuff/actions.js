@@ -170,7 +170,10 @@ export const addOccupation = (formData, navigate) => (dispatch) => {
         navigate(-1);
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      toast.error(err.response.data.message);
+    });
 };
 
 export const deleteOccupation = (occupation_id) => (dispatch) => {
@@ -250,14 +253,13 @@ export const addPrioritization = (formData, navigate) => (dispatch) => {
     });
 };
 
-export const updateCustomer = (updates, navigate) => (dispatch) => {
+export const updateCustomer = (updates) => (dispatch) => {
   axiosWithAuth()
     .put(url + "api/customers/:customer_id", updates)
     .then((res) => {
       if (res.status === 201) {
         dispatch({ type: UPDATE_CUSTOMER, payload: res.data });
         toast.success("Müşteri bilgileri güncellendi");
-        navigate(-1);
       }
     })
     .catch((err) => console.log(err));

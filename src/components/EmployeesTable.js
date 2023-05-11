@@ -30,6 +30,8 @@ function EmployeesTable() {
   let userType = "";
   if (users && user && users.filter((u) => u.email === user.email)[0]) {
     userType = users.filter((u) => u.email === user.email)[0]["role_name"];
+  } else if (user) {
+    userType = user.role_name;
   }
   useEffect(() => {
     dispatch(getUsers());
