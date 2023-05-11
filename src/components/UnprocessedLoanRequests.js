@@ -215,6 +215,7 @@ function UnprocessedLoanRequests() {
       })
       .catch((err) => console.log(err));
   };
+
   let missingInfoCustomers = [];
   let missingSectorCustomers = [];
   let missingOccupationCustomers = [];

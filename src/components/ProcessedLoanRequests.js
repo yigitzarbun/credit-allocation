@@ -45,18 +45,28 @@ function ProcessedLoanRequests() {
   };
   const handleRecalculate = () => {
     customers.forEach((c) => {
+      // find customer sector
+      let customerSector = sectors.find((s) => s.sector_id === c.sector_id);
+      // find customer occupation
+      let customerOccupation = occupations.find(
+        (o) => o.occupation_id === c.occupation_id
+      );
       // calculate credit score
-      let creditScore =
-        weights.find((w) => w.field === "sector")["weight_score"] *
-          sectors.filter((s) => s.sector_name == c.sector_name)[0][
-            "sector_score"
-          ] +
-        weights.find((w) => w.field === "occupation")["weight_score"] *
-          occupations.filter((o) => o.occupation_name == c.occupation_name)[0][
-            "occupation_score"
-          ] +
-        weights.find((w) => w.field === "experience")["weight_score"] *
-          c.experience_years;
+      let creditScore = null;
+      if (customerSector && customerOccupation) {
+        let sectorScore = customerSector["sector_score"];
+        if (sectorScore) {
+          creditScore =
+            weights.find((w) => w.field === "sector")["weight_score"] *
+              sectorScore +
+            weights.find((w) => w.field === "occupation")["weight_score"] *
+              customerOccupation["occupation_score"] +
+            weights.find((w) => w.field === "experience")["weight_score"] *
+              c.experience_years;
+        }
+      }
+      // calculate priority
+      let existingPriority = c.priority_id;
       let priority = null;
       if (customPriorities.length > 0) {
         for (let i = 0; i < customPriorities.length; i++) {
@@ -66,22 +76,23 @@ function ProcessedLoanRequests() {
             customPriorities[i]["occupation_id"] == c.occupation_id
           ) {
             priority = customPriorities[i]["priority_id"];
+          } else if (creditScore >= 90) {
+            priority = 2;
+          } else if (creditScore >= 80) {
+            priority = 3;
+          } else if (creditScore >= 70) {
+            priority = 4;
+          } else if (creditScore >= 60) {
+            priority = 5;
+          } else {
+            priority = 1;
           }
         }
-      } else if (creditScore >= 90) {
-        priority = 2;
-      } else if (creditScore >= 80) {
-        priority = 3;
-      } else if (creditScore >= 70) {
-        priority = 4;
-      } else if (creditScore >= 60) {
-        priority = 5;
-      } else {
-        priority = 6;
       }
       const dataWide = {
         priority_id: priority,
         customer_id: c.customer_id,
+        credit_score: creditScore,
       };
       dispatch(updateCustomer(dataWide, navigate));
     });

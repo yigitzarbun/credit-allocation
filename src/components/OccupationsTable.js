@@ -94,13 +94,19 @@ function OccupationsTable() {
             })
             .map((o) => (
               <tr key={o.occupation_id} className="tableRow">
-                <td className={o.occupation_score === 0 && "text-yellow-400"}>
+                <td
+                  className={o.occupation_score === 0 ? "text-yellow-400" : ""}
+                >
                   {o.occupation_id}
                 </td>
-                <td className={o.occupation_score === 0 && "text-yellow-400"}>
+                <td
+                  className={o.occupation_score === 0 ? "text-yellow-400" : ""}
+                >
                   {o.occupation_name}
                 </td>
-                <td className={o.occupation_score === 0 && "text-yellow-400"}>
+                <td
+                  className={o.occupation_score === 0 ? "text-yellow-400" : ""}
+                >
                   {o.occupation_score}
                 </td>
                 {userType == "admin" && (

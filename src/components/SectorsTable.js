@@ -100,13 +100,13 @@ function SectorsTable() {
             })
             .map((s) => (
               <tr key={s.sector_id} className="tableRow">
-                <td className={s.sector_score === 0 && "text-yellow-400"}>
+                <td className={s.sector_score === 0 ? "text-yellow-400" : ""}>
                   {s.sector_id}
                 </td>
-                <td className={s.sector_score === 0 && "text-yellow-400"}>
+                <td className={s.sector_score === 0 ? "text-yellow-400" : ""}>
                   {s.sector_name}
                 </td>
-                <td className={s.sector_score === 0 && "text-yellow-400"}>
+                <td className={s.sector_score === 0 ? "text-yellow-400" : ""}>
                   {s.sector_score}
                 </td>
                 {userType == "admin" && (
