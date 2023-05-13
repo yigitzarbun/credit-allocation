@@ -7,7 +7,9 @@ async function findSectorById(id) {
   const sector = await db("sectors").where("sector_id", id).first();
   return sector;
 }
-
+async function getByFilter(filter) {
+  return db("sectors").where(filter).first();
+}
 async function createSector(sector) {
   const CreatedSectorId = await db("sectors").insert(sector);
   const createdSector = await findSectorById(CreatedSectorId);
@@ -25,6 +27,7 @@ async function deleteSector(id) {
 module.exports = {
   getAllSectors,
   findSectorById,
+  getByFilter,
   createSector,
   updateSector,
   deleteSector,

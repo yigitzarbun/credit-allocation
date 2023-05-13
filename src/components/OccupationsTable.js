@@ -94,6 +94,13 @@ function OccupationsTable() {
                 return o;
               }
             })
+            .filter((o) => {
+              if (o.occupation_score === 0 && filter === true) {
+                return o;
+              } else if (filter === false) {
+                return o;
+              }
+            })
             .map((o) => (
               <tr key={o.occupation_id} className="tableRow">
                 <td

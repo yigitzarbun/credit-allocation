@@ -64,7 +64,7 @@ function EmployeesTable() {
         </div>
         <select
           onChange={handleFilter}
-          className="w-1/6 p-2 border-2 border-blue-400 text-blue-400 bg-slate-950 rounded-md"
+          className="w-1/6 p-2 border-2 border-blue-400 font-bold text-white bg-slate-950 rounded-md hover:bg-blue-400 hover:text-white"
         >
           <option className="font-bold" value="">
             Tüm Roller

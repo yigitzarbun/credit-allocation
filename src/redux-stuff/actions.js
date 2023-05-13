@@ -70,6 +70,7 @@ export const login = (formData, navigate) => (dispatch) => {
 };
 
 export const addUser = (formData, navigate) => (dispatch) => {
+  console.log(formData);
   axiosWithAuth()
     .post(url + "api/users/register", formData)
     .then((res) => {
@@ -131,7 +132,10 @@ export const addSector = (formData, navigate) => (dispatch) => {
         navigate(-1);
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      toast.error(err.response.data.message);
+    });
 };
 
 export const deleteSector = (sector_id) => (dispatch) => {

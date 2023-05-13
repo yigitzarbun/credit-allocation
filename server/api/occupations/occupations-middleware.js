@@ -11,10 +11,17 @@ const occupationUnique = async (req, res, next) => {
     next();
   }
 };
-const infoExists = async (req, res, next) => {
+const infoExists = (req, res, next) => {
   const { occupation_name, occupation_score } = req.body;
-  if (!occupation_name || !occupation_score) {
-    res.status(400).json({ message: "Gerekli bilgiler eksik" });
+  if (
+    !occupation_name ||
+    !occupation_score ||
+    occupation_score > 100 ||
+    occupation_score < 0
+  ) {
+    res.status(400).json({ message: "Gerekli bilgiler eksik veya hatalı" });
+  } else {
+    next();
   }
 };
 module.exports = { occupationUnique, infoExists };

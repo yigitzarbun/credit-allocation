@@ -6,7 +6,7 @@ import { getWeights, updateWeight } from "../redux-stuff/actions";
 function ChangeOccupation() {
   const location = useLocation();
   const propsData = location.state;
-  const { weights } = useSelector((store) => store);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -29,9 +29,7 @@ function ChangeOccupation() {
     dispatch(updateWeight(dataWide, navigate));
     reset();
   };
-  useEffect(() => {
-    dispatch(getWeights());
-  }, []);
+
   return (
     <div className="formContainer">
       <div className="flex justify-between items-center">

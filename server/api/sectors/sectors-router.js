@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const sectorModel = require("./sectors-model");
+const md = require("./sectors-middleware");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -9,15 +10,20 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-router.post("/addSector", async (req, res, next) => {
-  try {
-    const newSector = req.body;
-    const addSector = await sectorModel.createSector(newSector);
-    res.status(201).json(newSector);
-  } catch (error) {
-    next(error);
+router.post(
+  "/addSector",
+  md.infoExists,
+  md.sectorUnique,
+  async (req, res, next) => {
+    try {
+      const newSector = req.body;
+      const addSector = await sectorModel.createSector(newSector);
+      res.status(201).json(newSector);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 router.put("/:sector_id", async (req, res, next) => {
   try {
     const updates = { ...req.body };
@@ -30,7 +36,7 @@ router.put("/:sector_id", async (req, res, next) => {
 });
 router.delete("/:id", async (req, res, next) => {
   try {
-    const deletedUser = await sectorModel.deleteSector(req.params.id);
+    const deletedSector = await sectorModel.deleteSector(req.params.id);
     res.status(200).json({ message: "Sektör başarıyla silindi" });
   } catch (error) {
     next(error);

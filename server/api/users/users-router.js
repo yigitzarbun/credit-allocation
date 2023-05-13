@@ -4,32 +4,39 @@ const bcrypt = require("bcryptjs");
 const jsWTN = require("jsonwebtoken");
 const { JWT_SECRET } = require("../../config/config");
 const tokenMW = require("../../middleware/restricted");
-router.post("/register", async (req, res, next) => {
-  try {
-    const newUser = req.body;
-    const getUser = await userModel.findByFilter({
-      email: newUser.email,
-    });
-    if (getUser) {
-      res.status(400).json({
-        message: "Bu kullanıcı kullanılıyor ",
+const md = require("./users-middleware");
+
+router.post(
+  "/register",
+  md.infoExists,
+  md.userUnique,
+  async (req, res, next) => {
+    try {
+      const newUser = req.body;
+      const getUser = await userModel.findByFilter({
+        email: newUser.email,
       });
+      if (getUser) {
+        res.status(400).json({
+          message: "Bu kullanıcı kullanılıyor ",
+        });
+      }
+      if (!newUser.email || !newUser.password) {
+        res.status(400).json({
+          message: "Kullanıcı adı ve şifre girmeniz zorunlu",
+        });
+      } else {
+        const hash = await bcrypt.hash(newUser.password, 8);
+        newUser.password = hash;
+        const addUser = await userModel.createUser(newUser);
+        res.status(201).json({ message: `Hoşgeldin ${newUser.email}` });
+      }
+    } catch (error) {
+      next(error);
     }
-    if (!newUser.email || !newUser.password) {
-      res.status(400).json({
-        message: "Kullanıcı adı ve şifre girmeniz zorunlu",
-      });
-    } else {
-      const hash = await bcrypt.hash(newUser.password, 8);
-      newUser.password = hash;
-      const addUser = await userModel.createUser(newUser);
-      res.status(201).json({ message: `Hoşgeldin ${newUser.email}` });
-    }
-  } catch (error) {
-    next(error);
   }
-});
-router.post("/login", async (req, res, next) => {
+);
+router.post("/login", md.loginCredentialsExist, async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const loginUser = await userModel.findByFilter({
@@ -38,11 +45,6 @@ router.post("/login", async (req, res, next) => {
     if (!loginUser) {
       res.status(404).json({
         message: "Geçersiz kriter",
-      });
-    }
-    if (!req.body.email || !req.body.password) {
-      res.status(404).json({
-        message: "email ve Password girmeniz gereklidir",
       });
     }
     if (
@@ -56,7 +58,7 @@ router.post("/login", async (req, res, next) => {
           role_name: loginUser.role_name,
         },
         JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "8h" }
       );
       res.status(200).json({
         email: loginUser.email,

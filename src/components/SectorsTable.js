@@ -30,7 +30,6 @@ function SectorsTable() {
   } else if (user) {
     userType = user.role_name;
   }
-
   useEffect(() => {
     dispatch(getSectors());
     dispatch(getUsers());

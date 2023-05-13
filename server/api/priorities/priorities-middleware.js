@@ -8,9 +8,19 @@ const priorityUnique = async (req, res, next) => {
     occupation_id,
   });
   if (priorityExists) {
-    res.status(400).json({ message: "Priority already exists" });
+    res.status(400).json({ message: "Öncelik zaten mevcut" });
   } else {
     next();
   }
 };
-module.exports = { priorityUnique };
+
+const infoValid = async (req, res, next) => {
+  const { priority, experience_years, sector_id, occupation_id } = req.body;
+  if (!priority || !experience_years || !sector_id || !occupation_id) {
+    res.status(400).json({ message: "Gerekli bilgiler eksik" });
+  } else {
+    next();
+  }
+};
+
+module.exports = { priorityUnique, infoValid };

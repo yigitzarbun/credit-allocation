@@ -10,6 +10,12 @@ function WeightsTable() {
   if (user && users && users.filter((u) => u.email === user.email)[0]) {
     userType = users.filter((u) => u.email === user.email)[0]["role_name"];
   }
+  let weightScoreSum = null;
+  if (weights) {
+    for (let i = 0; i < weights.length; i++) {
+      weightScoreSum += weights[i]["weight_score"];
+    }
+  }
   useEffect(() => {
     dispatch(getWeights());
     dispatch(getUsers());
@@ -17,7 +23,20 @@ function WeightsTable() {
   }, []);
   return (
     <div>
-      {weights && weights.length > 0 ? (
+      {weightScoreSum > 1 && (
+        <div className="mt-4">
+          <p className="text-red-400">
+            <span className="font-bold"> UYARI:</span> Yüzde hesabını sağlamak
+            için ağırlık toplamlarının 1'e eşit olduğundan emin olun.{" "}
+          </p>
+          <p className="text-red-400">
+            Mevcut durumda ağırlık toplamları{" "}
+            <span className="text-blue-400 font-bold">{weightScoreSum} </span>{" "}
+            etmektedir.
+          </p>
+        </div>
+      )}
+      {weights && weights.length > 0 && (
         <table className="table">
           <thead className="tableHead">
             <tr className="leading-loose">
@@ -60,22 +79,6 @@ function WeightsTable() {
               ))}
           </tbody>
         </table>
-      ) : (
-        <div className="w-1/2 mx-auto text-center formContainer">
-          <h2 className="font-bold text-slate-300 text-xl mt-4">
-            İstisnai önceliklendirme bulunmuyor
-          </h2>
-          <p className="mt-4 text-sm">
-            Yeni bir istisnai önceliklendirme ekleyerek, müşterilerin kredi
-            skorlarından bağımsız olarak önceliklendirilmelerini
-            sağlayabilirsin.
-          </p>
-          <Link to="/add-prioritization" className="w-1/2 mx-auto">
-            <button className="positiveButton">
-              Yeni Önceliklendirme Ekle
-            </button>
-          </Link>
-        </div>
       )}
     </div>
   );

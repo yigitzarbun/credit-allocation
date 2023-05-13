@@ -14,11 +14,7 @@ function AddEmployee() {
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
   const handleAddEmployee = (data) => {
-    const dataWide = {
-      ...data,
-      role_name: "analyst",
-    };
-    dispatch(addUser(dataWide, navigate));
+    dispatch(addUser(data, navigate));
     reset();
   };
 
@@ -61,7 +57,7 @@ function AddEmployee() {
           )}
         </div>
         <div>
-          <label htmlFor="fname" className="flex">
+          <label htmlFor="lname" className="flex">
             Soyisim
           </label>
           <input
@@ -72,6 +68,22 @@ function AddEmployee() {
           {errors.lname && (
             <span className="fieldError">{errors.lname.message}</span>
           )}
+        </div>
+        <div>
+          <label htmlFor="role_name" className="flex">
+            Rol
+          </label>
+          <select
+            className="border-2 rounded-md w-full p-2 mt-4"
+            {...register("role_name", { required: "Çalışan rolü zorunlu" })}
+          >
+            <option value="">-- Rol seçin -- </option>
+            <option value="analyst">Analyst</option>
+            <option value="admin">Admin</option>
+            {errors.role_name && (
+              <span className="fieldError">{errors.role_name.message}</span>
+            )}
+          </select>
         </div>
         <div>
           <label htmlFor="password" className="flex">

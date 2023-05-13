@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", md.priorityUnique, async (req, res, next) => {
+router.post("/", md.infoValid, md.priorityUnique, async (req, res, next) => {
   try {
     const newPriority = await prioritiesModel.add(req.body);
     res.status(201).json(newPriority);

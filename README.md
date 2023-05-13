@@ -19,9 +19,7 @@ To run the Credit Allocation Site on your local machine, follow these steps:
 2. Install dependencies: `npm install`
 3. Set up environment variables by creating a `.env` file in the root directory of the project. The file should include the following variables:
    ```
-   TYPEFORM_API_KEY=<typeform API key>
-   PIPELINE_ID=<Pipedrive pipeline ID>
-   PIPEDRIVE_API_KEY=<Pipedrive API key>
+   REACT_APP_TYPE_FORM=<typeform API key>
    ```
 4. Start the app: `npm start`
 5. Start the server: `npm run server` (which runs on PORT: 9000)
@@ -39,16 +37,16 @@ Initially send a post request to `http://localhost:9000/api/users/register` with
 "role_name": "admin"
 }
 
-As a result, the account holder will be authenticated and authorized as an admin upon signing in. Next, the admin may add other employees, who'd be regarded as "analyst" and will have view-only permissions.
+As a result, the account holder will be authenticated and authorized as admin upon signing in. Next, the admin may add other employees, who'd be regarded as "analyst" and will have view-only permissions.
 
 Here's how to use the Credit Allocation Site:
 
 1. Employees log in to the site using their credentials.
-2. They may retreive applications from Typeform via `/unprocessed-loan-requests`.
+2. They may retreive and view applications from Typeform via `/unprocessed-loan-requests`. Make sure to add the Typeform form id to /credit-allocation/server/api/server.js where the `typeFormId` variable is initialized.
 3. After obtaining applications from Typeform, the data is displayed on the site, where the employee can allocate a priority for the application.
 4. The site calculates the credit score and priority based on the sector and occupation scores, which can be edited by the user.
-5. The employee can then send the processed customer application data to Pipedrive.
+5. The employee can then send the processed customer application data to Pipedrive. Make sure to add your Pipedrive credentials on Lines 134 - 143 at the ProcessedLoanRequests.js file located under src/components folder.
 
 ## Contributing
 
-If you want to contribute to the Credit Allocation Site, please submit a pull request. Make sure your code passes the tests before submitting.
+If you want to contribute to the Credit Allocation Site, please submit a pull request.
